@@ -3,4 +3,4 @@
 # UI-suunnitelma sovellukselle
 
 # ER-kaavio tietokannalle
-![ER-kaavio:](./group_18/er.png "tehty workbenchillä")
+![er](https://user-images.githubusercontent.com/87731856/226368275-3fb4ff6b-f74d-43fa-8261-1e1a99a43a0a.png)
