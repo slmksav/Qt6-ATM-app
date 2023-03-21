@@ -51,8 +51,8 @@ ENGINE = InnoDB;
 -- Table `bankdb`.`card`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bankdb`.`card` (
-  `idcard` INT NOT NULL,
-  `4digitpin` VARCHAR(5) NULL,
+  `idcard` VARCHAR(20) NOT NULL,
+  `fourdigitpin` VARCHAR(255) NULL,
   `id_omistaja` INT NULL,
   `id_account` INT NULL,
   PRIMARY KEY (`idcard`),
