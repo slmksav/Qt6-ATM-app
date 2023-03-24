@@ -27,6 +27,43 @@
      <string>mikanappi</string>
     </property>
    </widget>
+   <widget class="QTimeEdit" name="sauliEdit">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>220</y>
+      <width>118</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="date">
+     <date>
+      <year>2002</year>
+      <month>12</month>
+      <day>5</day>
+     </date>
+    </property>
+    <property name="time">
+     <time>
+      <hour>9</hour>
+      <minute>9</minute>
+      <second>1</second>
+     </time>
+    </property>
+   </widget>
+   <widget class="QLabel" name="sauliLabel">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>180</y>
+      <width>161</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SAULIN SYNTYMÄ AIKA</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
