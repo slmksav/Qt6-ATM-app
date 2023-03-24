@@ -15,6 +15,19 @@ CREATE SCHEMA IF NOT EXISTS `bankdb` DEFAULT CHARACTER SET utf8 ;
 USE `bankdb` ;
 
 -- -----------------------------------------------------
+-- Table `bankdb`.`customer`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bankdb`.`customer` (
+  `idcustomer` INT NOT NULL,
+  `first_name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
+  `age` CHAR(3) NULL,
+  PRIMARY KEY (`idcustomer`),
+  UNIQUE INDEX `idcustomer_UNIQUE` (`idcustomer` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `bankdb`.`account`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bankdb`.`account` (
@@ -23,27 +36,14 @@ CREATE TABLE IF NOT EXISTS `bankdb`.`account` (
   `creditMax` DECIMAL(10,2) NULL,
   `accNumDebit` INT NULL,
   `accNumCredit` INT NULL,
-  PRIMARY KEY (`idaccount`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `bankdb`.`customer`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bankdb`.`customer` (
-  `idcustomer` INT NOT NULL,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  `age` CHAR(3) NULL,
-  `id_accounts` INT NULL,
-  PRIMARY KEY (`idcustomer`),
-  UNIQUE INDEX `idcustomer_UNIQUE` (`idcustomer` ASC) VISIBLE,
-  INDEX `id_accounts_idx` (`id_accounts` ASC) VISIBLE,
-  CONSTRAINT `id_accounts`
-    FOREIGN KEY (`id_accounts`)
-    REFERENCES `bankdb`.`account` (`idaccount`)
-    ON DELETE CASCADE
-    ON UPDATE RESTRICT)
+  `id_customers` INT NULL,
+  PRIMARY KEY (`idaccount`),
+  INDEX `id_accounts_idx` (`id_customers` ASC) VISIBLE,
+  CONSTRAINT `id_customers`
+    FOREIGN KEY (`id_customers`)
+    REFERENCES `bankdb`.`customer` (`idcustomer`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `bankdb`.`card` (
   `fourdigitpin` VARCHAR(255) NULL,
   `id_omistaja` INT NULL,
   `id_account` INT NULL,
+  `wrongAttempts` TINYINT NULL,
   PRIMARY KEY (`idcard`),
   UNIQUE INDEX `id_omistaja_UNIQUE` (`id_omistaja` ASC) VISIBLE,
   INDEX `id_account_idx` (`id_account` ASC) VISIBLE,
