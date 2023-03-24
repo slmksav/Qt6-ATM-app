@@ -1,93 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>800</width>
-    <height>600</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="mikaButton">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>140</y>
-      <width>83</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>mikanappi</string>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="sauliEdit">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>220</y>
-      <width>118</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="date">
-     <date>
-      <year>2002</year>
-      <month>12</month>
-      <day>5</day>
-     </date>
-    </property>
-    <property name="time">
-     <time>
-      <hour>9</hour>
-      <minute>9</minute>
-      <second>1</second>
-     </time>
-    </property>
-   </widget>
-   <widget class="QLabel" name="sauliLabel">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>180</y>
-      <width>161</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>SAULIN SYNTYMÄ AIKA</string>
-   <widget class="QCheckBox" name="samuliNappi">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>100</y>
-      <width>58</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>CheckBox</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>17</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
- </widget>
- <resources/>
- <connections/>
+    <class>MainWindow</class>
+    <widget class="QMainWindow" name="MainWindow">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>800</width>
+                <height>600</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>MainWindow</string>
+        </property>
+        <widget class="QWidget" name="centralwidget">
+            <widget class="QPushButton" name="mikaButton">
+                <property name="geometry">
+                    <rect>
+                        <x>140</x>
+                        <y>140</y>
+                        <width>83</width>
+                        <height>29</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>mikanappi</string>
+                </property>
+            </widget>
+            <widget class="QTimeEdit" name="sauliEdit">
+                <property name="geometry">
+                    <rect>
+                        <x>360</x>
+                        <y>220</y>
+                        <width>118</width>
+                        <height>29</height>
+                    </rect>
+                </property>
+                <property name="date">
+                    <date>
+                        <year>2002</year>
+                        <month>12</month>
+                        <day>5</day>
+                    </date>
+                </property>
+                <property name="time">
+                    <time>
+                        <hour>9</hour>
+                        <minute>9</minute>
+                        <second>1</second>
+                    </time>
+                </property>
+            </widget>
+            <widget class="QLabel" name="sauliLabel">
+                <property name="geometry">
+                    <rect>
+                        <x>360</x>
+                        <y>180</y>
+                        <width>161</width>
+                        <height>31</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>SAULIN SYNTYMÄ AIKA</string>
+                </property>
+            </widget>
+            <widget class="QCheckBox" name="samuliNappi">
+                <property name="geometry">
+                    <rect>
+                        <x>120</x>
+                        <y>100</y>
+                        <width>58</width>
+                        <height>18</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>CheckBox</string>
+                </property>
+            </widget>
+        </widget>
+        <widget class="QMenuBar" name="menubar">
+            <property name="geometry">
+                <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>800</width>
+                    <height>17</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QStatusBar" name="statusbar"/>
+    </widget>
+    <resources/>
+    <connections/>
 </ui>
