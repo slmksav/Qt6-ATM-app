@@ -17,19 +17,21 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-     static QString getBaseUrl();
+    static QString getBaseUrl();
 
 private slots:
-    void loginSlot (QNetworkReply *reply);
+    void loginSlot(QNetworkReply *reply);
     void on_mikaButton_clicked();
+    void on_customerButton_clicked();
+    void getCustomerData();
 
 private:
     Ui::MainWindow *ui;
-    QString username;
-    QNetworkAccessManager *loginManager;
     QNetworkReply *reply;
-    QByteArray response_data;
-    QByteArray token;
-
+    QNetworkAccessManager *loginManager;
+    QString response_data;
+    QString username;
+    QString token;
 };
+
 #endif // MAINWINDOW_H

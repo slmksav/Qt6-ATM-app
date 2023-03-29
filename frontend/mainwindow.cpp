@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "environment.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -23,6 +22,33 @@ QString MainWindow::getBaseUrl()
     //return "https://azure.com/myapp";
 }
 
+void MainWindow::getCustomerData()
+{
+    // Retrieve customer data from the MySQL database
+    QString site_url = MainWindow::getBaseUrl() + "/customer/1";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+    request.setRawHeader("Authorization", authHeader);
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+        if (reply->error()) {
+            qDebug() << reply->errorString();
+        }
+        else {
+            QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+            QJsonObject object = document.object();
+            QString firstName = object.value("first_name").toString();
+            QString lastName = object.value("last_name").toString();
+            ui->firstName->setText(firstName);
+            ui->lastName->setText(lastName);
+        }
+        reply->deleteLater();
+    });
+
+    manager->get(request);
+}
 
 void MainWindow::loginSlot(QNetworkReply *reply)
 {
@@ -56,7 +82,7 @@ void MainWindow::on_mikaButton_clicked()
     jsonObj.insert("username",username);
     jsonObj.insert("password",password);
 
-    QString site_url=Environment::getBaseUrl()+"/login";
+    QString site_url=MainWindow::getBaseUrl()+"/login";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -65,5 +91,12 @@ void MainWindow::on_mikaButton_clicked()
     connect(loginManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(loginSlot(QNetworkReply*)));
 
     reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+}
+
+
+
+void MainWindow::on_customerButton_clicked()
+{
+    getCustomerData();
 }
 
