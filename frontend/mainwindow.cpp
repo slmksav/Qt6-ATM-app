@@ -37,7 +37,10 @@ void MainWindow::getCustomerData()
             qDebug() << reply->errorString();
         }
         else {
-            QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
+            QByteArray response = reply->readAll();
+            qDebug() << "Raw response:" << response;
+
+            QJsonDocument document = QJsonDocument::fromJson(response);
             QJsonObject object = document.object();
             QString firstName = object.value("first_name").toString();
             QString lastName = object.value("last_name").toString();
@@ -49,6 +52,7 @@ void MainWindow::getCustomerData()
 
     manager->get(request);
 }
+
 
 void MainWindow::loginSlot(QNetworkReply *reply)
 {
