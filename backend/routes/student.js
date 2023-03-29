@@ -2,24 +2,24 @@ const express = require('express');
 const router = express.Router();
 const student = require('../models/student_model');
 
-//tänne metodeja
-router.get('/', function(request, response) {
-    student.getAll(function(err, dbResult) {
-        if (err) {
+router.get('/',function(request,response){
+    student.getAll(function(err,dbResult){
+        if(err){
             response.json(err);
-        } else {
+        }
+        else{
             response.json(dbResult);
         }
     })
 });
 
-router.get('/:id',
+router.get('/:user',
     function (request, response) {
-        student.getById(request.params.id, function (err, dbResult) {
+        student.getById(request.params.user, function (err, dbResult) {
             if (err) {
                 response.json(err);
             } else {
-                response.json(dbResult[0]); //<-- tulee pelkkä objekti, ei taulukkoa
+                response.json(dbResult[0]);
             }
         })
     });
@@ -44,7 +44,7 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult.affectedRows + " affected rows!")
+      response.json(dbResult.affectedRows);
     }
   });
 });
@@ -56,9 +56,10 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult);
+      response.json(dbResult.affectedRows);
     }
   });
 });
 
-module.exports = router;
+
+module.exports=router;

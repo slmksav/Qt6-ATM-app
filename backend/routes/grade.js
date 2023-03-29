@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const grade = require('../models/grade_model');
 
-//tänne metodeja
-router.get('/', function(request, response) {
-    grade.getAll(function(err, dbResult) {
-        if (err) {
+router.get('/',function(request,response){
+    grade.getAll(function(err,dbResult){
+        if(err){
             response.json(err);
-        } else {
+        }
+        else{
             response.json(dbResult);
         }
     })
@@ -19,7 +19,7 @@ router.get('/:id',
             if (err) {
                 response.json(err);
             } else {
-                response.json(dbResult[0]); //<-- tulee pelkkä objekti, ei taulukkoa
+                response.json(dbResult[0]);
             }
         })
     });
@@ -44,7 +44,7 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult.affectedRows + " affected rows!")
+      response.json(dbResult.affectedRows);
     }
   });
 });
@@ -56,9 +56,10 @@ function(request, response) {
     if (err) {
       response.json(err);
     } else {
-      response.json(dbResult);
+      response.json(dbResult.affectedRows);
     }
   });
 });
 
-module.exports = router;
+
+module.exports=router;
