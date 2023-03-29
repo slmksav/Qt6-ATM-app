@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const course = require('../models/course_model');
+const student = require('../models/customer_model');
 
 router.get('/',function(request,response){
-    course.getAll(function(err,dbResult){
+    student.getAll(function(err,dbResult){
         if(err){
             response.json(err);
         }
@@ -15,7 +15,7 @@ router.get('/',function(request,response){
 
 router.get('/:id',
     function (request, response) {
-        course.getById(request.params.id, function (err, dbResult) {
+        student.getById(request.params.id, function (err, dbResult) {
             if (err) {
                 response.json(err);
             } else {
@@ -27,7 +27,7 @@ router.get('/:id',
 
 router.post('/', 
 function(request, response) {
-  course.add(request.body, function(err, dbResult) {
+  student.add(request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -40,7 +40,7 @@ function(request, response) {
 
 router.delete('/:id', 
 function(request, response) {
-  course.delete(request.params.id, function(err, dbResult) {
+  student.delete(request.params.id, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {
@@ -52,7 +52,7 @@ function(request, response) {
 
 router.put('/:id', 
 function(request, response) {
-  course.update(request.params.id, request.body, function(err, dbResult) {
+  student.update(request.params.id, request.body, function(err, dbResult) {
     if (err) {
       response.json(err);
     } else {

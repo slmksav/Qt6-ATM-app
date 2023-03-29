@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const cors=require('cors');
 
 var indexRouter = require('./routes/index');
-var courseRouter = require('./routes/course');
+var customerRouter = require('./routes/customer');
 var loginRouter = require('./routes/login');
 
 
@@ -27,7 +27,7 @@ app.use('/login', loginRouter);
 
 //app.use(authenticateToken);
 //suojatut endpointit
-app.use('/course', courseRouter);
+app.use('/customer', customerRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
