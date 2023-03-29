@@ -5,7 +5,7 @@ const customer = {
     return db.query('select * from customer', callback);
   },
   getById: function(id, callback) {
-    return db.query('select * from studen where idcustomer=?', [id], callback);
+    return db.query('select * from customer where idcustomer=?', [id], callback);
   },
   add: function(customer, callback) {
     return db.query(
