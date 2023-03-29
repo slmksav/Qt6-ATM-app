@@ -8,9 +8,6 @@ const cors=require('cors');
 
 var indexRouter = require('./routes/index');
 var courseRouter = require('./routes/course');
-var studentRouter = require('./routes/student');
-var gradeRouter = require('./routes/grade');
-var studentGradeRouter = require('./routes/studentgrade');
 var loginRouter = require('./routes/login');
 
 
@@ -31,10 +28,6 @@ app.use('/login', loginRouter);
 //app.use(authenticateToken);
 //suojatut endpointit
 app.use('/course', courseRouter);
-app.use('/student', studentRouter);
-app.use('/grade', gradeRouter);
-app.use('/studentgrade', studentGradeRouter);
-
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
