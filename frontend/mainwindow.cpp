@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <QSerialPort>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,7 +24,6 @@ QString MainWindow::getBaseUrl()
 
 void MainWindow::getCustomerData()
 {
-    // Retrieve customer data from the MySQL database
     QString site_url = MainWindow::getBaseUrl() + "/customer/1";
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
