@@ -19,7 +19,7 @@ QString MainWindow::getBaseUrl()
     return "http://localhost:3000";
     //tarvittaessa helppo muuttaa
     //esimerkiksi
-    //return "https://azure.com/myapp";
+    //return "https://azure.com/myapp"; Tämä pitäisi saada muutettua johonkin ulkoiseen palvelimeen, koska yhteys db4free:stä tähän on nyt lokaali
 }
 
 void MainWindow::getCustomerData()
