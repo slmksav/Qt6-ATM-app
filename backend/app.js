@@ -4,32 +4,30 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const dotenv=require('dotenv');
 const jwt = require('jsonwebtoken');
+const cors=require('cors');
 
 var indexRouter = require('./routes/index');
-var courseRouter = require('./routes/course');
-var studentRouter = require('./routes/student');
-var gradeRouter = require('./routes/grade');
-var studentgradeRouter = require('./routes/studentgrade');
+var customerRouter = require('./routes/customer');
 var loginRouter = require('./routes/login');
+
 
 var app = express();
 dotenv.config();
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false })); //<-- ottaa vastaan urlencoded
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //suojaamattomat endpointit
 app.use('/', indexRouter);
-app.use('/login', loginRouter)
-app.use(authenticateToken); //<-- suojaus ennen suojattuja
+app.use('/login', loginRouter);
+
+//app.use(authenticateToken); ei käytössä
 //suojatut endpointit
-app.use('/course', courseRouter);
-app.use('/student', studentRouter);
-app.use('/grade', gradeRouter);
-app.use('/studentgrade', studentgradeRouter);
+app.use('/customer', customerRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
@@ -48,5 +46,7 @@ function authenticateToken(req, res, next) {
       next()
     })
   }
+
+
 
 module.exports = app;

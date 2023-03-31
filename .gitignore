@@ -2,3 +2,4 @@ backend/node_modules/
 backend/.env
 frontend/build/
 frontend/*.user
+build-frontend-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/
