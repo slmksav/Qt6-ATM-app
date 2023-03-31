@@ -10,14 +10,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dllpincode.cpp
+    dllpincode.cpp \
+    pincodeui.cpp
 
 HEADERS += \
     DLLPinCode_global.h \
-    dllpincode.h
+    dllpincode.h \
+    pincodeui.h
 
 # Default rules for deployment.
 unix {
     target.path = /usr/lib
 }
 !isEmpty(target.path): INSTALLS += target
+
+FORMS += \
+    pincodeui.ui
