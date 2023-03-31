@@ -25,3 +25,8 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+unix:!macx|win32: LIBS += -L$$PWD/lib/DLLSerialPort/build/debug/ -lDLLSerialPort
+
+INCLUDEPATH += $$PWD/lib/DLLSerialPort/build
+DEPENDPATH += $$PWD/lib/DLLSerialPort/build
