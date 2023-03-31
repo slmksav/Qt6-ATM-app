@@ -16,7 +16,7 @@ MainWindow::~MainWindow()
 
 QString MainWindow::getBaseUrl()
 {
-    return "http://localhost:3000";
+    return "https://bankdb-r18.onrender.com";
     //tarvittaessa helppo muuttaa
     //esimerkiksi
     //return "https://azure.com/myapp"; Tämä pitäisi saada muutettua johonkin ulkoiseen palvelimeen, koska yhteys db4free:stä tähän on nyt lokaali
@@ -66,7 +66,7 @@ void MainWindow::on_customerButton_clicked()
 
 
 // LEGACY koodia myöhempään
-/*void MainWindow::loginSlot(QNetworkReply *reply)
+void MainWindow::loginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
     qDebug()<<response_data;
@@ -109,6 +109,4 @@ void MainWindow::on_mikaButton_clicked()
     reply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
 }
 
-
-*/
 
