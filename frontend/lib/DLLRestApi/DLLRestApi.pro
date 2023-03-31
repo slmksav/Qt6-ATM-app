@@ -1,4 +1,5 @@
 QT -= gui
+QT +=network
 
 TEMPLATE = lib
 DEFINES += DLLRESTAPI_LIBRARY
