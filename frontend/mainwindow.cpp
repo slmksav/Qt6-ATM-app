@@ -31,14 +31,15 @@ void MainWindow::getCustomerData()
     request.setRawHeader("Authorization", authHeader);
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+    connect(manager, &QNetworkAccessManager::finished,
+        this, [=](QNetworkReply *reply) {
+
         if (reply->error()) {
             qDebug() << reply->errorString();
         }
         else {
             QByteArray response = reply->readAll();
             qDebug() << "Raw response:" << response;
-
             QJsonDocument document = QJsonDocument::fromJson(response);
             QJsonObject object = document.object();
             QString firstName = object.value("first_name").toString();
@@ -51,6 +52,17 @@ void MainWindow::getCustomerData()
 
     manager->get(request);
 }
+
+void MainWindow::on_customerButton_clicked()
+{
+    getCustomerData();
+}
+
+
+
+
+
+
 
 
 // LEGACY koodia myöhempään
@@ -98,10 +110,5 @@ void MainWindow::on_mikaButton_clicked()
 }
 
 
-
-void MainWindow::on_customerButton_clicked()
-{
-    getCustomerData();
-}
-
 */
+
