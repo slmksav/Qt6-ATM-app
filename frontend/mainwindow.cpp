@@ -53,7 +53,8 @@ void MainWindow::getCustomerData()
 }
 
 
-void MainWindow::loginSlot(QNetworkReply *reply)
+// LEGACY koodia myöhempään
+/*void MainWindow::loginSlot(QNetworkReply *reply)
 {
     response_data=reply->readAll();
     qDebug()<<response_data;
@@ -103,3 +104,4 @@ void MainWindow::on_customerButton_clicked()
     getCustomerData();
 }
 
+*/
