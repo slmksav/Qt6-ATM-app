@@ -31,7 +31,7 @@ unix:!macx|win32: LIBS += -L$$PWD/lib/DLLSerialPort/build/debug/ -lDLLSerialPort
 INCLUDEPATH += $$PWD/lib/DLLSerialPort/build
 DEPENDPATH += $$PWD/lib/DLLSerialPort/build
 
-unix:!macx|win32: LIBS += -L$$PWD/lib/DLLSerialPort/build/debug/ -lDLLPinCode
+unix:!macx|win32: LIBS += -L$$PWD/lib/DLLPinCode/build/debug/ -lDLLPinCode
 INCLUDEPATH += $$PWD/lib/DLLPinCode/build
 DEPENDPATH += $$PWD/lib/DLLPinCode/build
 
