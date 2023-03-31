@@ -36,8 +36,6 @@ request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     // Connect to the database
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName(host);
-    db.setUserName(user);
     db.setPassword(password);
     db.setDatabaseName(database);
     if (!db.open()) {
