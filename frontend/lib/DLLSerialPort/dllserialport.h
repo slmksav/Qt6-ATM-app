@@ -1,12 +1,20 @@
 #ifndef DLLSERIALPORT_H
 #define DLLSERIALPORT_H
 
-#include "DLLSerialPort_global.h"
+#include <QObject>
+#include <QSerialPort>
+#include <QString>
 
-class DLLSERIALPORT_EXPORT DLLSerialPort
+class DLLSerialPort : public QObject
 {
+    Q_OBJECT
 public:
-    DLLSerialPort();
+    explicit DLLSerialPort(QObject *parent = nullptr);
+    QString getSerialData();
+    QString putCardNumber();
+
+private:
+    QSerialPort m_serialPort;
 };
 
 #endif // DLLSERIALPORT_H
