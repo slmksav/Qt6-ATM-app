@@ -39,3 +39,8 @@ unix:!macx|win32: LIBS += -L$$PWD/lib/DLLRestApi/build/debug/ -lDLLRestApi
 
 INCLUDEPATH += $$PWD/lib/DLLRestApi/build
 DEPENDPATH += $$PWD/lib/DLLRestApi/build
+
+unix:!macx|win32: LIBS += -L$$PWD/lib/DLLPinCode/build/debug/ -lDLLPinCode
+
+INCLUDEPATH += $$PWD/lib/DLLPinCode/build
+DEPENDPATH += $$PWD/lib/DLLPinCode/build
