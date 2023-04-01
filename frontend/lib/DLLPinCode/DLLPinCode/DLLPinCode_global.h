@@ -4,7 +4,7 @@
 #include <QtCore/qglobal.h>
 
 #if defined(DLLPINCODE_LIBRARY)
-#   define DLLPINCODE_EXPORT Q_DECL_EXPORT
+#  define DLLPINCODE_EXPORT Q_DECL_EXPORT
 #else
 #  define DLLPINCODE_EXPORT Q_DECL_IMPORT
 #endif
