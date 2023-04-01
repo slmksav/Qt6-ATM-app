@@ -1,12 +1,14 @@
-#ifndef DLLPINCODE_H
-#define DLLPINCODE_H
+#ifndef DLLSERIALPORT_H
+#define DLLSERIALPORT_H
 
-#include "DLLPinCode_global.h"
+#include <QObject>
+#include <QString>
 
-class DLLPINCODE_EXPORT DLLPinCode
+class DLLPinCode : public QObject
 {
+    Q_OBJECT
 public:
-    DLLPinCode();
+    explicit DLLPinCode(QObject *parent = nullptr);
 };
 
-#endif // DLLPINCODE_H
+#endif // DLLSERIALPORT_H

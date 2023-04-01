@@ -20,8 +20,6 @@ public:
     static QString getBaseUrl();
 
 private slots:
-    void loginSlot(QNetworkReply *reply);
-    void on_mikaButton_clicked();
     void on_customerButton_clicked();
     void getCustomerData();
 

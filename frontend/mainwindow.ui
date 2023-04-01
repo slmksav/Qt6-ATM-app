@@ -14,102 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="mikaButton">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>140</y>
-      <width>83</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>mikaLogin</string>
-    </property>
-   </widget>
-   <widget class="QTimeEdit" name="sauliEdit">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>220</y>
-      <width>118</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="date">
-     <date>
-      <year>2002</year>
-      <month>12</month>
-      <day>5</day>
-     </date>
-    </property>
-    <property name="time">
-     <time>
-      <hour>9</hour>
-      <minute>9</minute>
-      <second>1</second>
-     </time>
-    </property>
-   </widget>
-   <widget class="QLabel" name="sauliLabel">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>180</y>
-      <width>161</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>SAULIN SYNTYMÄ AIKA</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="samuliNappi">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>100</y>
-      <width>58</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>CheckBox</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>60</y>
-      <width>281</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>miikan pää räjähtää linuxin kanssa -nappi</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="mikaKayttaja">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>200</y>
-      <width>113</width>
-      <height>28</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="mikaSalis">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>270</y>
-      <width>113</width>
-      <height>28</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="mikaInfo">
     <property name="geometry">
      <rect>
@@ -123,43 +27,17 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>200</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Kayttaja</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>270</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Salasana</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="customerButton">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>340</y>
-      <width>83</width>
+      <x>240</x>
+      <y>320</y>
+      <width>381</width>
       <height>29</height>
      </rect>
     </property>
     <property name="text">
-     <string>customerButton</string>
+     <string>Tästä saa näkyviin asiakkaan nimen ja sukunimen</string>
     </property>
    </widget>
    <widget class="QLabel" name="firstName">
