@@ -8,6 +8,7 @@ const cors=require('cors');
 
 var indexRouter = require('./routes/index');
 var customerRouter = require('./routes/customer');
+var accountRouter = require('./routes/account');
 var loginRouter = require('./routes/login');
 
 
@@ -28,6 +29,7 @@ app.use('/login', loginRouter);
 //app.use(authenticateToken); ei käytössä
 //suojatut endpointit
 app.use('/customer', customerRouter);
+app.use('/account', accountRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']

@@ -30,14 +30,14 @@
    <widget class="QPushButton" name="customerButton">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>340</y>
-      <width>83</width>
+      <x>240</x>
+      <y>320</y>
+      <width>381</width>
       <height>29</height>
      </rect>
     </property>
     <property name="text">
-     <string>customerButton</string>
+     <string>Tästä saa näkyviin asiakkaan nimen ja sukunimen</string>
     </property>
    </widget>
    <widget class="QLabel" name="firstName">
