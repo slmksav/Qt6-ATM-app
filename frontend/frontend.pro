@@ -13,14 +13,40 @@ CONFIG(debug, debug|release): DESTDIR = $$PWD/build/debug
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    balancewindow.cpp \
+    changeaccountwindow.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    modeselectwindow.cpp \
+    optionswindow.cpp \
+    receiptwindow.cpp \
+    sessiondata.cpp \
+    startwindow.cpp \
+    transactionswindow.cpp \
+    withdrawwindow.cpp
 
 HEADERS += \
-    mainwindow.h
+    balancewindow.h \
+    changeaccountwindow.h \
+    mainwindow.h \
+    modeselectwindow.h \
+    optionswindow.h \
+    receiptwindow.h \
+    sessiondata.h \
+    startwindow.h \
+    transactionswindow.h \
+    withdrawwindow.h
 
 FORMS += \
-    mainwindow.ui
+    balancewindow.ui \
+    changeaccountwindow.ui \
+    mainwindow.ui \
+    modeselectwindow.ui \
+    optionswindow.ui \
+    receiptwindow.ui \
+    startwindow.ui \
+    transactionswindow.ui \
+    withdrawwindow.ui
 #
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
