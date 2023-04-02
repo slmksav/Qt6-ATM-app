@@ -15,6 +15,17 @@ public:
     explicit WithdrawWindow(QWidget *parent = nullptr);
     ~WithdrawWindow();
 
+signals:
+    void clickAmount(int);
+
+public slots:
+    void withdrawExceedWarning(QString);
+
+    void updateUI(QString);
+
+private slots:
+    void withdrawButtonClicked(int);
+
 private:
     Ui::WithdrawWindow *ui;
 };

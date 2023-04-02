@@ -15,6 +15,9 @@ public:
     explicit ChangeAccountWindow(QWidget *parent = nullptr);
     ~ChangeAccountWindow();
 
+public slots:
+    void updateUI();
+
 private:
     Ui::ChangeAccountWindow *ui;
 };

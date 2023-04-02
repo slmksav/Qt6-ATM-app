@@ -15,6 +15,9 @@ public:
     explicit TransactionsWindow(QWidget *parent = nullptr);
     ~TransactionsWindow();
 
+public slots:
+    void updateUI();
+
 private:
     Ui::TransactionsWindow *ui;
 };

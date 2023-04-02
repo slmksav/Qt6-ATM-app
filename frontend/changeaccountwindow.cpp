@@ -12,3 +12,8 @@ ChangeAccountWindow::~ChangeAccountWindow()
 {
     delete ui;
 }
+
+void ChangeAccountWindow::updateUI()
+{
+
+}

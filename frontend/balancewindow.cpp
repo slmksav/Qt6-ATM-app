@@ -12,3 +12,8 @@ BalanceWindow::~BalanceWindow()
 {
     delete ui;
 }
+
+void BalanceWindow::updateUI()
+{
+
+}

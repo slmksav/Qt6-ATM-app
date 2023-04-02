@@ -15,6 +15,9 @@ public:
     explicit BalanceWindow(QWidget *parent = nullptr);
     ~BalanceWindow();
 
+public slots:
+    void updateUI();
+
 private:
     Ui::BalanceWindow *ui;
 };

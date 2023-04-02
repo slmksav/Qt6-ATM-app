@@ -15,6 +15,14 @@ public:
     explicit ReceiptWindow(QWidget *parent = nullptr);
     ~ReceiptWindow();
 
+signals:
+    void clickReceipt(bool);
+
+private slots:
+    void on_buttonYes_clicked();
+
+    void on_buttonNo_clicked();
+
 private:
     Ui::ReceiptWindow *ui;
 };
