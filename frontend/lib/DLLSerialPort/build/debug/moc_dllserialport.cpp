@@ -30,7 +30,7 @@ struct qt_meta_stringdata_DLLSerialPort_t {
     char stringdata0[14];
     char stringdata1[13];
     char stringdata2[1];
-    char stringdata3[5];
+    char stringdata3[8];
     char stringdata4[16];
 };
 #define QT_MOC_LITERAL(ofs, len) \
@@ -40,13 +40,13 @@ Q_CONSTINIT static const qt_meta_stringdata_DLLSerialPort_t qt_meta_stringdata_D
         QT_MOC_LITERAL(0, 13),  // "DLLSerialPort"
         QT_MOC_LITERAL(14, 12),  // "dataReceived"
         QT_MOC_LITERAL(27, 0),  // ""
-        QT_MOC_LITERAL(28, 4),  // "data"
-        QT_MOC_LITERAL(33, 15)   // "handleReadyRead"
+        QT_MOC_LITERAL(28, 7),  // "hexData"
+        QT_MOC_LITERAL(36, 15)   // "handleReadyRead"
     },
     "DLLSerialPort",
     "dataReceived",
     "",
-    "data",
+    "hexData",
     "handleReadyRead"
 };
 #undef QT_MOC_LITERAL

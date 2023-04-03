@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSerialPort>
+#include "dllserialport.h"
 #include "dllrestapi.h"
 #include "codeui.h"
 
@@ -91,3 +92,5 @@ void MainWindow::handleSerialDataReceived(const QString& data)
     qDebug() << "Serial data received:" << data;
     ui->serialDataLabel->setText(data);
 }
+
+
