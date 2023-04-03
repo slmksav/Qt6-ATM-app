@@ -3,15 +3,22 @@
 
 #include <QObject>
 #include <QSerialPort>
-#include <QString>
+#include <QSerialPortInfo>
+#include "DLLSerialPort_global.h"
 
-class DLLSerialPort : public QObject
+class DLLSERIALPORT_EXPORT DLLSerialPort : public QObject
 {
     Q_OBJECT
+
 public:
     explicit DLLSerialPort(QObject *parent = nullptr);
     QString getSerialData();
-    QString putCardNumber();
+
+signals:
+    void dataReceived(const QString& data);
+
+private slots:
+    void handleReadyRead();
 
 private:
     QSerialPort m_serialPort;
