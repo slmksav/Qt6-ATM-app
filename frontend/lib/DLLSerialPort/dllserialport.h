@@ -1,20 +1,26 @@
-#ifndef DLLSERIALPORT_H
-#define DLLSERIALPORT_H
-
 #include <QObject>
 #include <QSerialPort>
-#include <QString>
 
-class DLLSerialPort : public QObject
+#if defined(DLLSERIALPORT_LIBRARY)
+#  define DLLSERIALPORTSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define DLLSERIALPORTSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+class DLLSERIALPORTSHARED_EXPORT DLLSerialPort : public QObject
 {
     Q_OBJECT
+
 public:
     explicit DLLSerialPort(QObject *parent = nullptr);
     QString getSerialData();
-    QString putCardNumber();
+
+signals:
+    void dataReceived(const QString& data);
+
+private slots:
+    void handleReadyRead();
 
 private:
     QSerialPort m_serialPort;
 };
-
-#endif // DLLSERIALPORT_H

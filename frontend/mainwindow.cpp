@@ -7,6 +7,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
+    //m_serialPort = new DLLSerialPort(this);
+    //connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived);
 }
 
 MainWindow::~MainWindow()
@@ -53,8 +57,16 @@ void MainWindow::getCustomerData()
     manager->get(request);
 }
 
+//nappi ylläolevaan
 void MainWindow::on_customerButton_clicked()
 {
     getCustomerData();
 }
 
+////void MainWindow::handleSerialDataReceived(const QString& data)
+//{
+    // Process the received serial port data as needed
+    //qDebug() << "Serial data received:" << data;
+    // For example, update a QLabel with the received data
+    //ui->serialDataLabel->setText(data);
+//}

@@ -1,13 +1,5 @@
 #include "dllserialport.h"
 
-QString getBaseUrl()
-{
-    return "http://localhost:3000";
-    //tarvittaessa helppo muuttaa
-    //esimerkiksi
-    //return "https://azure.com/myapp"; Tämä pitäisi saada muutettua johonkin ulkoiseen palvelimeen, koska yhteys db4free:stä tähän on nyt lokaali
-}
-
 DLLSerialPort::DLLSerialPort(QObject *parent) : QObject(parent)
 {
     m_serialPort.setPortName("/dev/ttyACM0");
@@ -21,25 +13,17 @@ DLLSerialPort::DLLSerialPort(QObject *parent) : QObject(parent)
     {
         qWarning("Failed to open serial port");
     }
+
+    connect(&m_serialPort, &QSerialPort::readyRead, this, &DLLSerialPort::handleReadyRead);
 }
 
-QString DLLSerialPort::getSerialData()
+void DLLSerialPort::handleReadyRead()
 {
     if (m_serialPort.canReadLine())
     {
         QByteArray data = m_serialPort.readLine();
         data = data.trimmed();
         QString strData = QString::fromUtf8(data);
-        return strData;
+        emit dataReceived(strData);
     }
-    else
-    {
-        return QString();
-    }
-}
-
-
-QString DLLSerialPort::putCardNumber()
-{
-    QString site_url = getBaseUrl() + "/card/1/pinhexcode";
 }
