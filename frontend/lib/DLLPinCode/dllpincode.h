@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "DLLPinCode_global.h"
+#include <QTimer>
 
 namespace Ui {
 class DLLPinCode;
@@ -34,6 +35,7 @@ private:
     QString SQLPin;
     QString InsertedPin;
     bool CompareStrings(QString,QString);
+    QTimer *timer;
 };
 
 #endif // DLLPINCODE_H

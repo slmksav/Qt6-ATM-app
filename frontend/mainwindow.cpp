@@ -12,10 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     m_serialPort = new DLLSerialPort(this);
-    m_codeUI = new CodeUI(this);
+    m_DLLPinCode = new DLLPinCode(this);
     // Numeroikaa connectionit, jotta voidaan refrensoida niihin dokumentaatiossa.
     connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived); //1. signaali
-    connect(this, &MainWindow::cardHexCodeUpdated, m_codeUI, &CodeUI::handleCardHexCodeReceived); //2. signaali
+    connect(this, &MainWindow::cardHexCodeUpdated, m_DLLPinCode, &DLLPinCode::handleCardHexCodeReceived); //2. signaali
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +67,8 @@ void MainWindow::on_customerButton_clicked()
 }
 
 //tämä funktio emittaa cardhexcoden Mikan DLLpincoden käyttöön
+//3.4.2023 Koitan itse tehdä tähän huomenna sellaisen toiminnon että se lähettää myös pin-koodin
+//tietokannasta samalla tavalla että voi verrata sitä syötettyyn pin-koodiin.
 void MainWindow::handleSerialDataReceived(const QString& data)
 {
     qDebug() << "Serial data received:" << data;

@@ -24,6 +24,9 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     connect(ui->buttonEnter,SIGNAL(clicked()),this,SLOT(enterClickHandler()));
     connect(ui->ButtonClear,SIGNAL(clicked()),this,SLOT(clearClickHandler()));
     connect(ui->ButtonStop,SIGNAL(clicked()),this,SLOT(stopClickHandler()));
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(stopClickHandler()));
+    timer->start(10000);
 
 }
 
@@ -42,6 +45,8 @@ void DLLPinCode::numberClickHandler()
 {
     QPushButton *numberButton = qobject_cast<QPushButton *>(sender());
         QString clickedValue = numberButton->text();
+        timer->stop();
+        timer->start(10000);
 
         InsertingPin += clickedValue;
         ui->lineEdit->setText(InsertingPin);
@@ -51,7 +56,7 @@ void DLLPinCode::numberClickHandler()
 
 void DLLPinCode::enterClickHandler()
 {
-
+      timer->stop();
       CheckPin = ui->lineEdit->text();
       //emit sendPin(CheckPin.toShort());
       if(CompareStrings(CheckPin,SQLPin))
@@ -61,12 +66,15 @@ void DLLPinCode::enterClickHandler()
       else
       {
           ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
+          timer->start(10000);
       }
 }
 void DLLPinCode::clearClickHandler()
 {
       InsertingPin = "";
       ui->lineEdit->clear();
+      timer->stop();
+      timer->start(10000);
 
 }
 
