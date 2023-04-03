@@ -174,11 +174,11 @@ void StartWindow::startSession(int customer)
     //getAdditionalAccountNames();
     session->additionalAccountNames = {"Martti Ahtisaari - debit",
                                        "Pekka Mahtisaari - dual",
-                                       "Pertti Vahtisaari - credit"/*,
+                                       "Pertti Vahtisaari - credit",
                                        "Jorma Sahtisaari - debit",
                                        "Makkis Pekkis - dual",
                                        "Putte Possu - debit",
-                                       "Poika Veli - credit"*/};
+                                       "Poika Veli - credit"};
 
     //getAdditionalAccountIDs
     session->additionalAccountIDs = {3,6,13,102,103,222,345};

@@ -16,7 +16,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="buttonLogout">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -29,7 +29,7 @@
     <string>Kirjaudu Ulos</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_7">
+  <widget class="QPushButton" name="buttonPrevious">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -42,7 +42,7 @@
     <string>Edelliset</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_8">
+  <widget class="QPushButton" name="buttonNext">
    <property name="geometry">
     <rect>
      <x>530</x>
