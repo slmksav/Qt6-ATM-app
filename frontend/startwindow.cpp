@@ -88,6 +88,7 @@ void StartWindow::openWithdraw()
     }
     else
     {
+        withdrawWindow->updateUI(session->accountType);
         withdrawWindow->show();
     }
 }
@@ -146,6 +147,7 @@ void StartWindow::changeWithdrawType(QString mode)
     session->withdrawMode = mode;
     qDebug() << "Withdraw mode changed to: " << session->withdrawMode;
 
+    withdrawWindow->updateUI(session->accountType);
     withdrawWindow->show();
 }
 
@@ -161,7 +163,8 @@ void StartWindow::openTransactions()
 
 void StartWindow::openChangeAccount()
 {
-
+    changeAccountWindow->updateUI(session->additionalAccountNames);
+    changeAccountWindow->show();
 }
 
 void StartWindow::printReceipt(bool print)
@@ -195,10 +198,13 @@ void StartWindow::startSession(int customer)
     session->additionalAccountNames = {"Martti Ahtisaari - debit",
                                        "Pekka Mahtisaari - dual",
                                        "Pertti Vahtisaari - credit",
-                                       "Jorma Sahtisaari - debit"};
+                                       "Jorma Sahtisaari - debit",
+                                       "Makkis Pekkis - dual",
+                                       "Putte Possu - debit",
+                                       "Poika Veli - credit"};
 
     //getAdditionalAccountIDs
-    session->additionalAccountIDs = {3,6,13,102};
+    session->additionalAccountIDs = {3,6,13,102,103,222,345};
 
     foreach (QString var, session->additionalAccountNames) {
         qDebug() << var;
