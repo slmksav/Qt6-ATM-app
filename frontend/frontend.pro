@@ -53,20 +53,17 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-unix:!macx|win32: LIBS += -L$$PWD/lib/DLLSerialPort/build/debug/ -lDLLSerialPort
-
-INCLUDEPATH += $$PWD/lib/DLLSerialPort/build
-DEPENDPATH += $$PWD/lib/DLLSerialPort/build
-
-
-
-
 unix:!macx|win32: LIBS += -L$$PWD/lib/DLLRestApi/build/debug/ -lDLLRestApi
 
-INCLUDEPATH += $$PWD/lib/DLLRestApi/build
-DEPENDPATH += $$PWD/lib/DLLRestApi/build
+INCLUDEPATH += $$PWD/lib/DLLRestApi
+DEPENDPATH += $$PWD/lib/DLLRestApi
 
 unix:!macx|win32: LIBS += -L$$PWD/lib/DLLPinCode/build/debug/ -lDLLPinCode
 
-INCLUDEPATH += $$PWD/lib/DLLPinCode/build
-DEPENDPATH += $$PWD/lib/DLLPinCode/build
+INCLUDEPATH += $$PWD/lib/DLLPinCode
+DEPENDPATH += $$PWD/lib/DLLPinCode
+
+unix:!macx|win32: LIBS += -L$$PWD/lib/DLLSerialPort/build/debug/ -lDLLSerialPort
+
+INCLUDEPATH += $$PWD/lib/DLLSerialPort
+DEPENDPATH += $$PWD/lib/DLLSerialPort

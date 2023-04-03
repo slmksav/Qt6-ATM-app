@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSerialPort>
+#include "dllserialport.h"
+#include "dllrestapi.h"
+#include "codeui.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -8,9 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-    //m_serialPort = new DLLSerialPort(this);
-    //connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived);
+    m_serialPort = new DLLSerialPort(this);
+    connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived);
 }
 
 MainWindow::~MainWindow()
@@ -63,10 +65,8 @@ void MainWindow::on_customerButton_clicked()
     getCustomerData();
 }
 
-////void MainWindow::handleSerialDataReceived(const QString& data)
-//{
-    // Process the received serial port data as needed
-    //qDebug() << "Serial data received:" << data;
-    // For example, update a QLabel with the received data
-    //ui->serialDataLabel->setText(data);
-//}
+void MainWindow::handleSerialDataReceived(const QString& data)
+{
+    qDebug() << "Serial data received:" << data;
+    ui->serialDataLabel->setText(data);
+}
