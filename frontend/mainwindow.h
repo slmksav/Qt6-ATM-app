@@ -7,7 +7,7 @@
 #include <QJsonDocument>
 #include "dllserialport.h"
 #include "dllrestapi.h"
-#include "codeui.h"
+#include "dllpincode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

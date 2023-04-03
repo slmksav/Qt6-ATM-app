@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'codeui.ui'
+** Form generated from reading UI file 'dllpincode.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.4.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_CODEUI_H
-#define UI_CODEUI_H
+#ifndef UI_DLLPINCODE_H
+#define UI_DLLPINCODE_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -146,4 +146,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_CODEUI_H
+#endif // UI_DLLPINCODE_H

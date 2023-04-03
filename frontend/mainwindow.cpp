@@ -3,7 +3,7 @@
 #include <QSerialPort>
 #include "dllserialport.h"
 #include "dllrestapi.h"
-#include "codeui.h"
+#include "dllpincode.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

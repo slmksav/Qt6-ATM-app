@@ -1,5 +1,5 @@
-#ifndef CODEUI_H
-#define CODEUI_H
+#ifndef DLLPINCODE_H
+#define DLLPINCODE_H
 
 #include <QDialog>
 #include "DLLPinCode_global.h"
@@ -23,6 +23,9 @@ public slots:
 private slots:
     void numberClickHandler();
     void enterClickHandler();
+    void clearClickHandler();
+    void stopClickHandler();
+
 
 private:
     Ui::CodeUI *ui;
@@ -33,4 +36,4 @@ private:
     bool CompareStrings(QString,QString);
 };
 
-#endif // CODEUI_H
+#endif // DLLPINCODE_H

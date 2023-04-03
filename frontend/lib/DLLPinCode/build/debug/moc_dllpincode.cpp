@@ -1,5 +1,5 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'codeui.h'
+** Meta object code from reading C++ file 'dllpincode.h'
 **
 ** Created by: The Qt Meta Object Compiler version 68 (Qt 6.4.3)
 **
@@ -7,10 +7,10 @@
 *****************************************************************************/
 
 #include <memory>
-#include "../../codeui.h"
+#include "../../dllpincode.h"
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'codeui.h' doesn't include <QObject>."
+#error "The header file 'dllpincode.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
 #error "This file was generated using the moc from 6.4.3. It"
 #error "cannot be used with the include files from this version of Qt."
