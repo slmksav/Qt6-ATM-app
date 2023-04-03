@@ -5,6 +5,9 @@
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
+#include "dllserialport.h"
+#include "dllrestapi.h"
+#include "codeui.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +19,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void handleSerialDataReceived(const QString& data);
     ~MainWindow();
     static QString getBaseUrl();
 
@@ -26,10 +30,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QNetworkReply *reply;
+    DLLSerialPort *m_serialPort;
     QNetworkAccessManager *loginManager;
     QString response_data;
     QString username;
     QString token;
+
 };
 
 #endif // MAINWINDOW_H

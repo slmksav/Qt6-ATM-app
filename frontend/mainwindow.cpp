@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QSerialPort>
-#include "dllserialport.h"
 #include "dllrestapi.h"
 #include "codeui.h"
 

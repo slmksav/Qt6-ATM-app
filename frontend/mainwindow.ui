@@ -66,6 +66,19 @@
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QLabel" name="serialDataLabel">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>140</y>
+      <width>211</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tähän tulee sarjaportti itestään</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
