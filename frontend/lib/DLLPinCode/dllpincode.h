@@ -3,18 +3,19 @@
 
 #include <QDialog>
 #include "DLLPinCode_global.h"
+#include <QTimer>
 
 namespace Ui {
-class CodeUI;
+class DLLPinCode;
 }
 
-class DLLPINCODE_EXPORT CodeUI : public QDialog
+class DLLPINCODE_EXPORT DLLPinCode : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit CodeUI(QWidget *parent = nullptr);
-    ~CodeUI();
+    explicit DLLPinCode(QWidget *parent = nullptr);
+    ~DLLPinCode();
 signals:
     void sendPin(short);
 public slots:
@@ -28,12 +29,13 @@ private slots:
 
 
 private:
-    Ui::CodeUI *ui;
+    Ui::DLLPinCode *ui;
     QString InsertingPin;
     QString CheckPin;
     QString SQLPin;
     QString InsertedPin;
     bool CompareStrings(QString,QString);
+    QTimer *timer;
 };
 
 #endif // DLLPINCODE_H

@@ -141,7 +141,7 @@ public:
 };
 
 namespace Ui {
-    class CodeUI: public Ui_CodeUI {};
+class DLLPinCode: public Ui_CodeUI {};
 } // namespace Ui
 
 QT_END_NAMESPACE

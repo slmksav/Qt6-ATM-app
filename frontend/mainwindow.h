@@ -35,7 +35,7 @@ private:
     Ui::MainWindow *ui;
     QNetworkReply *reply;
     DLLSerialPort *m_serialPort;
-    CodeUI *m_codeUI;
+    DLLPinCode *m_DLLPinCode;
     QNetworkAccessManager *loginManager;
     QString response_data;
     QString username;
