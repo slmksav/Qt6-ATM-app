@@ -1,6 +1,8 @@
 #ifndef BALANCEWINDOW_H
 #define BALANCEWINDOW_H
 
+#include "sessiondata.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -16,10 +18,13 @@ public:
     ~BalanceWindow();
 
 public slots:
+    void putSessionData(SessionData *session);
     void updateUI();
 
 private:
     Ui::BalanceWindow *ui;
+
+    SessionData * session;
 };
 
 #endif // BALANCEWINDOW_H
