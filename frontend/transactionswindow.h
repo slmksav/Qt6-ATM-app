@@ -1,6 +1,8 @@
 #ifndef TRANSACTIONSWINDOW_H
 #define TRANSACTIONSWINDOW_H
 
+#include "sessiondata.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -16,10 +18,13 @@ public:
     ~TransactionsWindow();
 
 public slots:
+    void putSessionData(SessionData *session);
     void updateUI();
 
 private:
     Ui::TransactionsWindow *ui;
+
+    SessionData * session;
 };
 
 #endif // TRANSACTIONSWINDOW_H

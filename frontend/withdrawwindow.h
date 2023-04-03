@@ -1,6 +1,9 @@
 #ifndef WITHDRAWWINDOW_H
 #define WITHDRAWWINDOW_H
 
+#include "receiptwindow.h"
+#include "sessiondata.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -19,15 +22,23 @@ signals:
     void clickAmount(int);
 
 public slots:
-    void withdrawExceedWarning(QString);
+    void withdrawExceedWarning();
 
-    void updateUI(QString);
+    void putSessionData(SessionData *session);
+    void updateUI();
 
 private slots:
     void withdrawButtonClicked(int);
+    void withdrawMoney(int);
 
 private:
     Ui::WithdrawWindow *ui;
+
+    SessionData * session;
+
+    ReceiptWindow * receiptWindow;
+
+    bool invalidAttempt = false;
 };
 
 #endif // WITHDRAWWINDOW_H

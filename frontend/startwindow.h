@@ -52,13 +52,13 @@ private:
 
     OptionsWindow * optionsWindow;
 
-    ChangeAccountWindow * changeAccountWindow;
-    TransactionsWindow * transactionsWindow;
-    WithdrawWindow * withdrawWindow;
-    BalanceWindow * balanceWindow;
+//    ChangeAccountWindow * changeAccountWindow;
+//    TransactionsWindow * transactionsWindow;
+//    WithdrawWindow * withdrawWindow;
+//    BalanceWindow * balanceWindow;
 
-    ModeSelectWindow * modeSelectWindow;
-    ReceiptWindow * receiptWindow;
+//    ModeSelectWindow * modeSelectWindow;
+//    ReceiptWindow * receiptWindow;
 
     SessionData * session;
 
