@@ -20,6 +20,27 @@ DLLSerialPort::DLLSerialPort(QObject *parent) : QObject(parent)
     qDebug() << m_serialPort.bytesAvailable();
 
     connect(&m_serialPort, &QSerialPort::readyRead, this, &DLLSerialPort::handleReadyRead);
+
+    // Get list of available serial ports
+    const auto serialPortInfos = QSerialPortInfo::availablePorts();
+
+    // Loop over ports and print information
+    for (const QSerialPortInfo &portInfo : serialPortInfos) {
+        qDebug() << "\n"
+                 << "Port:" << portInfo.portName() << "\n"
+                 << "Location:" << portInfo.systemLocation() << "\n"
+                 << "Description:" << portInfo.description() << "\n"
+                 << "Manufacturer:" << portInfo.manufacturer() << "\n"
+                 << "Serial number:" << portInfo.serialNumber() << "\n"
+                 << "Vendor Identifier:"
+                 << (portInfo.hasVendorIdentifier()
+                     ? QByteArray::number(portInfo.vendorIdentifier(), 16)
+                     : QByteArray()) << "\n"
+                 << "Product Identifier:"
+                 << (portInfo.hasProductIdentifier()
+                     ? QByteArray::number(portInfo.productIdentifier(), 16)
+                     : QByteArray());
+    }
 }
 
 void DLLSerialPort::sendData(const QString& dataToSend)
@@ -31,7 +52,7 @@ void DLLSerialPort::sendData(const QString& dataToSend)
 void DLLSerialPort::handleReadyRead()
 {
     QByteArray data = m_serialPort.readAll();
-    QString hexData = QString(data.toHex()).trimmed();
+    QString hexData = QString::fromLatin1(data.toHex().constData(), data.size()*2);
     qDebug() << "Received data:" << hexData;
     emit dataReceived(hexData);
 }

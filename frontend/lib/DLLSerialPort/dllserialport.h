@@ -14,8 +14,6 @@ public:
     explicit DLLSerialPort(QObject *parent = nullptr);
     void sendData(const QString& dataToSend);
 
-
-
 signals:
     void dataReceived(const QString& hexData);
 

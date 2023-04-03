@@ -192,6 +192,19 @@
     <string>0</string>
    </property>
   </widget>
+  <widget class="QLabel" name="cardhexcodeLabel">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>30</y>
+     <width>191</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>cardhexcode tulee tähä</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
