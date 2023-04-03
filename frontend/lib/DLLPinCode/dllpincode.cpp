@@ -1,9 +1,9 @@
 #include "dllpincode.h"
-#include "ui_codeui.h"
+#include "ui_DLLPinCode.h"
 
-CodeUI::CodeUI(QWidget *parent) :
+DLLPinCode::DLLPinCode(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CodeUI)
+    ui(new Ui::DLLPinCode)
 {
     ui->setupUi(this);
     //cardHexCode = "060006491c";
@@ -27,18 +27,18 @@ CodeUI::CodeUI(QWidget *parent) :
 
 }
 
-CodeUI::~CodeUI()
+DLLPinCode::~DLLPinCode()
 {
     delete ui;
 }
 //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
-void CodeUI::handleCardHexCodeReceived(const QString& hexCode)
+void DLLPinCode::handleCardHexCodeReceived(const QString& hexCode)
 {
     //asettaa testinä labellille sen hexcodearvon, joka ensin tuli DLLSerialPortin kautta Exeen ja sieltä vielä tänne.
     ui->cardhexcodeLabel->setText(hexCode);
 }
 
-void CodeUI::numberClickHandler()
+void DLLPinCode::numberClickHandler()
 {
     QPushButton *numberButton = qobject_cast<QPushButton *>(sender());
         QString clickedValue = numberButton->text();
@@ -49,7 +49,7 @@ void CodeUI::numberClickHandler()
 
 }
 
-void CodeUI::enterClickHandler()
+void DLLPinCode::enterClickHandler()
 {
 
       CheckPin = ui->lineEdit->text();
@@ -63,14 +63,14 @@ void CodeUI::enterClickHandler()
           ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
       }
 }
-void CodeUI::clearClickHandler()
+void DLLPinCode::clearClickHandler()
 {
       InsertingPin = "";
       ui->lineEdit->clear();
 
 }
 
-void CodeUI::stopClickHandler()
+void DLLPinCode::stopClickHandler()
 {
       ui->labelInterrupt->setVisible(true);
       ui->label->setVisible(false);
@@ -97,7 +97,7 @@ void CodeUI::stopClickHandler()
 
 
 
-bool CodeUI::CompareStrings(QString str1,QString str2)
+bool DLLPinCode::CompareStrings(QString str1,QString str2)
 {
     if(str1.compare(str2) == 0) {
         return true;
