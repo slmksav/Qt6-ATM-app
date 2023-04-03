@@ -1,5 +1,9 @@
+#ifndef DLLSERIALPORT_H
+#define DLLSERIALPORT_H
+
 #include <QObject>
 #include <QSerialPort>
+#include <QSerialPortInfo>
 #include "DLLSerialPort_global.h"
 
 class DLLSERIALPORT_EXPORT DLLSerialPort : public QObject
@@ -9,7 +13,6 @@ class DLLSERIALPORT_EXPORT DLLSerialPort : public QObject
 public:
     explicit DLLSerialPort(QObject *parent = nullptr);
     QString getSerialData();
-    QSerialPort m_serialPort;
 
 signals:
     void dataReceived(const QString& data);
@@ -18,5 +21,7 @@ private slots:
     void handleReadyRead();
 
 private:
-    //QSerialPort m_serialPort;
+    QSerialPort m_serialPort;
 };
+
+#endif // DLLSERIALPORT_H

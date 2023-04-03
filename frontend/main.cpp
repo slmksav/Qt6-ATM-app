@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "startwindow.h"
 #include <QApplication>
+#include <QSerialPortInfo>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
