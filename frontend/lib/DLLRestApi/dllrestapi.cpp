@@ -7,59 +7,182 @@ DLLRestApi::DLLRestApi()
 
 QString DLLRestApi::getBaseUrl()
 {
-    return "http://localhost:3000";
+     return "https://bankdb-r18.onrender.com";
 }
 
-void DLLRestApi::getCustomerData()
+void DLLRestApi::getAccount2Data(QString samuliAccount)  // samulin tili
 {
-    QString site_url = DLLRestApi::getBaseUrl() + "/customer/";
-    QNetworkRequest request((site_url));
+    QString url = getBaseUrl() + "/account/" + samuliAccount;
+
+    QUrlQuery query;
+    query.addQueryItem("id", "2");
+
+    QUrl urlWithQuery(url);
+    urlWithQuery.setQuery(query);
+
+    QNetworkRequest request;
+    request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QByteArray responseData;
+
+    while(!networkReply->isFinished()) {
+        qApp->processEvents();
+    }
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << "Raw response:" << responseData;
+
+        QJsonDocument document = QJsonDocument::fromJson(responseData);
+        QJsonObject object = document.object();
+        QString debitSaldo = object.value("debitSaldo").toString();
+        QString accNumDebit = object.value("accNumDebit").toString();
+
+        qDebug() << "debitSaldo: " << debitSaldo;
+        qDebug() << "accNumDebit: " << accNumDebit;
+    }
+    else {
+        qDebug() << "Network error: " << networkReply->errorString();
+    }
+
+    networkReply->deleteLater();
 }
 
-void DLLRestApi::getLoginData()
+
+/*void MainWindow::on_customerButton_clicked()
 {
-    QString site_url = DLLRestApi::getBaseUrl() + "/login/";
-    QNetworkRequest request((site_url));
+    DLLRestApi restApi;
+    restApi.getAccount2Data("2");
+
+}*/
+
+void DLLRestApi::getCard2Data(QString samuliCard)  // samulin kortti
+{
+    QString url = getBaseUrl() + "/card/" + samuliCard;
+
+    QUrlQuery query;
+    query.addQueryItem("id", "2");
+
+    QUrl urlWithQuery(url);
+    urlWithQuery.setQuery(query);
+
+    QNetworkRequest request;
+    request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QByteArray responseData;
+
+    while(!networkReply->isFinished()) {
+        qApp->processEvents();
+    }
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << "Raw response:" << responseData;
+
+        QJsonDocument document = QJsonDocument::fromJson(responseData);
+        QJsonObject object = document.object();
+        QString fourdigitpin = object.value("fourdigitpin").toString();
+        QString cardhexcode = object.value("cardhexcode").toString();
+
+        qDebug() << "fourdigitpin: " << fourdigitpin;
+        qDebug() << "cardhexcode: " << cardhexcode;
+    }
+    else {
+        qDebug() << "Network error: " << networkReply->errorString();
+    }
+
+    networkReply->deleteLater();
 }
 
-void DLLRestApi::getCardData()
+void DLLRestApi::getCustomerData(QString sauliCustomer)  // saulin käyttäjä
 {
-QString site_url = DLLRestApi::getBaseUrl() + "/card/";
-QNetworkRequest request((site_url));
-request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QString url = getBaseUrl() + "/customer/" + sauliCustomer;
 
-// Define the MySQL connection parameters
-    QString password = "test";
-    QString database = "bankdb";
+    QUrlQuery query;
+    query.addQueryItem("id", "1");
 
-    // Connect to the database
-    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setPassword(password);
-    db.setDatabaseName(database);
-    if (!db.open()) {
-        qDebug() << "Failed to connect to database:" << db.lastError().text();
-        return;
+    QUrl urlWithQuery(url);
+    urlWithQuery.setQuery(query);
+
+    QNetworkRequest request;
+    request.setUrl(urlWithQuery);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QByteArray responseData;
+
+    while(!networkReply->isFinished()) {
+        qApp->processEvents();
     }
 
-    // Execute a SELECT query to retrieve data from the "card" table
-    QSqlQuery query;
-    if (!query.exec("SELECT * FROM card")) {
-        qDebug() << "Failed to execute query:" << query.lastError().text();
-        db.close();
-        return;
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << "Raw response:" << responseData;
+
+        QJsonDocument document = QJsonDocument::fromJson(responseData);
+        QJsonObject object = document.object();
+        QString debitSaldo = object.value("debitSaldo").toString();
+        QString accNumDebit = object.value("accNumDebit").toString();
+
+        qDebug() << "debitSaldo: " << debitSaldo;
+        qDebug() << "accNumDebit: " << accNumDebit;
+    }
+    else {
+        qDebug() << "Network error: " << networkReply->errorString();
     }
 
-    // Retrieve and print the data from the query result
-    while (query.next()) {
-        int id = query.value("id").toInt();
-        QString name = query.value("name").toString();
-        int value = query.value("value").toInt();
-        qDebug() << "ID:" << id << "Name:" << name << "Value:" << value;
+    networkReply->deleteLater();
+}
+
+void DLLRestApi::getCustomer2Data(QString samuliCustomer)  // Samuli Käyttäjä
+{
+    QString url = getBaseUrl() + "/customer/" + samuliCustomer;
+
+    QUrlQuery query;
+    query.addQueryItem("id", "2");
+
+    QUrl urlWithQuery(url);
+    urlWithQuery.setQuery(query);
+
+    QNetworkRequest request;
+    request.setUrl(urlWithQuery);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QByteArray responseData;
+
+    while(!networkReply->isFinished()) {
+        qApp->processEvents();
     }
 
-    // Close the database connection
-    db.close();
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << "Raw response:" << responseData;
+
+        QJsonDocument document = QJsonDocument::fromJson(responseData);
+        QJsonObject object = document.object();
+        QString debitSaldo = object.value("debitSaldo").toString();
+        QString accNumDebit = object.value("accNumDebit").toString();
+
+        qDebug() << "debitSaldo: " << debitSaldo;
+        qDebug() << "accNumDebit: " << accNumDebit;
+    }
+    else {
+        qDebug() << "Network error: " << networkReply->errorString();
+    }
+
+    networkReply->deleteLater();
 }
 
