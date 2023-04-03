@@ -15,7 +15,7 @@ OptionsWindow::~OptionsWindow()
 
 void OptionsWindow::updateUI(QString customerName, QString accountType)
 {
-
+    ui->labelAccountName->setText(customerName + " - " + accountType);
 }
 
 void OptionsWindow::on_buttonLogout_clicked()
@@ -53,6 +53,7 @@ void OptionsWindow::on_buttonTransactions_clicked()
 
 void OptionsWindow::on_buttonChangeAccount_clicked()
 {
+    emit clickChangeAccount();
 //    changeAccountWindow = new ChangeAccountWindow(this);
 //    changeAccountWindow->open();
 }

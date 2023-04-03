@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Kirjaudu Ulos</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_7">
@@ -39,7 +39,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Edelliset</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_8">
@@ -52,20 +52,23 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Seuraavat</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>40</y>
-     <width>49</width>
-     <height>16</height>
+     <x>0</x>
+     <y>60</y>
+     <width>641</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Valitse Tili:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
   <widget class="QWidget" name="verticalLayoutWidget">

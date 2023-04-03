@@ -16,7 +16,7 @@ public:
     ~ChangeAccountWindow();
 
 public slots:
-    void updateUI();
+    void updateUI(QList<QString>);
 
 private:
     Ui::ChangeAccountWindow *ui;
