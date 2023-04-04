@@ -41,7 +41,6 @@ public:
     QPushButton *button0;
     QPushButton *button6;
     QLabel *labeljee;
-    QLabel *label_2;
     QLabel *labelpin;
 
     void setupUi(QDialog *DLLPinCode)
@@ -51,7 +50,7 @@ public:
         DLLPinCode->resize(693, 644);
         cardhexcodeLabel = new QLabel(DLLPinCode);
         cardhexcodeLabel->setObjectName("cardhexcodeLabel");
-        cardhexcodeLabel->setGeometry(QRect(120, 30, 191, 20));
+        cardhexcodeLabel->setGeometry(QRect(350, 40, 191, 20));
         button4 = new QPushButton(DLLPinCode);
         button4->setObjectName("button4");
         button4->setGeometry(QRect(170, 330, 21, 29));
@@ -116,9 +115,6 @@ public:
         labeljee = new QLabel(DLLPinCode);
         labeljee->setObjectName("labeljee");
         labeljee->setGeometry(QRect(460, 160, 63, 20));
-        label_2 = new QLabel(DLLPinCode);
-        label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(470, 230, 63, 20));
         labelpin = new QLabel(DLLPinCode);
         labelpin->setObjectName("labelpin");
         labelpin->setGeometry(QRect(470, 290, 63, 20));
@@ -150,7 +146,6 @@ public:
         button0->setText(QCoreApplication::translate("DLLPinCode", "0", nullptr));
         button6->setText(QCoreApplication::translate("DLLPinCode", "6", nullptr));
         labeljee->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
-        label_2->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
         labelpin->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
     } // retranslateUi
 

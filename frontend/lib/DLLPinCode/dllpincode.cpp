@@ -72,7 +72,6 @@ void DLLPinCode::getCardhexcodeFromDb()
 
                     SQLPin = object.value("fourdigitpin").toString();
                     ui->labeljee->setText(cardhexcodeSQL);
-                    ui->label_2->setText(cardHexCode);
                     ui->labelpin->setText(SQLPin);
 
                 }
@@ -85,8 +84,9 @@ void DLLPinCode::getCardhexcodeFromDb()
 void DLLPinCode::handleCardHexCodeReceived(const QString& hexCode)
 {
     //asettaa testinä labellille sen hexcodearvon, joka ensin tuli DLLSerialPortin kautta Exeen ja sieltä vielä tänne.
-    ui->cardhexcodeLabel->setText(hexCode);
-    cardHexCode = ui->cardhexcodeLabel->text();
+    cardHexCode = hexCode;
+    ui->cardhexcodeLabel->setText(cardHexCode);
+    qDebug()<<cardHexCode;
 }
 
 void DLLPinCode::numberClickHandler()
