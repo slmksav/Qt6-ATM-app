@@ -13,6 +13,12 @@ TransactionsWindow::~TransactionsWindow()
     delete ui;
 }
 
+void TransactionsWindow::putSessionData(SessionData *session)
+{
+    this->session = session;
+    updateUI();
+}
+
 void TransactionsWindow::updateUI()
 {
 

@@ -7,7 +7,7 @@
 #include <QJsonDocument>
 #include "dllserialport.h"
 #include "dllrestapi.h"
-#include "codeui.h"
+#include "dllpincode.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,19 +23,27 @@ public:
     ~MainWindow();
     static QString getBaseUrl();
 
+signals:
+    //tämä funktio päivittää nykyisen luetun cardhexcoden
+    void cardHexCodeUpdated(const QString& hexCode);
+
 private slots:
     void on_customerButton_clicked();
     void getCustomerData();
+    void getCardhexcodeFromDb();
+
+    void on_cardhexcodePushbutton_clicked();
 
 private:
     Ui::MainWindow *ui;
     QNetworkReply *reply;
     DLLSerialPort *m_serialPort;
+    DLLPinCode *m_DLLPinCode;
     QNetworkAccessManager *loginManager;
     QString response_data;
     QString username;
     QString token;
-
+    QString cardhexcode;
 };
 
 #endif // MAINWINDOW_H

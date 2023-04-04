@@ -1,6 +1,8 @@
 #ifndef CHANGEACCOUNTWINDOW_H
 #define CHANGEACCOUNTWINDOW_H
 
+#include "sessiondata.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -16,10 +18,18 @@ public:
     ~ChangeAccountWindow();
 
 public slots:
+    void putSessionData(SessionData *session);
     void updateUI();
+
+private slots:
+    void on_buttonPrevious_clicked();
+    void on_buttonNext_clicked();
 
 private:
     Ui::ChangeAccountWindow *ui;
+    int listIndex = 0;
+
+    SessionData * session;
 };
 
 #endif // CHANGEACCOUNTWINDOW_H

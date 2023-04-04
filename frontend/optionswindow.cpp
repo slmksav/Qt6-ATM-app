@@ -13,9 +13,15 @@ OptionsWindow::~OptionsWindow()
     delete ui;
 }
 
-void OptionsWindow::updateUI(QString customerName, QString accountType)
+void OptionsWindow::putSessionData(SessionData *session)
 {
+    this->session = session;
+    updateUI();
+}
 
+void OptionsWindow::updateUI()
+{
+    ui->labelAccountName->setText(session->customerName + " - " + session->accountType);
 }
 
 void OptionsWindow::on_buttonLogout_clicked()
@@ -25,35 +31,54 @@ void OptionsWindow::on_buttonLogout_clicked()
 
 void OptionsWindow::on_buttonWithdraw_clicked()
 {
-    emit clickWithdraw();
-//    withdrawWindow = new WithdrawWindow(this);
+    withdrawWindow = new WithdrawWindow(this);
 
-//    if(1/*mode == "dual"*/)
-//    {
-//        modeSelectWindow = new ModeSelectWindow(this);
-//    }
+    if(session->accountType == "dual")
+    {
+        modeSelectWindow = new ModeSelectWindow(this);
+        connect(modeSelectWindow, SIGNAL(clickMode(QString)),
+                this, SLOT(changeWithdrawType(QString)));
 
-//    withdrawWindow->open();
+        modeSelectWindow->show();
+    }
+    else
+    {
+        withdrawWindow->putSessionData(session);
+        withdrawWindow->show();
+    }
+}
+
+void OptionsWindow::changeWithdrawType(QString mode)
+{
+    session->withdrawMode = mode;
+    qDebug() << "Withdraw mode changed to: " << session->withdrawMode;
+
+    withdrawWindow->putSessionData(session);
+    withdrawWindow->show();
+
+    delete modeSelectWindow;
+    modeSelectWindow = nullptr;
 }
 
 
 void OptionsWindow::on_buttonBalance_clicked()
 {
-//    balanceWindow = new BalanceWindow(this);
-//    balanceWindow->open();
+
 }
 
 
 void OptionsWindow::on_buttonTransactions_clicked()
 {
-//    transactionsWindow = new TransactionsWindow(this);
-//    transactionsWindow->open();
+    transactionsWindow = new TransactionsWindow(this);
+    transactionsWindow->putSessionData(session);
+    transactionsWindow->show();
 }
 
 
 void OptionsWindow::on_buttonChangeAccount_clicked()
 {
-//    changeAccountWindow = new ChangeAccountWindow(this);
-//    changeAccountWindow->open();
+    changeAccountWindow = new ChangeAccountWindow(this);
+    changeAccountWindow->putSessionData(session);
+    changeAccountWindow->show();
 }
 

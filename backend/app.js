@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var customerRouter = require('./routes/customer');
 var accountRouter = require('./routes/account');
 var loginRouter = require('./routes/login');
+var cardRouter = require('./routes/card');
 
 
 var app = express();
@@ -30,6 +31,7 @@ app.use('/login', loginRouter);
 //suojatut endpointit
 app.use('/customer', customerRouter);
 app.use('/account', accountRouter);
+app.use('/card', cardRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']

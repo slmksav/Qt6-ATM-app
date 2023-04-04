@@ -58,12 +58,12 @@ unix:!macx|win32: LIBS += -L$$PWD/lib/DLLRestApi/build/debug/ -lDLLRestApi
 INCLUDEPATH += $$PWD/lib/DLLRestApi
 DEPENDPATH += $$PWD/lib/DLLRestApi
 
-unix:!macx|win32: LIBS += -L$$PWD/lib/DLLPinCode/build/debug/ -lDLLPinCode
-
-INCLUDEPATH += $$PWD/lib/DLLPinCode
-DEPENDPATH += $$PWD/lib/DLLPinCode
-
 unix:!macx|win32: LIBS += -L$$PWD/lib/DLLSerialPort/build/debug/ -lDLLSerialPort
 
 INCLUDEPATH += $$PWD/lib/DLLSerialPort
 DEPENDPATH += $$PWD/lib/DLLSerialPort
+
+unix:!macx|win32: LIBS += -L$$PWD/lib/DLLPinCode/build/debug/ -lDLLPinCode
+
+INCLUDEPATH += $$PWD/lib/DLLPinCode
+DEPENDPATH += $$PWD/lib/DLLPinCode

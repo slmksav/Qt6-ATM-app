@@ -79,6 +79,32 @@
      <string>Tähän tulee sarjaportti itestään</string>
     </property>
    </widget>
+   <widget class="QLabel" name="cardhexcodeLabel">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>170</y>
+      <width>211</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tähän tulee cardhexcode</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cardhexcodePushbutton">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>190</y>
+      <width>251</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tästä cardhexcode DBstä</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

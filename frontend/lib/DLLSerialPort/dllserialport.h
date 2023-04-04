@@ -8,20 +8,22 @@
 
 class DLLSERIALPORT_EXPORT DLLSerialPort : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit DLLSerialPort(QObject *parent = nullptr);
-    QString getSerialData();
+    void sendData(const QString& dataToSend);
 
 signals:
-    void dataReceived(const QString& data);
+    void dataReceived(const QString& hexData);
 
 private slots:
     void handleReadyRead();
 
 private:
     QSerialPort m_serialPort;
+    int SerialBytes;
+    QString SerialInfo;
 };
 
 #endif // DLLSERIALPORT_H

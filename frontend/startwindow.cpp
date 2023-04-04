@@ -7,50 +7,27 @@ StartWindow::StartWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::StartWindow)
 {
-    //optionsWindow connections
-    optionsWindow = new OptionsWindow(this);
+//    //balanceWindow connections
+//    balanceWindow = new BalanceWindow(this);
 
-    connect(optionsWindow, SIGNAL(clickLogout()),
-            this, SLOT(logout()));
+//    //transactionsWindow connections
+//    transactionsWindow = new TransactionsWindow(this);
 
-    connect(optionsWindow, SIGNAL(clickWithdraw()),
-            this, SLOT(openWithdraw()));
-
-    connect(optionsWindow, SIGNAL(clickBalance()),
-            this, SLOT(openBalance()));
-
-    connect(optionsWindow, SIGNAL(clickTransactions()),
-            this, SLOT(openTransactions()));
-
-    connect(optionsWindow, SIGNAL(clickChangeAccount()),
-            this, SLOT(openChangeAccount()));
-
-    //withdrawWindow connections
-    withdrawWindow = new WithdrawWindow(this);
-    connect(withdrawWindow, SIGNAL(clickAmount(int)),
-            this, SLOT(withdrawMoney(int)));
-
-    //balanceWindow connections
-    balanceWindow = new BalanceWindow(this);
-
-    //transactionsWindow connections
-    transactionsWindow = new TransactionsWindow(this);
-
-    //changeAccountWindow connections
-    changeAccountWindow = new ChangeAccountWindow(this);
+//    //changeAccountWindow connections
+//    changeAccountWindow = new ChangeAccountWindow(this);
 
 
-    //modeSelectWindow connections
-    modeSelectWindow = new ModeSelectWindow(this);
+//    //modeSelectWindow connections
+//    modeSelectWindow = new ModeSelectWindow(this);
 
-    connect(modeSelectWindow, SIGNAL(clickMode(QString)),
-            this, SLOT(changeWithdrawType(QString)));
+//    connect(modeSelectWindow, SIGNAL(clickMode(QString)),
+//            this, SLOT(changeWithdrawType(QString)));
 
-    //receiptWindow connections
-    receiptWindow = new ReceiptWindow(this);
+//    //receiptWindow connections
+//    receiptWindow = new ReceiptWindow(this);
 
-    connect(receiptWindow, SIGNAL(clickReceipt(bool)),
-            this, SLOT(printReceipt(bool)));
+//    connect(receiptWindow, SIGNAL(clickReceipt(bool)),
+//            this, SLOT(printReceipt(bool)));
 
 
     ui->setupUi(this);
@@ -82,86 +59,89 @@ void StartWindow::logout()
 
 void StartWindow::openWithdraw()
 {
-    if(session->accountType == "dual")
-    {
-        openModeSelect();
-    }
-    else
-    {
-        withdrawWindow->show();
-    }
+//    if(session->accountType == "dual")
+//    {
+//        openModeSelect();
+//    }
+//    else
+//    {
+//        withdrawWindow->updateUI(session->accountType);
+//        withdrawWindow->show();
+//    }
 }
 
 void StartWindow::withdrawMoney(int amount)
 {
-    session->withdrawAmount = amount;
+//    session->withdrawAmount = amount;
 
-    if(session->withdrawMode == "debit")
-    {
-        double newAmount = session->accountBalance - (double)amount;
+//    if(session->withdrawMode == "debit")
+//    {
+//        double newAmount = session->accountBalance - (double)amount;
 
-        if(newAmount < 0.00)
-        {
-            qDebug() << "withdrawAmount exceeds accountBalance!\n"
-                     << "Balance: " << session->accountBalance
-                     << "After attempted withdrawal: " << newAmount;
+//        if(newAmount < 0.00)
+//        {
+//            qDebug() << "withdrawAmount exceeds accountBalance!\n"
+//                     << "Balance: " << session->accountBalance
+//                     << "After attempted withdrawal: " << newAmount;
 
-            withdrawWindow->withdrawExceedWarning("debit");
-            return;
-        }
+//            withdrawWindow->withdrawExceedWarning("debit");
+//            return;
+//        }
 
-        qDebug() << "Old accountBalance: " << session->accountBalance;
-        session->accountBalance = newAmount;
-        qDebug() << "New accountBalance: " << session->accountBalance;
-    }
-    else
-    {
-        double newAmount = session->accountCredit - (double)amount;
+//        qDebug() << "Old accountBalance: " << session->accountBalance;
+//        session->accountBalance = newAmount;
+//        qDebug() << "New accountBalance: " << session->accountBalance;
+//    }
+//    else
+//    {
+//        double newAmount = session->accountCredit - (double)amount;
 
-        if(newAmount < 0.00)
-        {
-            qDebug() << "withdrawAmount exceeds accountCredit!\n"
-                     << "Balance: " << session->accountCredit
-                     << "After attempted withdrawal: " << newAmount;
+//        if(newAmount < 0.00)
+//        {
+//            qDebug() << "withdrawAmount exceeds accountCredit!\n"
+//                     << "Balance: " << session->accountCredit
+//                     << "After attempted withdrawal: " << newAmount;
 
-            withdrawWindow->withdrawExceedWarning("credit");
-            return;
-        }
+//            withdrawWindow->withdrawExceedWarning("credit");
+//            return;
+//        }
 
-        qDebug() << "Old accountCredit: " << session->accountCredit;
-        session->accountCredit = newAmount;
-        qDebug() << "New accountCredit: " << session->accountCredit;
-    }
+//        qDebug() << "Old accountCredit: " << session->accountCredit;
+//        session->accountCredit = newAmount;
+//        qDebug() << "New accountCredit: " << session->accountCredit;
+//    }
 
-    receiptWindow->open();
+//    receiptWindow->open();
 }
 
 void StartWindow::openModeSelect()
 {
-    modeSelectWindow->show();
+//    modeSelectWindow->show();
 }
 
 void StartWindow::changeWithdrawType(QString mode)
 {
-    session->withdrawMode = mode;
-    qDebug() << "Withdraw mode changed to: " << session->withdrawMode;
+//    session->withdrawMode = mode;
+//    qDebug() << "Withdraw mode changed to: " << session->withdrawMode;
 
-    withdrawWindow->show();
+//    withdrawWindow->updateUI(session->accountType);
+//    withdrawWindow->show();
 }
 
 void StartWindow::openBalance()
 {
-
+//    balanceWindow->show();
 }
 
 void StartWindow::openTransactions()
 {
-
+//    transactionsWindow->show();
 }
 
 void StartWindow::openChangeAccount()
 {
-
+//    changeAccountWindow->updateUI(session->additionalAccountNames);
+//    changeAccountWindow->show();
 }
 
 void StartWindow::printReceipt(bool print)
@@ -195,10 +175,13 @@ void StartWindow::startSession(int customer)
     session->additionalAccountNames = {"Martti Ahtisaari - debit",
                                        "Pekka Mahtisaari - dual",
                                        "Pertti Vahtisaari - credit",
-                                       "Jorma Sahtisaari - debit"};
+                                       "Jorma Sahtisaari - debit",
+                                       "Makkis Pekkis - dual",
+                                       "Putte Possu - debit",
+                                       "Poika Veli - credit"};
 
     //getAdditionalAccountIDs
-    session->additionalAccountIDs = {3,6,13,102};
+    session->additionalAccountIDs = {3,6,13,102,103,222,345};
 
     foreach (QString var, session->additionalAccountNames) {
         qDebug() << var;
@@ -212,7 +195,8 @@ void StartWindow::startSession(int customer)
         session->withdrawMode = session->accountType;
     }
 
-    optionsWindow->updateUI(session->customerName, session->accountType);
+    optionsWindow = new OptionsWindow(this);
+    optionsWindow->putSessionData(session);
     optionsWindow->show();
 }
 
