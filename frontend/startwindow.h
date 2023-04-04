@@ -4,7 +4,7 @@
 #include "sessiondata.h"
 
 #include "optionswindow.h"
-
+#include "dllpincode.h"
 #include "balancewindow.h"
 #include "changeaccountwindow.h"
 #include "transactionswindow.h"
@@ -44,7 +44,7 @@ private slots:
     void openBalance();
     void openTransactions();
     void openChangeAccount();
-
+    void openPinCode();
     void printReceipt(bool);
 
 private:
@@ -61,7 +61,7 @@ private:
 //    ReceiptWindow * receiptWindow;
 
     SessionData * session;
-
+    DLLPinCode * pDLLPinCode;
     void startSession(int);
     void updateUI();
 };

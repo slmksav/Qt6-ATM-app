@@ -79,7 +79,8 @@ public:
         button9->setGeometry(QRect(230, 370, 21, 29));
         lineEdit = new QLineEdit(DLLPinCode);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(180, 240, 113, 28));
+        lineEdit->setGeometry(QRect(170, 230, 171, 31));
+        lineEdit->setFont(font);
         button5 = new QPushButton(DLLPinCode);
         button5->setObjectName("button5");
         button5->setGeometry(QRect(200, 330, 21, 29));

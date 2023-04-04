@@ -143,11 +143,16 @@
   <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>240</y>
-     <width>113</width>
-     <height>28</height>
+     <x>170</x>
+     <y>230</y>
+     <width>171</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
    </property>
   </widget>
   <widget class="QPushButton" name="button5">

@@ -1,5 +1,5 @@
 #include "dllpincode.h"
-#include "ui_DLLPinCode.h"
+#include "ui_dllpincode.h"
 
 DLLPinCode::DLLPinCode(QWidget *parent) :
     QDialog(parent),
@@ -26,7 +26,7 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     connect(ui->ButtonStop,SIGNAL(clicked()),this,SLOT(stopClickHandler()));
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(stopClickHandler()));
-    timer->start(10000);
+    timer->start(30000);
 
 }
 
@@ -46,7 +46,7 @@ void DLLPinCode::numberClickHandler()
     QPushButton *numberButton = qobject_cast<QPushButton *>(sender());
         QString clickedValue = numberButton->text();
         timer->stop();
-        timer->start(10000);
+        timer->start(30000);
 
         InsertingPin += clickedValue;
         ui->lineEdit->setText(InsertingPin);
@@ -66,7 +66,7 @@ void DLLPinCode::enterClickHandler()
       else
       {
           ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
-          timer->start(10000);
+          timer->start(30000);
       }
 }
 void DLLPinCode::clearClickHandler()
@@ -74,7 +74,7 @@ void DLLPinCode::clearClickHandler()
       InsertingPin = "";
       ui->lineEdit->clear();
       timer->stop();
-      timer->start(10000);
+      timer->start(30000);
 
 }
 

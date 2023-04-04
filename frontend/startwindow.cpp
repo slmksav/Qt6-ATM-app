@@ -29,6 +29,8 @@ StartWindow::StartWindow(QWidget *parent) :
 //    connect(receiptWindow, SIGNAL(clickReceipt(bool)),
 //            this, SLOT(printReceipt(bool)));
 
+      //DLLPinCode connections
+
 
     ui->setupUi(this);
 }
@@ -46,7 +48,8 @@ void StartWindow::on_cardInput_textEdited(const QString &input)
 
         //change this to signal to slot system
         int customerID = 3; //getCustomerID(input);
-        startSession(customerID);
+        //startSession(customerID);
+        openPinCode();
     }
 }
 
@@ -141,7 +144,13 @@ void StartWindow::openTransactions()
 void StartWindow::openChangeAccount()
 {
 //    changeAccountWindow->updateUI(session->additionalAccountNames);
-//    changeAccountWindow->show();
+    //    changeAccountWindow->show();
+}
+
+void StartWindow::openPinCode()
+{
+    pDLLPinCode = new DLLPinCode(this);
+    pDLLPinCode->show();
 }
 
 void StartWindow::printReceipt(bool print)
