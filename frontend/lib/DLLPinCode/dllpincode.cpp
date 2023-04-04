@@ -9,7 +9,7 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     //cardHexCode = "060006491c";
      ui->labelInterrupt->setVisible(false);
      ui->lineEdit->setMaxLength(4); // Set the maximum length to 4 digits
-     ui->lineEdit->setReadOnly(true);
+     ui->lineEdit->setReadOnly(true); //Cannot write t
      ui->lineEdit->setEchoMode(QLineEdit::Password);
     connect(ui->button1,SIGNAL(clicked()),this,SLOT(numberClickHandler()));
     connect(ui->button2,SIGNAL(clicked()),this,SLOT(numberClickHandler()));
@@ -34,11 +34,55 @@ DLLPinCode::~DLLPinCode()
 {
     delete ui;
 }
-//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
+
+QString DLLPinCode::getBaseUrl()
+{
+    return "https://bankdb-r18.onrender.com";
+}
+
+void DLLPinCode::getCardhexcodeFromDb()
+{
+    QString site_url = DLLPinCode::getBaseUrl() + "/card/2";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+    request.setRawHeader("Authorization", authHeader);
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    connect(manager, &QNetworkAccessManager::finished,
+            this, [=](QNetworkReply *reply) {
+
+                if (reply->error()) {
+                    qDebug() << reply->errorString();
+                }
+                else {
+                    QByteArray response = reply->readAll();
+                    qDebug() << "Raw response:" << response;
+
+                    QJsonDocument document = QJsonDocument::fromJson(response);
+                    QJsonObject object = document.object();
+
+                    // Check if the response contains the cardhexcode key
+                    if (!object.contains("cardhexcode")) {
+                        qDebug() << "Response does not contain cardhexcode";
+                        return;
+                    }
+
+                    cardhexcodeSQL = object.value("cardhexcode").toString();
+
+                    SQLPin = object.value("fourdigitpin").toString();
+                }
+                reply->deleteLater();
+            });
+
+    manager->get(request);
+}
+//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
 void DLLPinCode::handleCardHexCodeReceived(const QString& hexCode)
 {
     //asettaa testinä labellille sen hexcodearvon, joka ensin tuli DLLSerialPortin kautta Exeen ja sieltä vielä tänne.
     ui->cardhexcodeLabel->setText(hexCode);
+    cardHexCode = ui->cardhexcodeLabel->text();
 }
 
 void DLLPinCode::numberClickHandler()
@@ -57,11 +101,11 @@ void DLLPinCode::numberClickHandler()
 void DLLPinCode::enterClickHandler()
 {
       timer->stop();
+      getCardhexcodeFromDb();
       CheckPin = ui->lineEdit->text();
-      //emit sendPin(CheckPin.toShort());
-      if(CompareStrings(CheckPin,SQLPin))
+      if(CompareStrings(CheckPin,SQLPin) == true && CompareStrings(cardhexcodeSQL,cardHexCode) == true)
       {
-           emit sendPin(SQLPin.toShort());
+          ui->labeljee->setText("jeeeeeeeeeeeeeeeeee");
       }
       else
       {
@@ -80,6 +124,8 @@ void DLLPinCode::clearClickHandler()
 
 void DLLPinCode::stopClickHandler()
 {
+      timer->stop();
+      timer->start(5000);
       ui->labelInterrupt->setVisible(true);
       ui->label->setVisible(false);
       ui->label_3->setVisible(false);

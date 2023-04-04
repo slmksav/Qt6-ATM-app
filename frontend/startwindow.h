@@ -46,6 +46,7 @@ private slots:
     void openChangeAccount();
     void openPinCode();
     void printReceipt(bool);
+    void hidePinCode();
 
 private:
     Ui::StartWindow *ui;

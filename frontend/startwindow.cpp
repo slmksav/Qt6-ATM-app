@@ -153,6 +153,11 @@ void StartWindow::openPinCode()
     pDLLPinCode->show();
 }
 
+void StartWindow::hidePinCode()
+{
+    pDLLPinCode->hide();
+}
+
 void StartWindow::printReceipt(bool print)
 {
     //store transaction

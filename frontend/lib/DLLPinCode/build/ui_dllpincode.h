@@ -40,6 +40,7 @@ public:
     QPushButton *button3;
     QPushButton *button0;
     QPushButton *button6;
+    QLabel *labeljee;
 
     void setupUi(QDialog *DLLPinCode)
     {
@@ -110,6 +111,9 @@ public:
         button6 = new QPushButton(DLLPinCode);
         button6->setObjectName("button6");
         button6->setGeometry(QRect(230, 330, 21, 29));
+        labeljee = new QLabel(DLLPinCode);
+        labeljee->setObjectName("labeljee");
+        labeljee->setGeometry(QRect(460, 160, 63, 20));
 
         retranslateUi(DLLPinCode);
 
@@ -137,6 +141,7 @@ public:
         button3->setText(QCoreApplication::translate("DLLPinCode", "3", nullptr));
         button0->setText(QCoreApplication::translate("DLLPinCode", "0", nullptr));
         button6->setText(QCoreApplication::translate("DLLPinCode", "6", nullptr));
+        labeljee->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
     } // retranslateUi
 
 };
