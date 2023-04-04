@@ -30,6 +30,9 @@ signals:
 private slots:
     void on_customerButton_clicked();
     void getCustomerData();
+    void getCardhexcodeFromDb();
+
+    void on_cardhexcodePushbutton_clicked();
 
 private:
     Ui::MainWindow *ui;
