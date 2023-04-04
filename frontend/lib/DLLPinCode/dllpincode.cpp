@@ -86,7 +86,7 @@ void DLLPinCode::handleCardHexCodeReceived(const QString& hexCode)
     //asettaa testinä labellille sen hexcodearvon, joka ensin tuli DLLSerialPortin kautta Exeen ja sieltä vielä tänne.
     cardHexCode = hexCode;
     ui->cardhexcodeLabel->setText(cardHexCode);
-    qDebug()<<cardHexCode;
+    qDebug()<<"mikaaaaaaaaaaaaa "+cardHexCode;
 }
 
 void DLLPinCode::numberClickHandler()
