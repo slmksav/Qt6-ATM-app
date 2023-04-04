@@ -87,6 +87,7 @@ QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
     cardHexCode = hexCode;
     // Update the label with the new hex code
     qDebug()<<"cardHexCode arvo on: " + cardHexCode;
+    ui->cardhexcodeLabel->setText(cardHexCode);
     return cardHexCode;
 }
 

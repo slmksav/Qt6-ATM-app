@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
     // Numeroikaa connectionit, jotta voidaan refrensoida niihin dokumentaatiossa.
     connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived); //1. signaali
     connect(this, &MainWindow::cardHexCodeUpdated, m_DLLPinCode, &DLLPinCode::handleCardHexCodeReceived); //2. signaali
+
+    connect(this, SIGNAL(leikkiHexaSignaali(QString)),
+            this, SLOT(leikkiHexaSlotti(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -123,4 +126,28 @@ void MainWindow::handleSerialDataReceived(const QString& data)
     emit cardHexCodeUpdated(cardhexcode);
 }
 
+
+
+void MainWindow::on_buttonTestHexaToDLL_clicked()
+{
+    qDebug() << "leikkiHexaSignaali lähetetään";
+    emit leikkiHexaSignaali("0d0a2d303630303035343246450d0a3e");
+}
+
+void MainWindow::leikkiHexaSlotti(QString hexaKoodi)
+{
+    qDebug() << "leikkiHexaSlotti vastaanotti seuraavaa:" << hexaKoodi;
+
+    mikanDLL = new DLLPinCode(this);
+    //voidaan myös antaa constructorissa tyyliin
+    //mikanDLL = new DLLPinCode(this, hexaKoodi)
+    mikanDLL->cardHexCode = hexaKoodi;
+
+    qDebug() << "DLLPinCode-luokan cardHexCode on nyt:" << mikanDLL->cardHexCode;
+
+    mikanDLL->show();
+
+    //tässä ei kannattaisi enää manipuloida dll:ää, vaan antaa sen hoitaa hommat, mutta testin vuoksi
+    mikanDLL->handleCardHexCodeReceived(mikanDLL->cardHexCode);
+}
 

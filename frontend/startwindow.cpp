@@ -23,8 +23,7 @@ void StartWindow::on_cardInput_textEdited(const QString &input)
 
         //change this to signal to slot system
         int customerID = 3; //getCustomerID(input);
-        //startSession(customerID);
-        openPinCode();
+        startSession(customerID);
     }
 }
 
