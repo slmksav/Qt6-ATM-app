@@ -28,6 +28,9 @@ public:
     void getAccountId(QString sauliId);
     void getCustomerId(QString sauliId);
     void getAccountType(QString sauliType); //Saulin tilin tyyppi
+    void getCustomerName(QString sauliName);
+    void getAccountBalance(QString sauliSaldo);
+    void getAccountCredit(QString sauliCredit);
 
 private slots:
 
