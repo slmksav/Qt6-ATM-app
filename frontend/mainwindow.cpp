@@ -88,21 +88,13 @@ void MainWindow::getCardhexcodeFromDb()
             QJsonDocument document = QJsonDocument::fromJson(response);
             QJsonObject object = document.object();
 
-            // Check if the response contains any errors
-            if (object.contains("error")) {
-                qDebug() << object.value("error").toString();
+            // Check if the response contains the cardhexcode key
+            if (!object.contains("cardhexcode")) {
+                qDebug() << "Response does not contain cardhexcode";
                 return;
             }
 
-            // Check if the response contains any data
-            if (!object.contains("data")) {
-                qDebug() << "Response does not contain any data";
-                return;
-            }
-
-            // Retrieve the data from the response
-            QJsonObject data = object.value("data").toObject();
-            QString cardhexcode = data.value("cardhexcode").toString();
+            QString cardhexcode = object.value("cardhexcode").toString();
             ui->cardhexcodeLabel->setText(cardhexcode);
         }
         reply->deleteLater();
@@ -112,11 +104,11 @@ void MainWindow::getCardhexcodeFromDb()
 }
 
 
+
 void MainWindow::on_cardhexcodePushbutton_clicked()
 {
     getCardhexcodeFromDb();
 }
-
 
 //tämä funktio emittaa cardhexcoden Mikan DLLpincoden käyttöön
 //3.4.2023 Koitan itse tehdä tähän huomenna sellaisen toiminnon että se lähettää myös pin-koodin
