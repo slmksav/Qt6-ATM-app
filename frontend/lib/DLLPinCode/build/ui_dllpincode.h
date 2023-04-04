@@ -50,7 +50,7 @@ public:
         DLLPinCode->resize(693, 644);
         cardhexcodeLabel = new QLabel(DLLPinCode);
         cardhexcodeLabel->setObjectName("cardhexcodeLabel");
-        cardhexcodeLabel->setGeometry(QRect(350, 40, 191, 20));
+        cardhexcodeLabel->setGeometry(QRect(460, 80, 191, 20));
         button4 = new QPushButton(DLLPinCode);
         button4->setObjectName("button4");
         button4->setGeometry(QRect(170, 330, 21, 29));
@@ -114,10 +114,10 @@ public:
         button6->setGeometry(QRect(230, 330, 21, 29));
         labeljee = new QLabel(DLLPinCode);
         labeljee->setObjectName("labeljee");
-        labeljee->setGeometry(QRect(460, 160, 63, 20));
+        labeljee->setGeometry(QRect(460, 160, 131, 20));
         labelpin = new QLabel(DLLPinCode);
         labelpin->setObjectName("labelpin");
-        labelpin->setGeometry(QRect(470, 290, 63, 20));
+        labelpin->setGeometry(QRect(470, 290, 131, 20));
 
         retranslateUi(DLLPinCode);
 

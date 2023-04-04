@@ -22,11 +22,12 @@ public:
     ~DLLPinCode();
     static QString getBaseUrl();
     QString cardhexcodeSQL;
+    QString cardHexCode;
 signals:
     void sendPin(short);
 public slots:
     //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
-    void handleCardHexCodeReceived(const QString& hexCode);
+    QString handleCardHexCodeReceived(QString hexCode);
 private slots:
     void numberClickHandler();
     void enterClickHandler();
@@ -43,7 +44,6 @@ private:
     QString InsertedPin;
     bool CompareStrings(QString,QString);
     QTimer *timer;
-    QString cardHexCode;
     QString SQLHexCode;
     QString response_data;
     QString username;

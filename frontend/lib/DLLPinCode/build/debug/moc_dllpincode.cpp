@@ -97,7 +97,7 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
     QMetaType::Void, QMetaType::Short,    2,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QString,    4,
+    QMetaType::QString, QMetaType::QString,    4,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -120,8 +120,8 @@ Q_CONSTINIT const QMetaObject DLLPinCode::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<short, std::false_type>,
         // method 'handleCardHexCodeReceived'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'numberClickHandler'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'enterClickHandler'
@@ -143,7 +143,8 @@ void DLLPinCode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         (void)_t;
         switch (_id) {
         case 0: _t->sendPin((*reinterpret_cast< std::add_pointer_t<short>>(_a[1]))); break;
-        case 1: _t->handleCardHexCodeReceived((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 1: { QString _r = _t->handleCardHexCodeReceived((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         case 2: _t->numberClickHandler(); break;
         case 3: _t->enterClickHandler(); break;
         case 4: _t->clearClickHandler(); break;

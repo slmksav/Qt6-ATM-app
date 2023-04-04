@@ -69,7 +69,6 @@ void DLLPinCode::getCardhexcodeFromDb()
                     }
 
                     cardhexcodeSQL = object.value("cardhexcode").toString();
-
                     SQLPin = object.value("fourdigitpin").toString();
                     ui->labeljee->setText(cardhexcodeSQL);
                     ui->labelpin->setText(SQLPin);
@@ -81,12 +80,14 @@ void DLLPinCode::getCardhexcodeFromDb()
     manager->get(request);
 }
 //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
-void DLLPinCode::handleCardHexCodeReceived(const QString& hexCode)
+QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
 {
-    //asettaa testinä labellille sen hexcodearvon, joka ensin tuli DLLSerialPortin kautta Exeen ja sieltä vielä tänne.
+    qDebug()<<"emitattu signaali on " + hexCode;
+    // Update the cardHexCode variable with the new hex code
     cardHexCode = hexCode;
-    ui->cardhexcodeLabel->setText(cardHexCode);
-    qDebug()<<"mikaaaaaaaaaaaaa "+cardHexCode;
+    // Update the label with the new hex code
+    qDebug()<<"cardHexCode arvo on: " + cardHexCode;
+    return cardHexCode;
 }
 
 void DLLPinCode::numberClickHandler()
@@ -104,19 +105,24 @@ void DLLPinCode::numberClickHandler()
 
 void DLLPinCode::enterClickHandler()
 {
-      timer->stop();
-      getCardhexcodeFromDb();
-      CheckPin = ui->lineEdit->text();
-      if(CompareStrings(CheckPin,SQLPin) == true && CompareStrings(cardhexcodeSQL,cardHexCode) == true)
-      {
-          ui->labeljee->setText("jeeeeeeeeeeeeeeeeee");
-      }
-      else
-      {
-          ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
-          timer->start(30000);
-      }
+    timer->stop();
+    getCardhexcodeFromDb();
+    CheckPin = ui->lineEdit->text();
+    qDebug() << "lineEdit content:" << CheckPin;
+    qDebug() << "cardHexCode:" << handleCardHexCodeReceived(cardHexCode);
+    qDebug() << "cardhexcodeSQL:" << cardhexcodeSQL;
+    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin)
+    {
+        ui->labeljee->setText("jeeeeeeeeeeeeeeeeee");
+    }
+    else
+    {
+        ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
+        timer->start(30000);
+    }
 }
+
+
 void DLLPinCode::clearClickHandler()
 {
       InsertingPin = "";
@@ -148,19 +154,4 @@ void DLLPinCode::stopClickHandler()
       ui->ButtonClear->setVisible(false);
       ui->buttonEnter->setVisible(false);
       ui->lineEdit->setVisible(false);
-}
-
-
-
-
-
-
-bool DLLPinCode::CompareStrings(QString str1,QString str2)
-{
-    if(str1.compare(str2) == 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
 }
