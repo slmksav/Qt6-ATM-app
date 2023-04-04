@@ -44,6 +44,7 @@ private:
     QString username;
     QString token;
     QString cardhexcode;
+    QString cardhexcodeSQLTest;
 };
 
 #endif // MAINWINDOW_H

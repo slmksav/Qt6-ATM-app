@@ -94,7 +94,7 @@ void MainWindow::getCardhexcodeFromDb()
                 return;
             }
 
-            QString cardhexcode = object.value("cardhexcode").toString();
+            cardhexcodeSQLTest = object.value("cardhexcode").toString();
             ui->cardhexcodeLabel->setText(cardhexcode);
         }
         reply->deleteLater();
@@ -103,11 +103,13 @@ void MainWindow::getCardhexcodeFromDb()
     manager->get(request);
 }
 
-
-
 void MainWindow::on_cardhexcodePushbutton_clicked()
 {
     getCardhexcodeFromDb();
+    if (cardhexcode == cardhexcodeSQLTest)
+    {
+        qDebug() << "Sarjaportin cardhexcode on sama kun cardhexcodeSQL.";
+    }
 }
 
 //tämä funktio emittaa cardhexcoden Mikan DLLpincoden käyttöön
