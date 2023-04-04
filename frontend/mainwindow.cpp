@@ -66,6 +66,58 @@ void MainWindow::on_customerButton_clicked()
 
 }
 
+void MainWindow::getCardhexcodeFromDb()
+{
+    QString site_url = MainWindow::getBaseUrl() + "/card/2";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+    request.setRawHeader("Authorization", authHeader);
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    connect(manager, &QNetworkAccessManager::finished,
+        this, [=](QNetworkReply *reply) {
+
+        if (reply->error()) {
+            qDebug() << reply->errorString();
+        }
+        else {
+            QByteArray response = reply->readAll();
+            qDebug() << "Raw response:" << response;
+
+            QJsonDocument document = QJsonDocument::fromJson(response);
+            QJsonObject object = document.object();
+
+            // Check if the response contains any errors
+            if (object.contains("error")) {
+                qDebug() << object.value("error").toString();
+                return;
+            }
+
+            // Check if the response contains any data
+            if (!object.contains("data")) {
+                qDebug() << "Response does not contain any data";
+                return;
+            }
+
+            // Retrieve the data from the response
+            QJsonObject data = object.value("data").toObject();
+            QString cardhexcode = data.value("cardhexcode").toString();
+            ui->cardhexcodeLabel->setText(cardhexcode);
+        }
+        reply->deleteLater();
+    });
+
+    manager->get(request);
+}
+
+
+void MainWindow::on_cardhexcodePushbutton_clicked()
+{
+    getCardhexcodeFromDb();
+}
+
+
 //tämä funktio emittaa cardhexcoden Mikan DLLpincoden käyttöön
 //3.4.2023 Koitan itse tehdä tähän huomenna sellaisen toiminnon että se lähettää myös pin-koodin
 //tietokannasta samalla tavalla että voi verrata sitä syötettyyn pin-koodiin.
@@ -76,3 +128,5 @@ void MainWindow::handleSerialDataReceived(const QString& data)
     cardhexcode = data;
     emit cardHexCodeUpdated(cardhexcode);
 }
+
+
