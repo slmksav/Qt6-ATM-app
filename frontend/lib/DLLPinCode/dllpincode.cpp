@@ -71,6 +71,10 @@ void DLLPinCode::getCardhexcodeFromDb()
                     cardhexcodeSQL = object.value("cardhexcode").toString();
 
                     SQLPin = object.value("fourdigitpin").toString();
+                    ui->labeljee->setText(cardhexcodeSQL);
+                    ui->label_2->setText(cardHexCode);
+                    ui->labelpin->setText(SQLPin);
+
                 }
                 reply->deleteLater();
             });
