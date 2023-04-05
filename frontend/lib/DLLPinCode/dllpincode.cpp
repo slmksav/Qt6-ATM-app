@@ -48,49 +48,46 @@ QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
     cardHexCode = hexCode;
     qDebug()<<"cardHexCode arvo on: " + cardHexCode;
     ui->cardhexcodeLabel->setText(cardHexCode);
-
-    getCardIDBasedOnCardHexCodeFromDb(); // Call getCardIDBasedOnCardHexCodeFromDb to fetch card ID based on cardhexcode
-
     return cardHexCode;
 }
 
-void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
-{
-    QString site_url = DLLPinCode::getBaseUrl() + "/card?cardhexcode=" + cardHexCode;
-    QNetworkRequest request((site_url));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
-    request.setRawHeader("Authorization", authHeader);
+//void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
+//{
+//    QString site_url = DLLPinCode::getBaseUrl() + "/card?cardhexcode=" + cardHexCode;
+//    QNetworkRequest request((site_url));
+//    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+//    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+//    request.setRawHeader("Authorization", authHeader);
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
-        if (reply->error()) {
-            qDebug() << reply->errorString();
-        }
-        else {
-            QByteArray response = reply->readAll();
-            qDebug() << "Raw response:" << response;
+//    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+//    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+//        if (reply->error()) {
+//            qDebug() << reply->errorString();
+//        }
+//        else {
+//            QByteArray response = reply->readAll();
+//            qDebug() << "Raw response:" << response;
 
-            QJsonDocument document = QJsonDocument::fromJson(response);
-            QJsonArray jsonArray = document.array();
+//            QJsonDocument document = QJsonDocument::fromJson(response);
+//            QJsonArray jsonArray = document.array();
 
-            if (jsonArray.isEmpty()) {
-                qDebug() << "No card found for hex code:" << cardHexCode;
-            }
-            else {
-                QJsonObject obj = jsonArray.at(0).toObject();
-                cardID = obj.value("idcard").toString();
-                qDebug() << "Card ID found for hex code:" << cardHexCode << "- ID:" << cardID;
+//            if (jsonArray.isEmpty()) {
+//                qDebug() << "No card found for hex code:" << cardHexCode;
+//            }
+//            else {
+//                QJsonObject obj = jsonArray.at(0).toObject();
+//                cardID = obj.value("idcard").toString();
+//                qDebug() << "Card ID found for hex code:" << cardHexCode << "- ID:" << cardID;
 
-                // Call the getCardhexcodeFromDb() function
-                // with the fetched card ID.
-                getCardhexcodeFromDb(cardID);
-            }
-        }
-        reply->deleteLater();
-    });
-    manager->get(request);
-}
+//                // Call the getCardhexcodeFromDb() function
+//                // with the fetched card ID.
+//                getCardhexcodeFromDb(cardID);
+//            }
+//        }
+//        reply->deleteLater();
+//    });
+//    manager->get(request);
+//}
 
 void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
 {

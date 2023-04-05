@@ -34,7 +34,7 @@ private slots:
     void enterClickHandler();
     void clearClickHandler();
     void stopClickHandler();
-    void getCardIDBasedOnCardHexCodeFromDb();
+   //void getCardIDBasedOnCardHexCodeFromDb();
     void getCardhexcodeFromDb(const QString& cardId);
 
 private:
