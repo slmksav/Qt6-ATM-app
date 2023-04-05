@@ -104,8 +104,8 @@ void StartWindow::startSession(int returnedCardID)
 
         session->transactionIDs = {1,2,3,4,
                                    5,6,7,8};
-        session->transactionDates = {"1.2.2012", "5.12.2013", "1.12.2014", "6.11.2015",
-                                     "1.12.2016", "5.10.2018", "1.2.2019", "5.12.2021"};
+        session->transactionDates = {"01.02.2012", "05.12.2013", "01.12.2014", "06.11.2015",
+                                     "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
         session->transactionAmounts = {200.25, 55.00, 60, 20,
                                        20000.1, 60, 100.0, 100.00};
     }

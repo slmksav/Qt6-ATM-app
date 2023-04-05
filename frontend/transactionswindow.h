@@ -26,8 +26,14 @@ private slots:
 
     void on_buttonReturn_clicked();
 
+    void on_buttonPrevious_clicked();
+
+    void on_buttonNext_clicked();
+
 private:
     Ui::TransactionsWindow *ui;
+
+    int listIndex = 0;
 
     SessionData * session;
 };
