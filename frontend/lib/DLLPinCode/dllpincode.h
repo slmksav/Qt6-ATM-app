@@ -29,6 +29,7 @@ public slots:
     //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
     QString handleCardHexCodeReceived(QString hexCode);
 private slots:
+    void updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token);
     void numberClickHandler();
     void enterClickHandler();
     void clearClickHandler();
