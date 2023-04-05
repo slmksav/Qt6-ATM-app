@@ -18,6 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(m_serialPort, SIGNAL(dataReceived(QString)), //2. signaali
             this, SLOT(leikkiHexaSlotti(QString)));
+    DLLPinCode * pDLLPinCode = new DLLPinCode(this);
+    connect(pDLLPinCode, &DLLPinCode::LoginSuccess, [this](bool LoginAttempt){
+        if(LoginAttempt){
+            OptionsWindow * optionsWindow = new OptionsWindow(this);
+            optionsWindow->show();
+        }else{
+
+        }
+    });
+
 }
 
 MainWindow::~MainWindow()

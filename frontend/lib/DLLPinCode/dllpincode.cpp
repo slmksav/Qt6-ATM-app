@@ -132,6 +132,19 @@ void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
     manager->get(request);
 }
 
+//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
+QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
+{
+    qDebug()<<"emitattu signaali on " + hexCode;
+    cardHexCode = hexCode;
+    qDebug()<<"cardHexCode arvo on: " + cardHexCode;
+    ui->cardhexcodeLabel->setText(cardHexCode);
+
+    getCardIDBasedOnCardHexCodeFromDb(); // Call getCardIDBasedOnCardHexCodeFromDb to fetch card ID based on cardhexcode
+
+    return cardHexCode;
+}
+
 //////loppu
 
 void DLLPinCode::enterClickHandler()
@@ -149,10 +162,14 @@ void DLLPinCode::enterClickHandler()
     qDebug() << "cardhexcodeSQL:" << cardhexcodeSQL;
     if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin)
     {
-        ui->labeljee->setText("jeeeeeeeeeeeeeeeeee");
+        emit LoginSuccess(true);
+        delete ui;
+        ui = nullptr;
+
     }
     else
     {
+        emit LoginSuccess(false);
         ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
         timer->start(30000);
     }

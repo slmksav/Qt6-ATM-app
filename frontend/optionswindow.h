@@ -7,7 +7,6 @@
 #include "sessiondata.h"
 #include "transactionswindow.h"
 #include "withdrawwindow.h"
-
 #include <QDialog>
 
 namespace Ui {
