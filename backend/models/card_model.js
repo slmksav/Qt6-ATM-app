@@ -10,13 +10,6 @@ const card = {
   getById: function(id, callback) {
     return db.query('select * from card where idcard=?', [id], callback);
   },
-  add: function(card, callback) {
-    return db.query(
-      'insert into card (first_name,last_name) values(?,?)',
-      [card.first_name, card.last_name],
-      callback
-    );
-  },
   delete: function(id, callback) {
     return db.query('delete from card where idcard=?', [id], callback);
   },

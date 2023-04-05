@@ -26,12 +26,11 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_DLLSerialPort_t {
-    uint offsetsAndSizes[10];
+    uint offsetsAndSizes[8];
     char stringdata0[14];
     char stringdata1[13];
     char stringdata2[1];
-    char stringdata3[8];
-    char stringdata4[16];
+    char stringdata3[16];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_DLLSerialPort_t::offsetsAndSizes) + ofs), len 
@@ -40,13 +39,11 @@ Q_CONSTINIT static const qt_meta_stringdata_DLLSerialPort_t qt_meta_stringdata_D
         QT_MOC_LITERAL(0, 13),  // "DLLSerialPort"
         QT_MOC_LITERAL(14, 12),  // "dataReceived"
         QT_MOC_LITERAL(27, 0),  // ""
-        QT_MOC_LITERAL(28, 7),  // "hexData"
-        QT_MOC_LITERAL(36, 15)   // "handleReadyRead"
+        QT_MOC_LITERAL(28, 15)   // "handleReadyRead"
     },
     "DLLSerialPort",
     "dataReceived",
     "",
-    "hexData",
     "handleReadyRead"
 };
 #undef QT_MOC_LITERAL
@@ -69,10 +66,10 @@ Q_CONSTINIT static const uint qt_meta_data_DLLSerialPort[] = {
        1,    1,   26,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,   29,    2, 0x08,    3 /* Private */,
+       3,    0,   29,    2, 0x08,    3 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::QString,    2,
 
  // slots: parameters
     QMetaType::Void,
@@ -91,7 +88,7 @@ Q_CONSTINIT const QMetaObject DLLSerialPort::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<DLLSerialPort, std::true_type>,
         // method 'dataReceived'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'handleReadyRead'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
@@ -111,7 +108,7 @@ void DLLSerialPort::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (DLLSerialPort::*)(const QString & );
+            using _t = void (DLLSerialPort::*)(QString );
             if (_t _q_method = &DLLSerialPort::dataReceived; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -151,7 +148,7 @@ int DLLSerialPort::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void DLLSerialPort::dataReceived(const QString & _t1)
+void DLLSerialPort::dataReceived(QString _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

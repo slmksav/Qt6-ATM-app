@@ -1,5 +1,6 @@
 #include "dllpincode.h"
 #include "ui_dllpincode.h"
+#include <QSqlQuery>
 
 DLLPinCode::DLLPinCode(QWidget *parent) :
     QDialog(parent),
@@ -40,9 +41,57 @@ QString DLLPinCode::getBaseUrl()
     return "https://bankdb-r18.onrender.com";
 }
 
-void DLLPinCode::getCardhexcodeFromDb()
+//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
+QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
 {
-    QString site_url = DLLPinCode::getBaseUrl() + "/card/2";
+    qDebug()<<"emitattu signaali on " + hexCode;
+    cardHexCode = hexCode;
+    qDebug()<<"cardHexCode arvo on: " + cardHexCode;
+    ui->cardhexcodeLabel->setText(cardHexCode);
+    return cardHexCode;
+}
+
+//void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
+//{
+//    QString site_url = DLLPinCode::getBaseUrl() + "/card?cardhexcode=" + cardHexCode;
+//    QNetworkRequest request((site_url));
+//    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+//    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+//    request.setRawHeader("Authorization", authHeader);
+
+//    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+//    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+//        if (reply->error()) {
+//            qDebug() << reply->errorString();
+//        }
+//        else {
+//            QByteArray response = reply->readAll();
+//            qDebug() << "Raw response:" << response;
+
+//            QJsonDocument document = QJsonDocument::fromJson(response);
+//            QJsonArray jsonArray = document.array();
+
+//            if (jsonArray.isEmpty()) {
+//                qDebug() << "No card found for hex code:" << cardHexCode;
+//            }
+//            else {
+//                QJsonObject obj = jsonArray.at(0).toObject();
+//                cardID = obj.value("idcard").toString();
+//                qDebug() << "Card ID found for hex code:" << cardHexCode << "- ID:" << cardID;
+
+//                // Call the getCardhexcodeFromDb() function
+//                // with the fetched card ID.
+//                getCardhexcodeFromDb(cardID);
+//            }
+//        }
+//        reply->deleteLater();
+//    });
+//    manager->get(request);
+//}
+
+void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
+{
+    QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
@@ -70,7 +119,6 @@ void DLLPinCode::getCardhexcodeFromDb()
 
                     cardhexcodeSQL = object.value("cardhexcode").toString();
                     SQLPin = object.value("fourdigitpin").toString();
-                    ui->labeljee->setText(cardhexcodeSQL);
                     ui->labelpin->setText(SQLPin);
 
                 }
@@ -79,17 +127,37 @@ void DLLPinCode::getCardhexcodeFromDb()
 
     manager->get(request);
 }
-//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
-QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
+
+//////loppu
+
+void DLLPinCode::enterClickHandler()
 {
-    qDebug()<<"emitattu signaali on " + hexCode;
-    // Update the cardHexCode variable with the new hex code
-    cardHexCode = hexCode;
-    // Update the label with the new hex code
-    qDebug()<<"cardHexCode arvo on: " + cardHexCode;
-    ui->cardhexcodeLabel->setText(cardHexCode);
-    return cardHexCode;
+    timer->stop();
+    getCardhexcodeFromDb(cardID);
+
+    while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
+        QCoreApplication::processEvents();
+    }
+
+    CheckPin = ui->lineEdit->text();
+    qDebug() << "lineEdit content:" << CheckPin;
+    qDebug() << "cardHexCode:" << handleCardHexCodeReceived(cardHexCode);
+    qDebug() << "cardhexcodeSQL:" << cardhexcodeSQL;
+    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin)
+    {
+        emit LoginSuccess(true);
+        delete ui;
+        ui = nullptr;
+
+    }
+    else
+    {
+        emit LoginSuccess(false);
+        ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
+        timer->start(30000);
+    }
 }
+
 
 void DLLPinCode::numberClickHandler()
 {
@@ -102,25 +170,6 @@ void DLLPinCode::numberClickHandler()
         ui->lineEdit->setText(InsertingPin);
         CheckPin = clickedValue;
 
-}
-
-void DLLPinCode::enterClickHandler()
-{
-    timer->stop();
-    getCardhexcodeFromDb();
-    CheckPin = ui->lineEdit->text();
-    qDebug() << "lineEdit content:" << CheckPin;
-    qDebug() << "cardHexCode:" << handleCardHexCodeReceived(cardHexCode);
-    qDebug() << "cardhexcodeSQL:" << cardhexcodeSQL;
-    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin)
-    {
-        ui->labeljee->setText("jeeeeeeeeeeeeeeeeee");
-    }
-    else
-    {
-        ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
-        timer->start(30000);
-    }
 }
 
 
