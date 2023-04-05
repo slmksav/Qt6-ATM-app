@@ -4,12 +4,12 @@ const card = {
   getAll: function(callback) {
     return db.query('select * from card', callback);
   },
-  getById: function(cardhexcode, callback) {
+  getById: function(id, callback) {
     return db.query('select idcard from card where idcard = ?', [id], callback);
   },
   getByHexCode: function(cardhexcode, callback) {
     return db.query('select * from card where cardhexcode = ?', [cardhexcode], callback);
-},
+  },
   add: function(card, callback) {
     return db.query(
       'insert into card (first_name,last_name) values(?,?)',

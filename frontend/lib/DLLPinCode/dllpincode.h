@@ -49,7 +49,7 @@ private:
     QString response_data;
     QString username;
     QString token;
-    QString cardID;
+    QString cardID = "2";
 };
 
 #endif // DLLPINCODE_H
