@@ -70,7 +70,6 @@ void DLLPinCode::getCardhexcodeFromDb()
 
                     cardhexcodeSQL = object.value("cardhexcode").toString();
                     SQLPin = object.value("fourdigitpin").toString();
-                    ui->labeljee->setText(cardhexcodeSQL);
                     ui->labelpin->setText(SQLPin);
 
                 }
@@ -83,9 +82,7 @@ void DLLPinCode::getCardhexcodeFromDb()
 QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
 {
     qDebug()<<"emitattu signaali on " + hexCode;
-    // Update the cardHexCode variable with the new hex code
     cardHexCode = hexCode;
-    // Update the label with the new hex code
     qDebug()<<"cardHexCode arvo on: " + cardHexCode;
     ui->cardhexcodeLabel->setText(cardHexCode);
     return cardHexCode;
@@ -108,6 +105,11 @@ void DLLPinCode::enterClickHandler()
 {
     timer->stop();
     getCardhexcodeFromDb();
+
+    while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
+        QCoreApplication::processEvents();
+    }
+
     CheckPin = ui->lineEdit->text();
     qDebug() << "lineEdit content:" << CheckPin;
     qDebug() << "cardHexCode:" << handleCardHexCodeReceived(cardHexCode);

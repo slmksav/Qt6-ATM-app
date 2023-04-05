@@ -25,7 +25,6 @@ public:
 
 signals:
     //tämä funktio päivittää nykyisen luetun cardhexcoden
-    void cardHexCodeUpdated(const QString& hexCode);
     void leikkiHexaSignaali(QString);
 
 private slots:
@@ -33,9 +32,7 @@ private slots:
     void getCustomerData();
     void getCardhexcodeFromDb();
     void on_cardhexcodePushbutton_clicked();
-
     void on_buttonTestHexaToDLL_clicked();
-
     void leikkiHexaSlotti(QString);
 
 private:

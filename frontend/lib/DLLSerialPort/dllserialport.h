@@ -15,7 +15,7 @@ public:
     void sendData(const QString& dataToSend);
 
 signals:
-    void dataReceived(const QString& hexData);
+    void dataReceived(QString);
 
 private slots:
     void handleReadyRead();
