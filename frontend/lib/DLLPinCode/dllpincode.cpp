@@ -108,14 +108,14 @@ void DLLPinCode::enterClickHandler()
     qDebug() << "cardhexcodeSQL:" << cardhexcodeSQL;
     if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin)
     {
-        emit LoginSuccess(true);
+        emit LoginSuccess(cardID.toInt());
         delete ui;
         ui = nullptr;
 
     }
     else
     {
-        emit LoginSuccess(false);
+        emit LoginSuccess(0);
         ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
         timer->start(30000);
     }
