@@ -5,6 +5,8 @@
 
 #include "optionswindow.h"
 #include "dllpincode.h"
+#include "dllrestapi.h"
+#include "dllserialport.h"
 
 #include <QMainWindow>
 
@@ -21,15 +23,18 @@ public:
     ~StartWindow();
 
 signals:
+    void testOhitaKorttiSignal(QString);
+    void testOhitaPINSignal(int);
 
 private slots:
-    void on_cardInput_textEdited(const QString &input);
-
     void logout();
+    void printReceipt(bool); //this might be redundant
 
-    void openPinCode();
-    void printReceipt(bool);
-    void hidePinCode();
+    void openDLLPinCode(QString);
+    void startSession(int);
+
+    void on_buttonOhitaKortti_clicked(); //this shall be removed on release
+    void on_buttonOhitaPIN_clicked(); //this shall be removed on release
 
 private:
     Ui::StartWindow *ui;
@@ -37,8 +42,11 @@ private:
     OptionsWindow * optionsWindow;
 
     SessionData * session;
+
     DLLPinCode * pDLLPinCode;
-    void startSession(int);
+    DLLRestApi * pDLLRestApi;
+    DLLSerialPort * pDLLSerialPort;
+
     void updateUI();
 };
 

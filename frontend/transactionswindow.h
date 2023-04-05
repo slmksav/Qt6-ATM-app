@@ -21,6 +21,9 @@ public slots:
     void putSessionData(SessionData *session);
     void updateUI();
 
+private slots:
+    void on_buttonLogout_clicked();
+
 private:
     Ui::TransactionsWindow *ui;
 

@@ -1,6 +1,8 @@
 #ifndef RECEIPTWINDOW_H
 #define RECEIPTWINDOW_H
 
+#include "sessiondata.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -15,6 +17,9 @@ public:
     explicit ReceiptWindow(QWidget *parent = nullptr);
     ~ReceiptWindow();
 
+public slots:
+    void putSessionData(SessionData *session);
+
 signals:
     void clickReceipt(bool);
 
@@ -25,6 +30,8 @@ private slots:
 
 private:
     Ui::ReceiptWindow *ui;
+
+    SessionData * session;
 };
 
 #endif // RECEIPTWINDOW_H

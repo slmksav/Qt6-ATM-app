@@ -29,9 +29,12 @@ public:
     QList<int> additionalAccountIDs; //getAdditionalAccountIDs(int customerID);
 
     QList<int> transactionIDs; //getTransactionIDs(int accountID);
+    QList<QString> transactionDates; //QList<QDate> getTransactionDates(QList<int> transactionIDs);
+    QList<double> transactionAmounts; //QList<int> getTransactionAmounts(QList<int> transactionIDs);
 
 signals:
     void sendTimeout();
+    void sendLogout();
 
 public slots:
     void resetTimer();

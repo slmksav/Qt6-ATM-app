@@ -9,6 +9,8 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     ui->setupUi(this);
     //cardHexCode = "060006491c";
      ui->labelInterrupt->setVisible(false);
+     ui->labelFreezed1->setVisible(false);
+     ui->labelFreezed2->setVisible(false);
      ui->lineEdit->setMaxLength(4); // Set the maximum length to 4 digits
      ui->lineEdit->setReadOnly(true); //Cannot write t
      ui->lineEdit->setEchoMode(QLineEdit::Password);
@@ -51,45 +53,7 @@ QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
     return cardHexCode;
 }
 
-//void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
-//{
-//    QString site_url = DLLPinCode::getBaseUrl() + "/card?cardhexcode=" + cardHexCode;
-//    QNetworkRequest request((site_url));
-//    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-//    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
-//    request.setRawHeader("Authorization", authHeader);
-
-//    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-//    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
-//        if (reply->error()) {
-//            qDebug() << reply->errorString();
-//        }
-//        else {
-//            QByteArray response = reply->readAll();
-//            qDebug() << "Raw response:" << response;
-
-//            QJsonDocument document = QJsonDocument::fromJson(response);
-//            QJsonArray jsonArray = document.array();
-
-//            if (jsonArray.isEmpty()) {
-//                qDebug() << "No card found for hex code:" << cardHexCode;
-//            }
-//            else {
-//                QJsonObject obj = jsonArray.at(0).toObject();
-//                cardID = obj.value("idcard").toString();
-//                qDebug() << "Card ID found for hex code:" << cardHexCode << "- ID:" << cardID;
-
-//                // Call the getCardhexcodeFromDb() function
-//                // with the fetched card ID.
-//                getCardhexcodeFromDb(cardID);
-//            }
-//        }
-//        reply->deleteLater();
-//    });
-//    manager->get(request);
-//}
-
-void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
+void DLLPinCode::getCardInfoFromDb(const QString& cardID)
 {
     QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
     QNetworkRequest request((site_url));
@@ -119,7 +83,22 @@ void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
 
                     cardhexcodeSQL = object.value("cardhexcode").toString();
                     SQLPin = object.value("fourdigitpin").toString();
+                    wrongAttempts = object.value("wrongAttempts").toInt();
+                    ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
+                    qDebug() << "wrongAttemptsMäärä" << wrongAttempts;
+
                     ui->labelpin->setText(SQLPin);
+                    if(wrongAttempts > 0)
+                    {
+                       ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
+                    }
+                    else
+                    {
+                       accountFreezed();
+                    }
+
+                    // Update wrongAttempts field in database
+                    updateWrongAttemptsInCard(cardID, wrongAttempts, token);
 
                 }
                 reply->deleteLater();
@@ -128,33 +107,67 @@ void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
     manager->get(request);
 }
 
+void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token)
+{
+    // Construct request URL
+    QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
+    // Create network request object
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    // Set authorization header
+    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+    request.setRawHeader("Authorization", authHeader);
+    // Create request body JSON object
+    QJsonObject requestBody;
+    requestBody.insert("wrongAttempts", newWrongAttempts);
+    // Convert request body to QByteArray
+    QJsonDocument requestBodyDoc(requestBody);
+    QByteArray requestBodyData = requestBodyDoc.toJson();
+    // Create network access manager and connect signal to slot
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
+
+    connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply *reply) {
+        if (reply->error()) {
+            qDebug() << reply->errorString();
+        }
+        else {
+            QByteArray response = reply->readAll();
+            qDebug() << "Raw response:" << response;
+        }
+        reply->deleteLater();
+    });
+    // Send PUT request to update wrongAttempts field in card object
+    manager->put(request, requestBodyData);
+}
+
 //////loppu
 
 void DLLPinCode::enterClickHandler()
 {
     timer->stop();
-    getCardhexcodeFromDb(cardID);
+    getCardInfoFromDb(cardID);
 
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
         QCoreApplication::processEvents();
     }
 
     CheckPin = ui->lineEdit->text();
-    qDebug() << "lineEdit content:" << CheckPin;
-    qDebug() << "cardHexCode:" << handleCardHexCodeReceived(cardHexCode);
-    qDebug() << "cardhexcodeSQL:" << cardhexcodeSQL;
-    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin)
+    qDebug() << "Pin joka on syötetty:" << CheckPin;
+    qDebug() << "Tietokannasta haettu PIN:" << SQLPin;
+    qDebug() << "cardHexCode (luettu):" << handleCardHexCodeReceived(cardHexCode);
+    qDebug() << "cardhexcodeSQL (haettu):" << cardhexcodeSQL;
+    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
     {
-        emit LoginSuccess(true);
-        delete ui;
-        ui = nullptr;
-
+        emit LoginSuccess(cardID.toInt());
+        done(Accepted);
     }
     else
     {
-        emit LoginSuccess(false);
+        emit LoginSuccess(0);
         ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
         timer->start(30000);
+        wrongAttempts--;
+        ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
     }
 }
 
@@ -187,6 +200,32 @@ void DLLPinCode::stopClickHandler()
       timer->stop();
       timer->start(5000);
       ui->labelInterrupt->setVisible(true);
+      ui->label->setVisible(false);
+      ui->label_3->setVisible(false);
+      ui->labelAttempts->setVisible(false);
+      ui->button0->setVisible(false);
+      ui->button1->setVisible(false);
+      ui->button2->setVisible(false);
+      ui->button3->setVisible(false);
+      ui->button4->setVisible(false);
+      ui->button5->setVisible(false);
+      ui->button6->setVisible(false);
+      ui->button7->setVisible(false);
+      ui->button8->setVisible(false);
+      ui->button9->setVisible(false);
+      ui->ButtonStop->setVisible(false);
+      ui->ButtonClear->setVisible(false);
+      ui->buttonEnter->setVisible(false);
+      ui->lineEdit->setVisible(false);
+      done(Rejected);
+}
+
+void DLLPinCode::accountFreezed()
+{
+      timer->stop();
+      timer->start(5000);
+      ui->labelFreezed1->setVisible(true);
+      ui->labelFreezed2->setVisible(true);
       ui->label->setVisible(false);
       ui->label_3->setVisible(false);
       ui->labelAttempts->setVisible(false);

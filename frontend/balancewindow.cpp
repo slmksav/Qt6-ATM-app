@@ -23,3 +23,16 @@ void BalanceWindow::updateUI()
 {
 
 }
+
+
+void BalanceWindow::on_buttonLogout_clicked()
+{
+    emit session->sendLogout();
+}
+
+
+void BalanceWindow::on_buttonReturn_clicked()
+{
+    done(Accepted);
+}
+

@@ -196,7 +196,7 @@
     </font>
    </property>
    <property name="text">
-    <string> yritystä jäljellä</string>
+    <string>  yritystä jäljellä</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -306,6 +306,42 @@
    </property>
    <property name="text">
     <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelFreezed1">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>200</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Tili jäädytetty</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelFreezed2">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>220</y>
+     <width>631</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567</string>
    </property>
   </widget>
  </widget>
