@@ -4,6 +4,10 @@
 #include <QDialog>
 #include "DLLPinCode_global.h"
 #include <QTimer>
+#include <QtNetwork>
+#include <QNetworkAccessManager>
+#include <QJsonDocument>
+#include <QDebug>
 
 namespace Ui {
 class DLLPinCode;
@@ -16,17 +20,22 @@ class DLLPINCODE_EXPORT DLLPinCode : public QDialog
 public:
     explicit DLLPinCode(QWidget *parent = nullptr);
     ~DLLPinCode();
+    static QString getBaseUrl();
+    QString cardhexcodeSQL;
+    QString cardHexCode;
 signals:
     void sendPin(short);
+    void LoginSuccess(bool LoginAttempt);
 public slots:
     //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
-    void handleCardHexCodeReceived(const QString& hexCode);
+    QString handleCardHexCodeReceived(QString hexCode);
 private slots:
     void numberClickHandler();
     void enterClickHandler();
     void clearClickHandler();
     void stopClickHandler();
-
+    void getCardIDBasedOnCardHexCodeFromDb();
+    void getCardhexcodeFromDb(const QString& cardId);
 
 private:
     Ui::DLLPinCode *ui;
@@ -36,6 +45,11 @@ private:
     QString InsertedPin;
     bool CompareStrings(QString,QString);
     QTimer *timer;
+    QString SQLHexCode;
+    QString response_data;
+    QString username;
+    QString token;
+    QString cardID;
 };
 
 #endif // DLLPINCODE_H

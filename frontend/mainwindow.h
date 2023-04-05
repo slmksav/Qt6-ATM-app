@@ -8,6 +8,7 @@
 #include "dllserialport.h"
 #include "dllrestapi.h"
 #include "dllpincode.h"
+#include "optionswindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,14 +26,15 @@ public:
 
 signals:
     //tämä funktio päivittää nykyisen luetun cardhexcoden
-    void cardHexCodeUpdated(const QString& hexCode);
+    void leikkiHexaSignaali(QString);
 
 private slots:
     void on_customerButton_clicked();
     void getCustomerData();
     void getCardhexcodeFromDb();
-
     void on_cardhexcodePushbutton_clicked();
+    void on_buttonTestHexaToDLL_clicked();
+    void leikkiHexaSlotti(QString);
 
 private:
     Ui::MainWindow *ui;
@@ -44,6 +46,9 @@ private:
     QString username;
     QString token;
     QString cardhexcode;
+    QString cardhexcodeSQLTest;
+
+    DLLPinCode * mikanDLL;
 };
 
 #endif // MAINWINDOW_H

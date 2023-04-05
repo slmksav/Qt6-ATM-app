@@ -40,6 +40,8 @@ public:
     QPushButton *button3;
     QPushButton *button0;
     QPushButton *button6;
+    QLabel *labeljee;
+    QLabel *labelpin;
 
     void setupUi(QDialog *DLLPinCode)
     {
@@ -48,7 +50,7 @@ public:
         DLLPinCode->resize(693, 644);
         cardhexcodeLabel = new QLabel(DLLPinCode);
         cardhexcodeLabel->setObjectName("cardhexcodeLabel");
-        cardhexcodeLabel->setGeometry(QRect(120, 30, 191, 20));
+        cardhexcodeLabel->setGeometry(QRect(460, 80, 191, 20));
         button4 = new QPushButton(DLLPinCode);
         button4->setObjectName("button4");
         button4->setGeometry(QRect(170, 330, 21, 29));
@@ -79,7 +81,8 @@ public:
         button9->setGeometry(QRect(230, 370, 21, 29));
         lineEdit = new QLineEdit(DLLPinCode);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(180, 240, 113, 28));
+        lineEdit->setGeometry(QRect(170, 230, 171, 31));
+        lineEdit->setFont(font);
         button5 = new QPushButton(DLLPinCode);
         button5->setObjectName("button5");
         button5->setGeometry(QRect(200, 330, 21, 29));
@@ -109,6 +112,12 @@ public:
         button6 = new QPushButton(DLLPinCode);
         button6->setObjectName("button6");
         button6->setGeometry(QRect(230, 330, 21, 29));
+        labeljee = new QLabel(DLLPinCode);
+        labeljee->setObjectName("labeljee");
+        labeljee->setGeometry(QRect(460, 160, 131, 20));
+        labelpin = new QLabel(DLLPinCode);
+        labelpin->setObjectName("labelpin");
+        labelpin->setGeometry(QRect(470, 290, 131, 20));
 
         retranslateUi(DLLPinCode);
 
@@ -136,6 +145,8 @@ public:
         button3->setText(QCoreApplication::translate("DLLPinCode", "3", nullptr));
         button0->setText(QCoreApplication::translate("DLLPinCode", "0", nullptr));
         button6->setText(QCoreApplication::translate("DLLPinCode", "6", nullptr));
+        labeljee->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
+        labelpin->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
     } // retranslateUi
 
 };

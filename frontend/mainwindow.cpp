@@ -14,8 +14,20 @@ MainWindow::MainWindow(QWidget *parent)
     m_serialPort = new DLLSerialPort(this);
     m_DLLPinCode = new DLLPinCode(this);
     // Numeroikaa connectionit, jotta voidaan refrensoida niihin dokumentaatiossa.
-    connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived); //1. signaali
-    connect(this, &MainWindow::cardHexCodeUpdated, m_DLLPinCode, &DLLPinCode::handleCardHexCodeReceived); //2. signaali
+    //connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived); //1. signaali
+
+    connect(m_serialPort, SIGNAL(dataReceived(QString)), //2. signaali
+            this, SLOT(leikkiHexaSlotti(QString)));
+    DLLPinCode * pDLLPinCode = new DLLPinCode(this);
+    connect(pDLLPinCode, &DLLPinCode::LoginSuccess, [this](bool LoginAttempt){
+        if(LoginAttempt){
+            OptionsWindow * optionsWindow = new OptionsWindow(this);
+            optionsWindow->show();
+        }else{
+
+        }
+    });
+
 }
 
 MainWindow::~MainWindow()
@@ -88,21 +100,13 @@ void MainWindow::getCardhexcodeFromDb()
             QJsonDocument document = QJsonDocument::fromJson(response);
             QJsonObject object = document.object();
 
-            // Check if the response contains any errors
-            if (object.contains("error")) {
-                qDebug() << object.value("error").toString();
+            // Check if the response contains the cardhexcode key
+            if (!object.contains("cardhexcode")) {
+                qDebug() << "Response does not contain cardhexcode";
                 return;
             }
 
-            // Check if the response contains any data
-            if (!object.contains("data")) {
-                qDebug() << "Response does not contain any data";
-                return;
-            }
-
-            // Retrieve the data from the response
-            QJsonObject data = object.value("data").toObject();
-            QString cardhexcode = data.value("cardhexcode").toString();
+            cardhexcodeSQLTest = object.value("cardhexcode").toString();
             ui->cardhexcodeLabel->setText(cardhexcode);
         }
         reply->deleteLater();
@@ -111,22 +115,36 @@ void MainWindow::getCardhexcodeFromDb()
     manager->get(request);
 }
 
-
 void MainWindow::on_cardhexcodePushbutton_clicked()
 {
     getCardhexcodeFromDb();
+    if (cardhexcode == cardhexcodeSQLTest)
+    {
+        qDebug() << "Sarjaportin cardhexcode on sama kun cardhexcodeSQL.";
+    }
 }
 
 
-//tämä funktio emittaa cardhexcoden Mikan DLLpincoden käyttöön
-//3.4.2023 Koitan itse tehdä tähän huomenna sellaisen toiminnon että se lähettää myös pin-koodin
-//tietokannasta samalla tavalla että voi verrata sitä syötettyyn pin-koodiin.
-void MainWindow::handleSerialDataReceived(const QString& data)
+void MainWindow::on_buttonTestHexaToDLL_clicked()
 {
-    qDebug() << "Serial data received:" << data;
-    ui->serialDataLabel->setText(data);
-    cardhexcode = data;
-    emit cardHexCodeUpdated(cardhexcode);
+    qDebug() << "leikkiHexaSignaali lähetetään";
+    emit leikkiHexaSignaali("0d0a2d303630303035343246450d0a3e");
 }
 
+void MainWindow::leikkiHexaSlotti(QString hexaKoodi)
+{
+    qDebug() << "leikkiHexaSlotti vastaanotti seuraavaa:" << hexaKoodi;
+
+    mikanDLL = new DLLPinCode(this);
+    //voidaan myös antaa constructorissa tyyliin
+    //mikanDLL = new DLLPinCode(this, hexaKoodi)
+    mikanDLL->cardHexCode = hexaKoodi;
+
+    qDebug() << "DLLPinCode-luokan cardHexCode on nyt:" << mikanDLL->cardHexCode;
+
+    mikanDLL->show();
+
+    //tässä ei kannattaisi enää manipuloida dll:ää, vaan antaa sen hoitaa hommat, mutta testin vuoksi
+    mikanDLL->handleCardHexCodeReceived(mikanDLL->cardHexCode);
+}
 

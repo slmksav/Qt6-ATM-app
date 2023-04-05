@@ -105,6 +105,19 @@
      <string>Tästä cardhexcode DBstä</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="buttonTestHexaToDLL">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>410</y>
+      <width>181</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>oikea hexa mikan dll:lle -nappi</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -112,7 +125,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
