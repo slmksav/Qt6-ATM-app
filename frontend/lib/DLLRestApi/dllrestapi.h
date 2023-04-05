@@ -28,9 +28,9 @@ public:
     void getAccountId(QString sauliId);
     void getCustomerId(QString sauliId);
     void getAccountType(QString sauliType); //Saulin tilin tyyppi
-    void getCustomerName(QString sauliName);
-    void getAccountBalance(QString sauliSaldo);
-    void getAccountCredit(QString sauliCredit);
+    QJsonObject getCustomerName(QString sauliName);
+    QJsonObject getAccountBalance(QString sauliSaldo);
+    QJsonObject getAccountCredit(QString sauliCredit);
 
 private slots:
 
