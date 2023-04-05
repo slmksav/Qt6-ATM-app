@@ -16,7 +16,7 @@ const card = {
   update: function(id, card, callback) {
     return db.query(
       'update card set wrongAttempts=? where idcard=?',
-      [card.first_name, card.last_name, id],
+      [card.wrongAttempts, id],
       callback
     );
   }
