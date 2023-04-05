@@ -41,6 +41,19 @@ QString DLLPinCode::getBaseUrl()
     return "https://bankdb-r18.onrender.com";
 }
 
+//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
+QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
+{
+    qDebug()<<"emitattu signaali on " + hexCode;
+    cardHexCode = hexCode;
+    qDebug()<<"cardHexCode arvo on: " + cardHexCode;
+    ui->cardhexcodeLabel->setText(cardHexCode);
+
+    getCardIDBasedOnCardHexCodeFromDb(); // Call getCardIDBasedOnCardHexCodeFromDb to fetch card ID based on cardhexcode
+
+    return cardHexCode;
+}
+
 void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
 {
     // Make a GET request to your REST API endpoint passing the cardhexcode
@@ -68,7 +81,7 @@ void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
                         qDebug() << "No card found for hex code:" << cardHexCode;
                     }
                     else {
-                        QString cardID = jsonArray.at(0).toObject().value("idcard").toString();
+                        cardID = jsonArray.at(0).toObject().value("idcard").toString();
                         qDebug() << "Card ID found for hex code:" << cardHexCode << "- ID:" << cardID;
                         getCardhexcodeFromDb(cardID);
                     }
@@ -77,8 +90,6 @@ void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
             });
     manager->get(request);
 }
-
-
 
 void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
 {
@@ -117,19 +128,6 @@ void DLLPinCode::getCardhexcodeFromDb(const QString& cardID)
             });
 
     manager->get(request);
-}
-
-//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
-QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
-{
-    qDebug()<<"emitattu signaali on " + hexCode;
-    cardHexCode = hexCode;
-    qDebug()<<"cardHexCode arvo on: " + cardHexCode;
-    ui->cardhexcodeLabel->setText(cardHexCode);
-
-    getCardIDBasedOnCardHexCodeFromDb(); // Call getCardIDBasedOnCardHexCodeFromDb to fetch card ID based on cardhexcode
-
-    return cardHexCode;
 }
 
 //////loppu

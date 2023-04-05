@@ -25,6 +25,7 @@ public:
     QString cardHexCode;
 signals:
     void sendPin(short);
+    void LoginSuccess(bool LoginAttempt);
 public slots:
     //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
     QString handleCardHexCodeReceived(QString hexCode);
