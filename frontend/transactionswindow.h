@@ -24,6 +24,8 @@ public slots:
 private slots:
     void on_buttonLogout_clicked();
 
+    void on_buttonReturn_clicked();
+
 private:
     Ui::TransactionsWindow *ui;
 

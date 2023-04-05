@@ -62,7 +62,9 @@ void OptionsWindow::changeWithdrawType(QString mode)
 
 void OptionsWindow::on_buttonBalance_clicked()
 {
-
+    balanceWindow = new BalanceWindow(this);
+    balanceWindow->putSessionData(session);
+    balanceWindow->show();
 }
 
 

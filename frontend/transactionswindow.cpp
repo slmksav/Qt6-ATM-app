@@ -29,3 +29,9 @@ void TransactionsWindow::on_buttonLogout_clicked()
     emit session->sendLogout();
 }
 
+
+void TransactionsWindow::on_buttonReturn_clicked()
+{
+    done(Accepted);
+}
+
