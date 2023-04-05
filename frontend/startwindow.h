@@ -5,8 +5,8 @@
 
 #include "optionswindow.h"
 #include "dllpincode.h"
-#include "dllrestapi.h";
-#include "dllserialport.h";
+#include "dllrestapi.h"
+#include "dllserialport.h"
 
 #include <QMainWindow>
 
