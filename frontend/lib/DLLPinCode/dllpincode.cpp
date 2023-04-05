@@ -84,6 +84,7 @@ void DLLPinCode::getCardInfoFromDb(const QString& cardID)
                     cardhexcodeSQL = object.value("cardhexcode").toString();
                     SQLPin = object.value("fourdigitpin").toString();
                     wrongAttempts = object.value("wrongAttempts").toInt();
+                    ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
                     qDebug() << "wrongAttemptsMäärä" << wrongAttempts;
 
                     ui->labelpin->setText(SQLPin);
@@ -129,6 +130,7 @@ void DLLPinCode::enterClickHandler()
     else
     {
         emit LoginSuccess(0);
+
         ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
         timer->start(30000);
         wrongAttempts--;
