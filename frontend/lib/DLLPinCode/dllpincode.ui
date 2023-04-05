@@ -196,7 +196,7 @@
     </font>
    </property>
    <property name="text">
-    <string> yritystä jäljellä</string>
+    <string>  yritystä jäljellä</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">

@@ -150,7 +150,7 @@ public:
         button9->setText(QCoreApplication::translate("DLLPinCode", "9", nullptr));
         button5->setText(QCoreApplication::translate("DLLPinCode", "5", nullptr));
         button8->setText(QCoreApplication::translate("DLLPinCode", "8", nullptr));
-        labelAttempts->setText(QCoreApplication::translate("DLLPinCode", " yrityst\303\244 j\303\244ljell\303\244", nullptr));
+        labelAttempts->setText(QCoreApplication::translate("DLLPinCode", "  yrityst\303\244 j\303\244ljell\303\244", nullptr));
         label->setText(QCoreApplication::translate("DLLPinCode", "N\303\244pp\303\244ile tunnusluku", nullptr));
         button7->setText(QCoreApplication::translate("DLLPinCode", "7", nullptr));
         ButtonStop->setText(QCoreApplication::translate("DLLPinCode", "STOP", nullptr));
