@@ -33,21 +33,19 @@ private slots:
     void enterClickHandler();
     void clearClickHandler();
     void stopClickHandler();
+    void accountFreezed();
    //void getCardIDBasedOnCardHexCodeFromDb();
-    void getCardhexcodeFromDb(const QString& cardId);
+    void getCardInfoFromDb(const QString& cardId);
 
 private:
     Ui::DLLPinCode *ui;
     QString InsertingPin;
     QString CheckPin;
     QString SQLPin;
-
     QTimer *timer;
-    QString SQLHexCode;
-    QString response_data;
-    QString username;
     QString token;
     QString cardID = "2";
+    int wrongAttempts;
 };
 
 #endif // DLLPINCODE_H

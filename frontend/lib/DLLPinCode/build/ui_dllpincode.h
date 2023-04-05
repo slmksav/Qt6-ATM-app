@@ -42,6 +42,8 @@ public:
     QPushButton *button6;
     QLabel *labeljee;
     QLabel *labelpin;
+    QLabel *labelFreezed1;
+    QLabel *labelFreezed2;
 
     void setupUi(QDialog *DLLPinCode)
     {
@@ -118,6 +120,14 @@ public:
         labelpin = new QLabel(DLLPinCode);
         labelpin->setObjectName("labelpin");
         labelpin->setGeometry(QRect(470, 290, 131, 20));
+        labelFreezed1 = new QLabel(DLLPinCode);
+        labelFreezed1->setObjectName("labelFreezed1");
+        labelFreezed1->setGeometry(QRect(230, 200, 241, 41));
+        labelFreezed1->setFont(font);
+        labelFreezed2 = new QLabel(DLLPinCode);
+        labelFreezed2->setObjectName("labelFreezed2");
+        labelFreezed2->setGeometry(QRect(30, 240, 631, 71));
+        labelFreezed2->setFont(font);
 
         retranslateUi(DLLPinCode);
 
@@ -147,6 +157,8 @@ public:
         button6->setText(QCoreApplication::translate("DLLPinCode", "6", nullptr));
         labeljee->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
         labelpin->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
+        labelFreezed1->setText(QCoreApplication::translate("DLLPinCode", "Tili j\303\244\303\244dytetty", nullptr));
+        labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "Ota yhteys asiakaspalvelumme numeroon 0800 5343", nullptr));
     } // retranslateUi
 
 };

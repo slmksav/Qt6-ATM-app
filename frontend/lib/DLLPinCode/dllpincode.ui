@@ -308,6 +308,42 @@
     <string>TextLabel</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelFreezed1">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>200</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Tili jäädytetty</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelFreezed2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>240</y>
+     <width>631</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Ota yhteys asiakaspalvelumme numeroon 0800 5343</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
