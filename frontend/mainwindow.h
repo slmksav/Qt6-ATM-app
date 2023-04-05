@@ -8,6 +8,7 @@
 #include "dllserialport.h"
 #include "dllrestapi.h"
 #include "dllpincode.h"
+#include "optionswindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

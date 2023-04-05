@@ -7,7 +7,6 @@ OptionsWindow::OptionsWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 }
-
 OptionsWindow::~OptionsWindow()
 {
     delete ui;
