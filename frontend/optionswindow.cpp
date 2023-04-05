@@ -26,7 +26,7 @@ void OptionsWindow::updateUI()
 
 void OptionsWindow::on_buttonLogout_clicked()
 {
-
+    emit session->sendLogout();
 }
 
 void OptionsWindow::on_buttonWithdraw_clicked()

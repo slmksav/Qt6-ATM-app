@@ -8,6 +8,14 @@ StartWindow::StartWindow(QWidget *parent) :
     ui(new Ui::StartWindow)
 {
     ui->setupUi(this);
+
+    //test button signal to skip reading the card
+    connect(this, SIGNAL(testOhitaKorttiSignal(QString)),
+            this, SLOT(openDLLPinCode(QString)));
+
+    //test button signal to skip pin window altogether
+    connect(this, SIGNAL(testOhitaPINSignal(int)),
+            this, SLOT(startSession(int)));
 }
 
 StartWindow::~StartWindow()
@@ -15,36 +23,17 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
-void StartWindow::on_cardInput_textEdited(const QString &input)
-{
-    if (ui->cardInput->text().size() == 10)
-    {
-        qDebug() << "card input: " << input << "\tlen: " << ui->cardInput->text().size();
-
-        //change this to signal to slot system
-        int customerID = 3; //getCustomerID(input);
-        startSession(customerID);
-    }
-}
-
 void StartWindow::logout()
 {
     qDebug() << "Logout initiated";
     delete session;
     session = nullptr;
+
+    delete optionsWindow;
+    optionsWindow = nullptr;
 }
 
-void StartWindow::openPinCode()
-{
-    pDLLPinCode = new DLLPinCode(this);
-    pDLLPinCode->show();
-}
-
-void StartWindow::hidePinCode()
-{
-    pDLLPinCode->hide();
-}
-
+//this might be redundant
 void StartWindow::printReceipt(bool print)
 {
     //store transaction
@@ -57,38 +46,60 @@ void StartWindow::printReceipt(bool print)
     logout();
 }
 
-void StartWindow::startSession(int customer)
+
+void StartWindow::openDLLPinCode(QString hexaCode)
 {
-    session = new SessionData();
+    pDLLPinCode = new DLLPinCode(this);
+    pDLLPinCode->cardHexCode = hexaCode;
+    pDLLPinCode->show();
+}
 
-    session->customerID = customer;
 
-    //(defaulting some data for testing purposes)
-    session->cardID = 2; //getCardID();
-    session->accountID = 5; //getAccountID();
-    session->accountType = "dual"; //getAccountType();
-    session->customerName = "Markus Korhonen"; //getCustomerName();
-
-    session->accountBalance = 255.64; //getAccountBalance();
-    session->accountCredit = 500.00; //getAccountCredit();
-
-    //getAdditionalAccountNames();
-    session->additionalAccountNames = {"Martti Ahtisaari - debit",
-                                       "Pekka Mahtisaari - dual",
-                                       "Pertti Vahtisaari - credit",
-                                       "Jorma Sahtisaari - debit",
-                                       "Makkis Pekkis - dual",
-                                       "Putte Possu - debit",
-                                       "Poika Veli - credit"};
-
-    //getAdditionalAccountIDs
-    session->additionalAccountIDs = {3,6,13,102,103,222,345};
-
-    foreach (QString var, session->additionalAccountNames) {
-        qDebug() << var;
+void StartWindow::startSession(int returnedCardID)
+{
+    if(returnedCardID == 0)
+    {
+        qDebug() << "DLLPinCode returned" << returnedCardID <<
+            "startSession aborted...";
+        return;
     }
-    foreach (int var, session->additionalAccountIDs) {
-        qDebug() << var;
+
+    ui->labelInfo->setText("Odota...");
+
+    session = new SessionData();
+    session->cardID = returnedCardID;
+
+    //test button pressed, initiate test data
+    if(returnedCardID == -313)
+    {
+        session->customerID = 2;
+        session->accountID = 5;
+        session->accountType = "dual";
+        session->customerName = "Markus Korhonen";
+
+        session->accountBalance = 255.64;
+        session->accountCredit = 500.00;
+
+        session->additionalAccountNames = {"Martti Ahtisaari - debit",
+                                           "Pekka Mahtisaari - dual",
+                                           "Pertti Vahtisaari - credit",
+                                           "Jorma Sahtisaari - debit",
+                                           "Makkis Pekkis - dual",
+                                           "Putte Possu - debit",
+                                           "Poika Veli - credit"};
+
+        session->additionalAccountIDs = {3,6,13,102,103,222,345};
+
+        session->transactionIDs = {1,2,3,4,
+                                   5,6,7,8};
+        session->transactionDates = {"1.2.2012", "5.12.2013", "1.12.2014", "6.11.2015",
+                                     "1.12.2016", "5.10.2018", "1.2.2019", "5.12.2021"};
+        session->transactionAmounts = {200.25, 55.00, 60, 20,
+                                       20000.1, 60, 100.0, 100.00};
+    }
+    else
+    {
+        //DLLRestApi functions should fetch stuff from database here
     }
 
     if(session->accountType != "dual")
@@ -97,6 +108,10 @@ void StartWindow::startSession(int customer)
     }
 
     optionsWindow = new OptionsWindow(this);
+
+    connect(session, SIGNAL(sendLogout()),
+            this, SLOT(logout()));
+
     optionsWindow->putSessionData(session);
     optionsWindow->show();
 }
@@ -104,5 +119,17 @@ void StartWindow::startSession(int customer)
 void StartWindow::updateUI()
 {
 
+}
+
+//This button shall get removed on release
+void StartWindow::on_buttonOhitaKortti_clicked()
+{
+    emit testOhitaKorttiSignal("0d0a2d303630303035343246450d0a3e");
+}
+
+//This button shall get removed on release
+void StartWindow::on_buttonOhitaPIN_clicked()
+{
+    emit testOhitaPINSignal(-313);
 }
 

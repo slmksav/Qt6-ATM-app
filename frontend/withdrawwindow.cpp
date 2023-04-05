@@ -103,6 +103,19 @@ void WithdrawWindow::withdrawMoney(int amount)
     }
 
     receiptWindow = new ReceiptWindow(this);
+    receiptWindow->putSessionData(session);
     receiptWindow->open();
+}
+
+
+void WithdrawWindow::on_buttonLogout_clicked()
+{
+    emit session->sendLogout();
+}
+
+
+void WithdrawWindow::on_buttonReturn_clicked()
+{
+    done(Accepted);
 }
 

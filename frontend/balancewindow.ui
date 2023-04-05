@@ -16,7 +16,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="buttonLogout">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -26,10 +26,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Kirjaudu Ulos</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="buttonReturn">
    <property name="geometry">
     <rect>
      <x>550</x>
@@ -39,33 +39,33 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Palaa</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>248</x>
      <y>160</y>
-     <width>49</width>
-     <height>16</height>
+     <width>101</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Tilin Saldo:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>238</x>
      <y>220</y>
-     <width>49</width>
-     <height>16</height>
+     <width>121</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Tilin Luotto:</string>
    </property>
   </widget>
  </widget>

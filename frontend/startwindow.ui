@@ -17,17 +17,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="cardInput">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>180</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="labelInfo">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -40,6 +30,64 @@
      <string>Lue kortti</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="buttonOhitaPIN">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>80</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TESTAUS
+OHITA PIN</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>151</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>skipataan pindll
+ja kirjaudutaan
+suoraan ID:llä 2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>200</y>
+      <width>281</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>lähetetään pindll:lle
+hexakoodi
+0d0a2d303630303035343246450d0a3e</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonOhitaKortti">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>260</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TESTAUS
+OHITA KORTTI</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -47,7 +95,7 @@
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>21</height>
+     <height>19</height>
     </rect>
    </property>
   </widget>
