@@ -7,6 +7,9 @@ ChangeAccountWindow::ChangeAccountWindow(QWidget *parent) :
     ui(new Ui::ChangeAccountWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->buttonGroup, SIGNAL(buttonClicked(QAbstractButton *)),
+            this, SLOT(accountButtonClicked(QAbstractButton *)));
 }
 
 ChangeAccountWindow::~ChangeAccountWindow()
@@ -46,8 +49,20 @@ void ChangeAccountWindow::updateUI()
         ui->buttonNext->setDisabled(false);
     }
 
+    QList<QPushButton *> accountButtons = ui->buttonWrapper->findChildren<QPushButton *>();
+
+    QListIterator<QString> additionalAccountNames(session->additionalAccountNames);
+    additionalAccountNames.toFront();
+//    QListIterator<int> additionalAccountIDs(session->additionalAccountIDs);
+//    additionalAccountIDs.toFront();
+
+    //reel iterator to index
+    for (int i = 0; i < listIndex; ++i) {
+        additionalAccountNames.next();
+//        additionalAccountIDs.next();
+    }
+
     //prints the list
-    QList<QAbstractButton *> accountButtons = ui->buttonGroup->buttons();
     for (int i = 0; i < 5; ++i) {
         qDebug() << "accountNames list size: " << session->additionalAccountNames.count() <<
                     "listIndex: " << listIndex;
@@ -55,19 +70,45 @@ void ChangeAccountWindow::updateUI()
         if(i + listIndex >= session->additionalAccountNames.count())
         {
             qDebug() << "Index outside of list, outputting a blank";
-            ui->buttonGroup->button(
-                        ui->buttonGroup->id(accountButtons[i])
-                        )->setText(" ");
+            accountButtons[i]->setText("");
+            accountButtons[i]->setFlat(true);
+            accountButtons[i]->setDisabled(true);
         }
         else
         {
             qDebug() << "Index inside of list, outputting accountNames[" << i + listIndex;
-            ui->buttonGroup->button(
-                        ui->buttonGroup->id(accountButtons[i])
-                        )->setText(session->additionalAccountNames[i + listIndex]);
+            accountButtons[i]->setText(additionalAccountNames.next());
+            accountButtons[i]->setFlat(false);
+            accountButtons[i]->setDisabled(false);
         }
     }
 }
+
+void ChangeAccountWindow::accountButtonClicked(QAbstractButton * button)
+{
+    qDebug() << "ChangeAccountWindow:: accountButtonClicked slot activated";
+    QList<QAbstractButton *> accountButtons = ui->buttonWrapper->findChildren<QAbstractButton *>();
+
+    //find out which button was pressed (position in the list/layout)
+    int nthButton = 0;
+    for (int i = 0; i < 5; ++i) {
+        if(accountButtons[i]->text() == button->text())
+        {
+            qDebug() << "ChangeAccountWindow:: button[" << i << "] was the sender";
+            qDebug() << "ChangeAccountWindow:: accountButtons[i]->text():" << accountButtons[i]->text() <<
+                        "\nbutton->text(): " << button->text();
+            nthButton = i;
+            break;
+        }
+    }
+
+    int accountID = session->additionalAccountIDs[listIndex + nthButton];
+
+    qDebug() << "ChangeAccountWindow:: Attempting to change to accountID:" << accountID;
+
+    emit changeToAccount(accountID);
+}
+
 
 void ChangeAccountWindow::on_buttonPrevious_clicked()
 {

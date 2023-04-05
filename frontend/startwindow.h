@@ -32,6 +32,7 @@ private slots:
 
     void openDLLPinCode(QString);
     void startSession(int);
+    void swapToAccount(int);
 
     void on_buttonOhitaKortti_clicked(); //this shall be removed on release
     void on_buttonOhitaPIN_clicked(); //this shall be removed on release

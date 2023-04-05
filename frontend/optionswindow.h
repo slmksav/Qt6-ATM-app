@@ -29,6 +29,8 @@ signals:
     void clickTransactions();
     void clickChangeAccount();
 
+    void changeToAccount(int);
+
 public slots:
     void putSessionData(SessionData *session);
     void updateUI();

@@ -100,7 +100,7 @@ void StartWindow::startSession(int returnedCardID)
                                            "Putte Possu - debit",
                                            "Poika Veli - credit"};
 
-        session->additionalAccountIDs = {3,6,13,102,103,222,345};
+        session->additionalAccountIDs = {3,6,13,102,103,-222,345};
 
         session->transactionIDs = {1,2,3,4,
                                    5,6,7,8};
@@ -108,6 +108,58 @@ void StartWindow::startSession(int returnedCardID)
                                      "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
         session->transactionAmounts = {200.25, 55.00, 60, 20,
                                        20000.1, 60, 100.0, 100.00};
+    }
+    else
+    {
+        //DLLRestApi functions should fetch stuff from database here
+    }
+
+    if(session->accountType != "dual")
+    {
+        session->withdrawMode = session->accountType;
+    }
+
+    optionsWindow = new OptionsWindow(this);
+
+    connect(session, SIGNAL(sendLogout()),
+            this, SLOT(logout()));
+    connect(optionsWindow, SIGNAL(changeToAccount(int)),
+            this, SLOT(swapToAccount(int)));
+
+    optionsWindow->putSessionData(session);
+    optionsWindow->show();
+}
+
+void StartWindow::swapToAccount(int accountID)
+{
+    delete optionsWindow;
+    optionsWindow = nullptr;
+
+    session->accountID = accountID;
+
+    //test button pressed, initiate test data
+    if(accountID == -222)
+    {
+//        session->customerID = 2;
+//        session->accountID = 5;
+        session->accountType = "debit";
+        session->customerName = "Putte Possu";
+
+        session->accountBalance = 155.62;
+        session->accountCredit = 50000.00;
+
+        session->additionalAccountNames = {"Martti Ahtisaari - debit",
+                                           "Pekka Mahtisaari - dual",
+                                           "Pertti Vahtisaari - credit"};
+
+        session->additionalAccountIDs = {3,6,13};
+
+        session->transactionIDs = {1,2,3,4,
+                                   5,6,7,8};
+        session->transactionDates = {"01.02.2015", "05.12.2016", "01.12.2017", "06.11.2018",
+                                     "01.12.2019", "05.10.2020", "01.02.2021", "05.12.2022"};
+        session->transactionAmounts = {100.25, 155.00, 160, 120,
+                                       20000.11, 560, 1000.0, 200.00};
     }
     else
     {

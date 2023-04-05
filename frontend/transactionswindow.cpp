@@ -45,7 +45,6 @@ void TransactionsWindow::updateUI()
         ui->buttonNext->setDisabled(false);
     }
 
-    //prints the list
     QList<QLabel *> transactionLabels = ui->layoutWrapper->findChildren<QLabel *>();
 
     QListIterator<QString> transactionDates(session->transactionDates);
@@ -59,6 +58,7 @@ void TransactionsWindow::updateUI()
         transactionAmounts.previous();
     }
 
+    //prints the list
     for (int i = 0; i < 5; ++i) {
         qDebug() << "transactionDates list size: " << session->transactionDates.count() <<
                     "listIndex: " << listIndex;
