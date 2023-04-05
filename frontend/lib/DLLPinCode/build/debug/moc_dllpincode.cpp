@@ -28,7 +28,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_DLLPinCode_t {
-    uint offsetsAndSizes[20];
+    uint offsetsAndSizes[24];
     char stringdata0[11];
     char stringdata1[8];
     char stringdata2[1];
@@ -38,7 +38,9 @@ struct qt_meta_stringdata_DLLPinCode_t {
     char stringdata6[18];
     char stringdata7[18];
     char stringdata8[17];
-    char stringdata9[21];
+    char stringdata9[34];
+    char stringdata10[21];
+    char stringdata11[7];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_DLLPinCode_t::offsetsAndSizes) + ofs), len 
@@ -53,7 +55,9 @@ Q_CONSTINIT static const qt_meta_stringdata_DLLPinCode_t qt_meta_stringdata_DLLP
         QT_MOC_LITERAL(73, 17),  // "enterClickHandler"
         QT_MOC_LITERAL(91, 17),  // "clearClickHandler"
         QT_MOC_LITERAL(109, 16),  // "stopClickHandler"
-        QT_MOC_LITERAL(126, 20)   // "getCardhexcodeFromDb"
+        QT_MOC_LITERAL(126, 33),  // "getCardIDBasedOnCardHexCodeFr..."
+        QT_MOC_LITERAL(160, 20),  // "getCardhexcodeFromDb"
+        QT_MOC_LITERAL(181, 6)   // "cardId"
     },
     "DLLPinCode",
     "sendPin",
@@ -64,7 +68,9 @@ Q_CONSTINIT static const qt_meta_stringdata_DLLPinCode_t qt_meta_stringdata_DLLP
     "enterClickHandler",
     "clearClickHandler",
     "stopClickHandler",
-    "getCardhexcodeFromDb"
+    "getCardIDBasedOnCardHexCodeFromDb",
+    "getCardhexcodeFromDb",
+    "cardId"
 };
 #undef QT_MOC_LITERAL
 } // unnamed namespace
@@ -75,7 +81,7 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -83,15 +89,16 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   56,    2, 0x06,    1 /* Public */,
+       1,    1,   62,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    1,   59,    2, 0x0a,    3 /* Public */,
-       5,    0,   62,    2, 0x08,    5 /* Private */,
-       6,    0,   63,    2, 0x08,    6 /* Private */,
-       7,    0,   64,    2, 0x08,    7 /* Private */,
-       8,    0,   65,    2, 0x08,    8 /* Private */,
-       9,    0,   66,    2, 0x08,    9 /* Private */,
+       3,    1,   65,    2, 0x0a,    3 /* Public */,
+       5,    0,   68,    2, 0x08,    5 /* Private */,
+       6,    0,   69,    2, 0x08,    6 /* Private */,
+       7,    0,   70,    2, 0x08,    7 /* Private */,
+       8,    0,   71,    2, 0x08,    8 /* Private */,
+       9,    0,   72,    2, 0x08,    9 /* Private */,
+      10,    1,   73,    2, 0x08,   10 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Short,    2,
@@ -103,6 +110,7 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   11,
 
        0        // eod
 };
@@ -130,8 +138,11 @@ Q_CONSTINIT const QMetaObject DLLPinCode::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'stopClickHandler'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'getCardIDBasedOnCardHexCodeFromDb'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'getCardhexcodeFromDb'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>
     >,
     nullptr
 } };
@@ -149,7 +160,8 @@ void DLLPinCode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->enterClickHandler(); break;
         case 4: _t->clearClickHandler(); break;
         case 5: _t->stopClickHandler(); break;
-        case 6: _t->getCardhexcodeFromDb(); break;
+        case 6: _t->getCardIDBasedOnCardHexCodeFromDb(); break;
+        case 7: _t->getCardhexcodeFromDb((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -183,13 +195,13 @@ int DLLPinCode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }

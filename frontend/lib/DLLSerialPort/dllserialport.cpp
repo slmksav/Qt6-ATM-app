@@ -57,3 +57,4 @@ void DLLSerialPort::handleReadyRead()
     emit dataReceived(hexData);
 }
 
+

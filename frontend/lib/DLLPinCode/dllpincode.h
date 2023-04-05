@@ -33,8 +33,8 @@ private slots:
     void enterClickHandler();
     void clearClickHandler();
     void stopClickHandler();
-    void getCardhexcodeFromDb();
-
+    void getCardIDBasedOnCardHexCodeFromDb();
+    void getCardhexcodeFromDb(const QString& cardId);
 
 private:
     Ui::DLLPinCode *ui;
@@ -48,6 +48,7 @@ private:
     QString response_data;
     QString username;
     QString token;
+    QString cardID;
 };
 
 #endif // DLLPINCODE_H
