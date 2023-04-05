@@ -452,50 +452,9 @@ void DLLRestApi::getAccountType(QString sauliType)
 }
 
 
-void DLLRestApi::getCustomerName(QString sauliName) // saulin nimen hakeminen
+QJsonObject DLLRestApi::getCustomerName(QString sauliName)
 {
     QString url = getBaseUrl() + "/customer/" + sauliName;
-
-    QUrlQuery query;
-    query.addQueryItem("id", "1");
-
-    QUrl urlWithQuery(url);
-    urlWithQuery.setQuery(query);
-
-    QNetworkRequest request;
-    request.setUrl(urlWithQuery);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    QNetworkAccessManager networkManager;
-    QNetworkReply* networkReply = networkManager.get(request);
-
-    QEventLoop eventLoop;
-    QObject::connect(networkReply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
-    eventLoop.exec();
-
-    if(networkReply->error() == QNetworkReply::NoError) {
-        QByteArray responseData = networkReply->readAll();
-        qDebug() << "Raw response:" << responseData;
-
-        QJsonDocument document = QJsonDocument::fromJson(responseData);
-        QJsonObject object = document.object();
-        QString first_name = object.value("first_name").toString();
-        QString last_name = object.value("last_name").toString();
-
-        qDebug() << "first_name: " << first_name;
-        qDebug() << "last_name: " << last_name;
-
-    }
-    else {
-        qDebug() << "Network error: " << networkReply->errorString();
-    }
-
-    networkReply->deleteLater();
-}
-
-void DLLRestApi::getAccountBalance(QString sauliSaldo)
-{
-    QString url = getBaseUrl() + "/account/" + sauliSaldo;
 
     QUrlQuery query;
     query.addQueryItem("id", "1");
@@ -522,21 +481,80 @@ void DLLRestApi::getAccountBalance(QString sauliSaldo)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
-        QString creditSaldo = object.value("creditSaldo").toString();
-        QString debitSaldo = object.value("debitSaldo").toString();
 
+        QString firstName = object.value("first_name").toString();
+        QString lastName = object.value("last_name").toString();
 
-        qDebug() << "creditSaldo: " << creditSaldo;
-        qDebug() << "debitSaldo: " << debitSaldo;
+        QJsonObject result;
+        result.insert("first_name", firstName);
+        result.insert("last_name", lastName);
+
+        networkReply->deleteLater();
+
+        return result;
     }
+
     else {
         qDebug() << "Network error: " << networkReply->errorString();
-    }
+        networkReply->deleteLater();
 
-    networkReply->deleteLater();
+        // Palauta tyhjä JSON-objekti virheen sattuessa
+        return QJsonObject();
+    }
 }
 
-void DLLRestApi::getAccountCredit(QString sauliCredit)
+
+
+QJsonObject DLLRestApi::getAccountBalance(QString sauliSaldo)
+{
+    QString url = getBaseUrl() + "/account/" + sauliSaldo;
+
+    QUrlQuery query;
+    query.addQueryItem("id", "1");
+
+    QUrl urlWithQuery(url);
+    urlWithQuery.setQuery(query);
+
+    QNetworkRequest request;
+    request.setUrl(urlWithQuery);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+            responseData = networkReply->readAll();
+            qDebug() << "Raw response:" << responseData;
+
+            QJsonDocument document = QJsonDocument::fromJson(responseData);
+            QJsonObject object = document.object();
+
+            QString creditSaldo = object.value("debitSaldo").toString();
+            double creditSaldoDouble = creditSaldo.toDouble();
+
+            QJsonObject result;
+            result.insert("debitSaldo", creditSaldoDouble);
+            networkReply->deleteLater();
+
+            return result;
+        }
+        else {
+            qDebug() << "Network error: " << networkReply->errorString();
+            networkReply->deleteLater();
+
+            // Palauta tyhjä JSON-objekti virheen sattuessa
+            return QJsonObject();
+        }
+    }
+
+
+QJsonObject DLLRestApi::getAccountCredit(QString sauliCredit)
 {
     QString url = getBaseUrl() + "/account/" + sauliCredit;
 
@@ -565,13 +583,22 @@ void DLLRestApi::getAccountCredit(QString sauliCredit)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
-        QString creditMax = object.value("creditMax").toString();
 
-        qDebug() << "creditMax: " << creditMax;
+        QString creditSaldo = object.value("creditSaldo").toString();
+        double creditSaldoDouble = creditSaldo.toDouble();
+
+        QJsonObject result;
+        result.insert("creditSaldo", creditSaldoDouble);
+        networkReply->deleteLater();
+
+        return result;
     }
     else {
         qDebug() << "Network error: " << networkReply->errorString();
-    }
+        networkReply->deleteLater();
 
-    networkReply->deleteLater();
+        // Palauta tyhjä JSON-objekti virheen sattuessa
+        return QJsonObject();
+    }
 }
+
