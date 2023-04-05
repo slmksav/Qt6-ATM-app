@@ -5,17 +5,10 @@ const card = {
     return db.query('select * from card', callback);
   },
   getById: function(id, callback) {
-    return db.query('select idcard from card where idcard = ?', [id], callback);
+    return db.query('select * from card where idcard=?', [id], callback);
   },
-  getByHexCode: function(cardhexcode, callback) {
-    return db.query('SELECT idcard, cardhexcode FROM card WHERE cardhexcode = ?', [cardhexcode], callback);
-  },
-  add: function(card, callback) {
-    return db.query(
-      'insert into card (first_name,last_name) values(?,?)',
-      [card.first_name, card.last_name],
-      callback
-    );
+  getById: function(id, callback) {
+    return db.query('select * from card where idcard=?', [id], callback);
   },
   delete: function(id, callback) {
     return db.query('delete from card where idcard=?', [id], callback);
