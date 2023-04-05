@@ -22,15 +22,16 @@ router.get('/:id', function(request, response) {
     })
 });
 
-router.get('/cardhexcode/:cardhexcode', function(request, response) {
-    card.getByHexCode(request.params.cardhexcode, function(err, dbResult) {
-        if (err) {
-            response.json(err);
-        } else {
-            response.json(dbResult[0]);
-        }
-    })
+router.get('/:cardhexcode', function(request, response) {
+  card.getByHexCode(request.params.cardhexcode, function(err, dbResult) {
+    if (err) {
+      response.json(err);
+    } else {
+      response.json(dbResult);
+    }
+  });
 });
+
 
 router.post('/', function(request, response) {
     card.add(request.body, function(err, dbResult) {

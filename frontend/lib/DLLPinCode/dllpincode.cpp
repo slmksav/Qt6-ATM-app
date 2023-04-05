@@ -56,7 +56,6 @@ QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
 
 void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
 {
-    // Make a GET request to your REST API endpoint passing the cardhexcode
     QString site_url = DLLPinCode::getBaseUrl() + "/card?cardhexcode=" + cardHexCode;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -64,30 +63,32 @@ void DLLPinCode::getCardIDBasedOnCardHexCodeFromDb()
     request.setRawHeader("Authorization", authHeader);
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, &QNetworkAccessManager::finished,
-            this, [=](QNetworkReply *reply) {
+    connect(manager, &QNetworkAccessManager::finished, this, [=](QNetworkReply *reply) {
+        if (reply->error()) {
+            qDebug() << reply->errorString();
+        }
+        else {
+            QByteArray response = reply->readAll();
+            qDebug() << "Raw response:" << response;
 
-                if (reply->error()) {
-                    qDebug() << reply->errorString();
-                }
-                else {
-                    QByteArray response = reply->readAll();
-                    qDebug() << "Raw response:" << response;
+            QJsonDocument document = QJsonDocument::fromJson(response);
+            QJsonArray jsonArray = document.array();
 
-                    QJsonDocument document = QJsonDocument::fromJson(response);
-                    QJsonArray jsonArray = document.array();
+            if (jsonArray.isEmpty()) {
+                qDebug() << "No card found for hex code:" << cardHexCode;
+            }
+            else {
+                QJsonObject obj = jsonArray.at(0).toObject();
+                cardID = obj.value("idcard").toString();
+                qDebug() << "Card ID found for hex code:" << cardHexCode << "- ID:" << cardID;
 
-                    if (jsonArray.isEmpty()) {
-                        qDebug() << "No card found for hex code:" << cardHexCode;
-                    }
-                    else {
-                        cardID = jsonArray.at(0).toObject().value("idcard").toString();
-                        qDebug() << "Card ID found for hex code:" << cardHexCode << "- ID:" << cardID;
-                        getCardhexcodeFromDb(cardID);
-                    }
-                }
-                reply->deleteLater();
-            });
+                // Call the getCardhexcodeFromDb() function
+                // with the fetched card ID.
+                getCardhexcodeFromDb(cardID);
+            }
+        }
+        reply->deleteLater();
+    });
     manager->get(request);
 }
 
