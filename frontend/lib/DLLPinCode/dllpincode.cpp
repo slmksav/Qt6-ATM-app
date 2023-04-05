@@ -102,7 +102,8 @@ void DLLPinCode::enterClickHandler()
     }
 
     CheckPin = ui->lineEdit->text();
-    qDebug() << "lineEdit content:" << CheckPin;
+    qDebug() << "Pin joka on syötetty:" << CheckPin;
+    qDebug() << "Tietokannasta haettu PIN:" << SQLPin;
     qDebug() << "cardHexCode:" << handleCardHexCodeReceived(cardHexCode);
     qDebug() << "cardhexcodeSQL:" << cardhexcodeSQL;
     if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin)
