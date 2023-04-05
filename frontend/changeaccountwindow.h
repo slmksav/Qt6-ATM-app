@@ -25,6 +25,8 @@ private slots:
     void on_buttonPrevious_clicked();
     void on_buttonNext_clicked();
 
+    void on_buttonLogout_clicked();
+
 private:
     Ui::ChangeAccountWindow *ui;
     int listIndex = 0;

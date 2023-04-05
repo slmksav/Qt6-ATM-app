@@ -82,3 +82,9 @@ void ChangeAccountWindow::on_buttonNext_clicked()
     updateUI();
 }
 
+
+void ChangeAccountWindow::on_buttonLogout_clicked()
+{
+    emit session->sendLogout();
+}
+
