@@ -9,6 +9,13 @@ StartWindow::StartWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //create and connect signals from DLLSerialPort
+    pDLLSerialPort = new DLLSerialPort;
+    connect(pDLLSerialPort, SIGNAL(dataReceived(QString)),
+            this, SLOT(openDLLPinCode(QString)));
+
+
+
     //test button signal to skip reading the card
     connect(this, SIGNAL(testOhitaKorttiSignal(QString)),
             this, SLOT(openDLLPinCode(QString)));
@@ -50,6 +57,10 @@ void StartWindow::printReceipt(bool print)
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
     pDLLPinCode = new DLLPinCode(this);
+
+    connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
+            this, SLOT(startSession(int)));
+
     pDLLPinCode->cardHexCode = hexaCode;
     pDLLPinCode->show();
 }

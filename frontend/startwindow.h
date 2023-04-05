@@ -5,6 +5,8 @@
 
 #include "optionswindow.h"
 #include "dllpincode.h"
+#include "dllrestapi.h"
+#include "dllserialport.h"
 
 #include <QMainWindow>
 
@@ -34,15 +36,16 @@ private slots:
     void on_buttonOhitaKortti_clicked(); //this shall be removed on release
     void on_buttonOhitaPIN_clicked(); //this shall be removed on release
 
-
-
 private:
     Ui::StartWindow *ui;
 
     OptionsWindow * optionsWindow;
 
     SessionData * session;
+
     DLLPinCode * pDLLPinCode;
+    DLLRestApi * pDLLRestApi;
+    DLLSerialPort * pDLLSerialPort;
 
     void updateUI();
 };
