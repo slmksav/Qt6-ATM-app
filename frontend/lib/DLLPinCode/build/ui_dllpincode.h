@@ -126,8 +126,10 @@ public:
         labelFreezed1->setFont(font);
         labelFreezed2 = new QLabel(DLLPinCode);
         labelFreezed2->setObjectName("labelFreezed2");
-        labelFreezed2->setGeometry(QRect(30, 240, 631, 71));
-        labelFreezed2->setFont(font);
+        labelFreezed2->setGeometry(QRect(80, 220, 631, 71));
+        QFont font1;
+        font1.setPointSize(10);
+        labelFreezed2->setFont(font1);
 
         retranslateUi(DLLPinCode);
 
@@ -158,7 +160,7 @@ public:
         labeljee->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
         labelpin->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
         labelFreezed1->setText(QCoreApplication::translate("DLLPinCode", "Tili j\303\244\303\244dytetty", nullptr));
-        labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "Ota yhteys asiakaspalvelumme numeroon 0800 5343", nullptr));
+        labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567", nullptr));
     } // retranslateUi
 
 };

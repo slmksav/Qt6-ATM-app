@@ -83,7 +83,8 @@ void DLLPinCode::getCardInfoFromDb(const QString& cardID)
 
                     cardhexcodeSQL = object.value("cardhexcode").toString();
                     SQLPin = object.value("fourdigitpin").toString();
-                    wrongAttempts = object.value("wrongAttemtps").toInt();
+                    wrongAttempts = object.value("wrongAttempts").toInt();
+                    qDebug() << "wrongAttemptsMäärä" << wrongAttempts;
 
                     ui->labelpin->setText(SQLPin);
                     if(wrongAttempts > 0)
