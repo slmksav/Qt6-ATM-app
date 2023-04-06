@@ -14,7 +14,8 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(pDLLSerialPort, SIGNAL(dataReceived(QString)),
             this, SLOT(openDLLPinCode(QString)));
 
-
+    //create restapi dll class
+    pDLLRestApi = new DLLRestApi();
 
     //test button signal to skip reading the card
     connect(this, SIGNAL(testOhitaKorttiSignal(QString)),
@@ -112,12 +113,55 @@ void StartWindow::startSession(int returnedCardID)
     else
     {
         //DLLRestApi functions should fetch stuff from database here
+        session->customerID = pDLLRestApi->getCustomerId(session->cardID);
+        session->accountID = pDLLRestApi->getAccountId(session->cardID);
+        session->accountType = pDLLRestApi->getAccountType(session->accountID);
+        session->customerName = pDLLRestApi->getCustomerName(session->customerID);
+
+        //avoid making unnecessary calls to server
+        if(session->accountType == "dual")
+        {
+            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
+            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+        }
+        else if(session->accountType == "debit")
+        {
+            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
+            session->accountCredit = 0.00;
+        }
+        else
+        {
+            session->accountBalance = 0.00;
+            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+        }
+
+        //dummy data, waiting for api function to get implemented
+        session->additionalAccountNames = {"Martti Ahtisaari - debit",
+                                           "Pekka Mahtisaari - dual",
+                                           "Pertti Vahtisaari - credit",
+                                           "Jorma Sahtisaari - debit",
+                                           "Makkis Pekkis - dual",
+                                           "Putte Possu - debit",
+                                           "Poika Veli - credit"};
+
+        //dummy data, waiting for api function to get implemented
+        session->additionalAccountIDs = {3,6,13,102,103,-222,345};
+
+        //dummy data, waiting for api function to get implemented
+        session->transactionIDs = {1,2,3,4,
+                                   5,6,7,8};
+        session->transactionDates = {"01.02.2012", "05.12.2013", "01.12.2014", "06.11.2015",
+                                     "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
+        session->transactionAmounts = {200.25, 55.00, 60, 20,
+                                       20000.1, 60, 100.0, 100.00};
     }
 
     if(session->accountType != "dual")
     {
         session->withdrawMode = session->accountType;
     }
+
+    session->debugPrintData();
 
     optionsWindow = new OptionsWindow(this);
 
@@ -128,6 +172,8 @@ void StartWindow::startSession(int returnedCardID)
 
     optionsWindow->putSessionData(session);
     optionsWindow->show();
+
+    ui->labelInfo->setText("Lue Kortti");
 }
 
 void StartWindow::swapToAccount(int accountID)
