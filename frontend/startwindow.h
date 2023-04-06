@@ -31,7 +31,9 @@ private slots:
     void printReceipt(bool); //this might be redundant
 
     void openDLLPinCode(QString);
+
     void startSession(int);
+    void fetchDataWithDLL(int);
     void swapToAccount(int);
 
     void on_buttonOhitaKortti_clicked(); //this shall be removed on release
