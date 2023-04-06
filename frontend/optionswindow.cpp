@@ -50,7 +50,7 @@ void OptionsWindow::on_buttonWithdraw_clicked()
 void OptionsWindow::changeWithdrawType(QString mode)
 {
     session->withdrawMode = mode;
-    qDebug() << "Withdraw mode changed to: " << session->withdrawMode;
+    qDebug() << Q_FUNC_INFO << "Withdraw mode changed to: " << session->withdrawMode;
 
     withdrawWindow->putSessionData(session);
     withdrawWindow->show();

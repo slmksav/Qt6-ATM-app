@@ -58,19 +58,20 @@ void TransactionsWindow::updateUI()
         transactionAmounts.previous();
     }
 
+    qDebug() << Q_FUNC_INFO << "transactionDates list size: " << session->transactionDates.count() <<
+                "| listIndex: " << listIndex;
     //prints the list
     for (int i = 0; i < 5; ++i) {
-        qDebug() << "transactionDates list size: " << session->transactionDates.count() <<
-                    "listIndex: " << listIndex;
+
         //index would traverse outside of list
         if(i + listIndex >= session->transactionDates.count())
         {
-            qDebug() << "Index outside of list, outputting a blank";
+            qDebug() << Q_FUNC_INFO << "Index outside of list, outputting a blank";
             transactionLabels[i]->setText(" ");
         }
         else
         {
-            qDebug() << "Index inside of list, outputting transaction[" << i + listIndex;
+            qDebug() << Q_FUNC_INFO << "Index inside of list, outputting transaction[" << i + listIndex;
             transactionLabels[i]->setText(transactionDates.previous() +
                     ": " + QString::number(-1 * transactionAmounts.previous()));
         }

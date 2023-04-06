@@ -62,21 +62,22 @@ void ChangeAccountWindow::updateUI()
 //        additionalAccountIDs.next();
     }
 
+    qDebug() << Q_FUNC_INFO << "accountNames list size: " << session->additionalAccountNames.count() <<
+                "| listIndex: " << listIndex;
     //prints the list
     for (int i = 0; i < 5; ++i) {
-        qDebug() << "accountNames list size: " << session->additionalAccountNames.count() <<
-                    "listIndex: " << listIndex;
+
         //index would traverse outside of list
         if(i + listIndex >= session->additionalAccountNames.count())
         {
-            qDebug() << "Index outside of list, outputting a blank";
+            qDebug() << Q_FUNC_INFO << "Index outside of list, outputting a blank";
             accountButtons[i]->setText("");
             accountButtons[i]->setFlat(true);
             accountButtons[i]->setDisabled(true);
         }
         else
         {
-            qDebug() << "Index inside of list, outputting accountNames[" << i + listIndex;
+            qDebug() << Q_FUNC_INFO << "Index inside of list, outputting accountNames[" << i + listIndex;
             accountButtons[i]->setText(additionalAccountNames.next());
             accountButtons[i]->setFlat(false);
             accountButtons[i]->setDisabled(false);
@@ -86,7 +87,7 @@ void ChangeAccountWindow::updateUI()
 
 void ChangeAccountWindow::accountButtonClicked(QAbstractButton * button)
 {
-    qDebug() << "ChangeAccountWindow:: accountButtonClicked slot activated";
+    qDebug() << Q_FUNC_INFO << "slot activated";
     QList<QAbstractButton *> accountButtons = ui->buttonWrapper->findChildren<QAbstractButton *>();
 
     //find out which button was pressed (position in the list/layout)
@@ -94,9 +95,9 @@ void ChangeAccountWindow::accountButtonClicked(QAbstractButton * button)
     for (int i = 0; i < 5; ++i) {
         if(accountButtons[i]->text() == button->text())
         {
-            qDebug() << "ChangeAccountWindow:: button[" << i << "] was the sender";
-            qDebug() << "ChangeAccountWindow:: accountButtons[i]->text():" << accountButtons[i]->text() <<
-                        "\nbutton->text(): " << button->text();
+            qDebug() << Q_FUNC_INFO << "button[" << i << "] was the sender";
+            qDebug() << Q_FUNC_INFO << "accountButtons[i]->text():" << accountButtons[i]->text() <<
+                        "\n\tbutton->text(): " << button->text();
             nthButton = i;
             break;
         }
@@ -104,7 +105,7 @@ void ChangeAccountWindow::accountButtonClicked(QAbstractButton * button)
 
     int accountID = session->additionalAccountIDs[listIndex + nthButton];
 
-    qDebug() << "ChangeAccountWindow:: Attempting to change to accountID:" << accountID;
+    qDebug() << Q_FUNC_INFO << "Attempting to change to accountID:" << accountID;
 
     emit changeToAccount(accountID);
 }

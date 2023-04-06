@@ -33,7 +33,7 @@ StartWindow::~StartWindow()
 
 void StartWindow::logout()
 {
-    qDebug() << "Logout initiated";
+    qDebug() << Q_FUNC_INFO << "Logout initiated";
     delete session;
     session = nullptr;
 
@@ -57,7 +57,7 @@ void StartWindow::printReceipt(bool print)
 
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
-    qDebug() << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
+    qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
     pDLLPinCode = new DLLPinCode(this);
 
     connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
@@ -72,8 +72,8 @@ void StartWindow::startSession(int returnedCardID)
 {
     if(returnedCardID == 0)
     {
-        qDebug() << "DLLPinCode returned" << returnedCardID <<
-            "startSession aborted...";
+        qDebug() << Q_FUNC_INFO << "DLLPinCode returned" << returnedCardID <<
+            "| startSession aborted...";
         return;
     }
 
