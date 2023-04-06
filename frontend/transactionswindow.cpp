@@ -34,7 +34,7 @@ void TransactionsWindow::updateUI()
     }
 
     //see if next can be shown
-    if(session->additionalAccountNames.count() - listIndex <= 5)
+    if(session->transactionIDs.count() - listIndex <= 5)
     {
         ui->buttonNext->setFlat(true);
         ui->buttonNext->setDisabled(true);
