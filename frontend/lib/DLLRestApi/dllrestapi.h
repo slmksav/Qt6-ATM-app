@@ -19,8 +19,8 @@ public:
    QNetworkAccessManager *getManager;
     static QString getBaseUrl();
     int getCardId(QString hexa);
-    int getAccountId(QString cardID);
-    int getCustomerId(QString cardID);
+    int getAccountId(int cardID);
+    int getCustomerId(int cardID);
     QString getAccountType(int accountID); //Saulin tilin tyyppi
     QString getCustomerName(int customerID);
     double getAccountBalance(int accountID);

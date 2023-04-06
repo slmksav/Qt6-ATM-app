@@ -16,57 +16,9 @@ QString DLLRestApi::getBaseUrl()
 ////////// tästä alkaa CARD-funktio///////
 ////////////////////////////////////////////
 
-void DLLRestApi::getCardId(QString sauliCard) //Saulin kortin Hexan haku
+int DLLRestApi::getAccountId(int cardID)
 {
-    QString url = getBaseUrl() + "/card/" + sauliCard;
-
-    QUrlQuery query;
-    query.addQueryItem("id", "1");
-
-    QUrl urlWithQuery(url);
-    urlWithQuery.setQuery(query);
-
-    QNetworkRequest request;
-    request.setUrl(urlWithQuery);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    QNetworkAccessManager networkManager;
-
-    QEventLoop eventLoop; // Create an event loop to block until the request is finished
-    QObject::connect(&networkManager, &QNetworkAccessManager::finished, &eventLoop, &QEventLoop::quit);
-
-    QNetworkReply* networkReply = networkManager.get(request);
-
-    eventLoop.exec(); // Block until the request is finished
-
-    if(networkReply->error() == QNetworkReply::NoError) {
-        QByteArray responseData = networkReply->readAll();
-        qDebug() << "Raw response:" << responseData;
-
-        QJsonDocument document = QJsonDocument::fromJson(responseData);
-        QJsonObject object = document.object();
-        QString cardhexcode = object.value("cardhexcode").toString();
-
-         qDebug() << "cardhexcode: " << cardhexcode;
-
-    }
-    else {
-        qDebug() << "Network error: " << networkReply->errorString();
-    }
-
-    networkReply->deleteLater();
-}
-
-////////// Loppuuu ////////////////////////
-/// //////////////////////////////////////
-
-
-////////// tästä alkaa ACCOUNT-funktiot///////
-////////////////////////////////////////////
-
-void DLLRestApi::getAccountId(QString sauliId)
-{
-    QString url = getBaseUrl() + "/account/" + sauliId;
+    QString url = getBaseUrl() + "/account/" + QString::number(cardID);
 
     QUrlQuery query;
     query.addQueryItem("id", "1");
@@ -93,16 +45,21 @@ void DLLRestApi::getAccountId(QString sauliId)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
-        QString idaccount = object.value("idaccount").toString();
+        int idaccount = object.value("idaccount").toInt();
 
         qDebug() << "idaccount: " << idaccount;
+        return idaccount;
     }
     else {
         qDebug() << "Network error: " << networkReply->errorString();
+        return -1;
     }
 
     networkReply->deleteLater();
+    return -1; // add this final return statement
 }
+
+
 
 
 
@@ -233,10 +190,12 @@ double DLLRestApi::getAccountCredit(int accountID)
     else {
         qDebug() << "Network error: " << networkReply->errorString();
         networkReply->deleteLater();
+        return -1.0; // or 0.0, or any other appropriate value
     }
 
     return creditSaldo;
 }
+
 
 
 ////////// Loppuuu ////////////////////////
@@ -249,9 +208,9 @@ double DLLRestApi::getAccountCredit(int accountID)
 ////////// tästä alkaa CUSTOMER-funktio///////
 ////////////////////////////////////////////
 
-void DLLRestApi::getCustomerId(QString sauliId)
+int DLLRestApi::getCustomerId(int cardID)
 {
-    QString url = getBaseUrl() + "/customer/" + sauliId;
+    QString url = getBaseUrl() + "/customer/" + QString::number(cardID);
 
     QUrlQuery query;
     query.addQueryItem("id", "1");
@@ -283,13 +242,16 @@ void DLLRestApi::getCustomerId(QString sauliId)
 
         qDebug() << "idcustomer: " << idcustomer;
 
+        return idcustomer.toInt();
     }
     else {
         qDebug() << "Network error: " << networkReply->errorString();
+        return -1;
     }
 
     networkReply->deleteLater();
 }
+
 
 
 
