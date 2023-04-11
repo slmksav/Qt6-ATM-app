@@ -30,6 +30,7 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(stopClickHandler()));
     timer->start(30000);
+    getCardInfoFromDb(cardID);
 }
 
 DLLPinCode::~DLLPinCode()
@@ -121,7 +122,6 @@ void DLLPinCode::getCardInfoFromDb(const QString& cardID)
                     ui->labelpin->setText(SQLPin);
                     if(wrongAttempts > 0)
                     {
-                       updateWrongAttemptsInCard(cardID, wrongAttempts, token);
                        ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
                     }
                     else
@@ -167,10 +167,10 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
 //////loppu
 
 void DLLPinCode::enterClickHandler()
-{
+{ 
     timer->stop();
-    getCardIDFromDb();
-    getCardInfoFromDb(cardID);
+    ui->buttonEnter->setFlat(true);
+    ui->buttonEnter->setDisabled(true);
 
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
         QCoreApplication::processEvents();
@@ -192,8 +192,11 @@ void DLLPinCode::enterClickHandler()
         ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
         timer->start(30000);
         wrongAttempts--;
+        updateWrongAttemptsInCard(cardID,wrongAttempts,token);
         ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
     }
+    ui->buttonEnter->setFlat(false);
+    ui->buttonEnter->setDisabled(false);
 }
 
 
