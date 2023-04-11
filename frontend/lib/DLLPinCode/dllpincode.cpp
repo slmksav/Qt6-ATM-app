@@ -30,6 +30,7 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(stopClickHandler()));
     timer->start(30000);
+    getCardInfoFromDb(cardID);
 }
 
 DLLPinCode::~DLLPinCode()
@@ -50,6 +51,9 @@ void DLLPinCode::getCardIDFromDb()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
     request.setRawHeader("Authorization", authHeader);
+    QUrl url = request.url();
+    qDebug() << "cardID pyynnön URL" << url.toString();
+
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished,
             this, [=](QNetworkReply *reply) {
@@ -61,10 +65,11 @@ void DLLPinCode::getCardIDFromDb()
                     QJsonDocument document = QJsonDocument::fromJson(response);
                     QJsonObject object = document.object();
                     qDebug() << "Tämän hexan perusteella haetaan cardID:tä" << cardHexCode;
-                    qDebug() << "Response (pitäisi tulla cardID)" << response;
+                    qDebug() << "Response (pitäisi tulla raw response)" << response;
                     if (object.contains("idcard")) {
-                        QString cardID = object.value("idcard").toString();
-                        qDebug() << "idcard found: " << cardID;
+                        QString cardIDFetched = object.value("idcard").toString(); //väliaikainen muuttuja johon talletetaan responsen haluttu osa
+                        qDebug() << "idcard found: " << cardIDFetched;
+                        cardIDFetched = cardID; //haetun ID:n arvo koko luokan muuttujalle, jota käytetään muualla
 
                     } else {
                         qDebug() << "idcard not found";
@@ -75,13 +80,11 @@ void DLLPinCode::getCardIDFromDb()
     manager->get(request);
 }
 
-
 //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
 QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
 {
     qDebug()<<"emitattu signaali on " + hexCode;
     cardHexCode = hexCode;
-    getCardIDFromDb();
     qDebug()<<"cardHexCode arvo on: " + cardHexCode;
     return cardHexCode;
 }
@@ -94,6 +97,8 @@ void DLLPinCode::getCardInfoFromDb(const QString& cardID)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
     request.setRawHeader("Authorization", authHeader);
+    QUrl url = request.url();
+    qDebug() << url.toString();
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished,
@@ -121,7 +126,6 @@ void DLLPinCode::getCardInfoFromDb(const QString& cardID)
                     ui->labelpin->setText(SQLPin);
                     if(wrongAttempts > 0)
                     {
-                       updateWrongAttemptsInCard(cardID, wrongAttempts, token);
                        ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
                     }
                     else
@@ -137,7 +141,6 @@ void DLLPinCode::getCardInfoFromDb(const QString& cardID)
 void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token)
 {
     qDebug() << "Updating wrongAttempts in card " << cardID << " to " << newWrongAttempts;
-
     QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -147,7 +150,6 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
     requestBody.insert("wrongAttempts", newWrongAttempts);
     QJsonDocument requestBodyDoc(requestBody);
     QByteArray requestBodyData = requestBodyDoc.toJson();
-
     QNetworkAccessManager *manager = new QNetworkAccessManager();
 
     connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply *reply) {
@@ -167,9 +169,10 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
 //////loppu
 
 void DLLPinCode::enterClickHandler()
-{
+{ 
     timer->stop();
-    getCardInfoFromDb(cardID);
+    ui->buttonEnter->setFlat(true);
+    ui->buttonEnter->setDisabled(true);
 
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
         QCoreApplication::processEvents();
@@ -183,6 +186,7 @@ void DLLPinCode::enterClickHandler()
     if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
     {
         emit LoginSuccess(cardID.toInt());
+        updateWrongAttemptsInCard(cardID,3,token);
         done(Accepted);
     }
     else
@@ -191,8 +195,12 @@ void DLLPinCode::enterClickHandler()
         ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
         timer->start(30000);
         wrongAttempts--;
+        updateWrongAttemptsInCard(cardID,wrongAttempts,token);
         ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
+        clearClickHandler();
     }
+    ui->buttonEnter->setFlat(false);
+    ui->buttonEnter->setDisabled(false);
 }
 
 

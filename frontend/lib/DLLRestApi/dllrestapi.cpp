@@ -92,20 +92,26 @@ QString DLLRestApi::getAccountType(int accountID)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
+
         QString accountType = object.value("accountType").toString();
+        bool creditSaldoIsNull = object.value("creditSaldo").isNull();
+        bool debitSaldoIsNull = object.value("debitSaldo").isNull();
 
         qDebug() << "accountType: " << accountType;
+        qDebug() << "creditSaldo is null: " << creditSaldoIsNull;
+        qDebug() << "debitSaldo is null: " << debitSaldoIsNull;
 
         networkReply->deleteLater();
 
         return accountType;
     }
     else {
-            QString errorMessage = "Network error: " + networkReply->errorString();
-            networkReply->deleteLater();
-            return errorMessage;
-        }
+        QString errorMessage = "Network error: " + networkReply->errorString();
+        networkReply->deleteLater();
+        return errorMessage;
+    }
 }
+
 
 
 
