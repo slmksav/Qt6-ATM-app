@@ -36,7 +36,6 @@ private slots:
     void on_cardhexcodePushbutton_clicked();
     void on_buttonTestHexaToDLL_clicked();
     void leikkiHexaSlotti(QString);
-
 private:
     Ui::MainWindow *ui;
     QNetworkReply *reply;

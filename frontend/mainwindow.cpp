@@ -167,3 +167,4 @@ void MainWindow::updateWrongAttemptsTest()
     });
     manager->put(request, requestBodyData);
 }
+

@@ -20,8 +20,8 @@ public:
     static QString getBaseUrl();
     int getCardId(QString hexa);
     int getAccountId(int cardID);
-    int getCustomerId(int cardID);
-    QString getAccountType(int accountID); //Saulin tilin tyyppi
+    int getCustomerId(int accountID);
+    QString getAccountType(int accountID);
     QString getCustomerName(int customerID);
     double getAccountBalance(int accountID);
     double getAccountCredit(int accountID);
