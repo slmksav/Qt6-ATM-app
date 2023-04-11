@@ -56,7 +56,7 @@ int DLLRestApi::getAccountId(int cardID)
     }
 
     networkReply->deleteLater();
-    return -1; // add this final return statement
+    return -1;
 }
 
 
@@ -190,7 +190,7 @@ double DLLRestApi::getAccountCredit(int accountID)
     else {
         qDebug() << "Network error: " << networkReply->errorString();
         networkReply->deleteLater();
-        return -1.0; // or 0.0, or any other appropriate value
+        return -1.0;
     }
 
     return creditSaldo;
@@ -208,9 +208,9 @@ double DLLRestApi::getAccountCredit(int accountID)
 ////////// tästä alkaa CUSTOMER-funktio///////
 ////////////////////////////////////////////
 
-int DLLRestApi::getCustomerId(int cardID)
+int DLLRestApi::getCustomerId(int accountID)
 {
-    QString url = getBaseUrl() + "/customer/" + QString::number(cardID);
+    QString url = getBaseUrl() + "/customer/" + QString::number(accountID);
 
     QUrlQuery query;
     query.addQueryItem("id", "1");
@@ -227,9 +227,9 @@ int DLLRestApi::getCustomerId(int cardID)
 
     QByteArray responseData;
 
-    QEventLoop loop;  // create a QEventLoop
+    QEventLoop loop;
     QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
-    loop.exec(); // start the event loop
+    loop.exec();
 
     if(networkReply->error() == QNetworkReply::NoError) {
         responseData = networkReply->readAll();
@@ -238,7 +238,6 @@ int DLLRestApi::getCustomerId(int cardID)
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
         QString idcustomer = object.value("idcustomer").toString();
-
 
         qDebug() << "idcustomer: " << idcustomer;
 
@@ -251,6 +250,7 @@ int DLLRestApi::getCustomerId(int cardID)
 
     networkReply->deleteLater();
 }
+
 
 
 
@@ -303,6 +303,9 @@ QString DLLRestApi::getCustomerName(int customerID)
         }
 }
 
+
+////////// Loppuuu ////////////////////////
+/// //////////////////////////////////////
 
 
 
