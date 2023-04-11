@@ -10,7 +10,7 @@ const card = {
   },
 
   getCardIdByHexCode: function(cardhexcode, callback) {
-    return db.query('SELECT idcard FROM card WHERE cardhexcode = ?', [cardhexcode], callback);
+    return db.query('SELECT idcard FROM card WHERE cardhexcode =?', [cardhexcode], callback);
   },
 
   delete: function(id, callback) {
