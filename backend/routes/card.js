@@ -22,7 +22,7 @@ router.get('/:id', function(request, response) {
     })
 });
 
-router.get('/:cardhexcode', (request, response) => {
+router.get('/hex/:cardhexcode', (request, response) => {
     card.getCardIdByHexCode(request.params.id, function(err, dbResult) {
         if (err) {
             response.json(err);
