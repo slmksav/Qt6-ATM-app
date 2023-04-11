@@ -9,8 +9,8 @@ const card = {
     return db.query('select * from card where idcard=?', [id], callback);
   },
 
-  getCardIdByHexCode: function(cardhexcode) {
-    return db.query('SELECT idcard FROM card WHERE cardhexcode = ?', [cardhexcode]);
+  getCardIdByHexCode: function(cardhexcode, callback) {
+    return db.query('SELECT idcard FROM card WHERE cardhexcode = ?', [cardhexcode], callback);
   },
 
   delete: function(id, callback) {
