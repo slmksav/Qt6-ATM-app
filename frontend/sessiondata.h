@@ -38,6 +38,7 @@ signals:
 
 public slots:
     void resetTimer();
+    void debugPrintData();
 
 private slots:
     void handleTimeout();

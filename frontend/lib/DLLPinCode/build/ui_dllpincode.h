@@ -44,6 +44,7 @@ public:
     QLabel *labelpin;
     QLabel *labelFreezed1;
     QLabel *labelFreezed2;
+    QLabel *labelinfo;
 
     void setupUi(QDialog *DLLPinCode)
     {
@@ -52,7 +53,7 @@ public:
         DLLPinCode->resize(693, 644);
         cardhexcodeLabel = new QLabel(DLLPinCode);
         cardhexcodeLabel->setObjectName("cardhexcodeLabel");
-        cardhexcodeLabel->setGeometry(QRect(460, 80, 191, 20));
+        cardhexcodeLabel->setGeometry(QRect(450, 410, 231, 20));
         button4 = new QPushButton(DLLPinCode);
         button4->setObjectName("button4");
         button4->setGeometry(QRect(170, 330, 21, 29));
@@ -116,10 +117,10 @@ public:
         button6->setGeometry(QRect(230, 330, 21, 29));
         labeljee = new QLabel(DLLPinCode);
         labeljee->setObjectName("labeljee");
-        labeljee->setGeometry(QRect(460, 160, 131, 20));
+        labeljee->setGeometry(QRect(450, 440, 211, 20));
         labelpin = new QLabel(DLLPinCode);
         labelpin->setObjectName("labelpin");
-        labelpin->setGeometry(QRect(470, 290, 131, 20));
+        labelpin->setGeometry(QRect(450, 470, 131, 20));
         labelFreezed1 = new QLabel(DLLPinCode);
         labelFreezed1->setObjectName("labelFreezed1");
         labelFreezed1->setGeometry(QRect(230, 200, 241, 41));
@@ -130,6 +131,13 @@ public:
         QFont font1;
         font1.setPointSize(10);
         labelFreezed2->setFont(font1);
+        labelinfo = new QLabel(DLLPinCode);
+        labelinfo->setObjectName("labelinfo");
+        labelinfo->setGeometry(QRect(440, 360, 231, 51));
+        QFont font2;
+        font2.setFamilies({QString::fromUtf8("Sitka Banner")});
+        font2.setPointSize(25);
+        labelinfo->setFont(font2);
 
         retranslateUi(DLLPinCode);
 
@@ -157,10 +165,11 @@ public:
         button3->setText(QCoreApplication::translate("DLLPinCode", "3", nullptr));
         button0->setText(QCoreApplication::translate("DLLPinCode", "0", nullptr));
         button6->setText(QCoreApplication::translate("DLLPinCode", "6", nullptr));
-        labeljee->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
-        labelpin->setText(QCoreApplication::translate("DLLPinCode", "TextLabel", nullptr));
+        labeljee->setText(QCoreApplication::translate("DLLPinCode", "cardhexcodeSQL tulee t\303\244h\303\244", nullptr));
+        labelpin->setText(QCoreApplication::translate("DLLPinCode", "PIN tietokannasta", nullptr));
         labelFreezed1->setText(QCoreApplication::translate("DLLPinCode", "Tili j\303\244\303\244dytetty", nullptr));
         labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567", nullptr));
+        labelinfo->setText(QCoreApplication::translate("DLLPinCode", "Login tiedot:", nullptr));
     } // retranslateUi
 
 };

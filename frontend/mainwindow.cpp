@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    updateWrongAttemptsTest();
     m_serialPort = new DLLSerialPort(this);
     m_DLLPinCode = new DLLPinCode(this);
     // Numeroikaa connectionit, jotta voidaan refrensoida niihin dokumentaatiossa.
@@ -139,3 +139,31 @@ void MainWindow::leikkiHexaSlotti(QString hexaKoodi)
     mikanDLL->handleCardHexCodeReceived(mikanDLL->cardHexCode);
 }
 
+
+void MainWindow::updateWrongAttemptsTest()
+{
+    int wrongAttempts = 2;
+    QString site_url = DLLPinCode::getBaseUrl() + "/card/2";
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+    request.setRawHeader("Authorization", authHeader);
+    QJsonObject requestBody;
+    requestBody.insert("wrongAttempts", wrongAttempts);
+    QJsonDocument requestBodyDoc(requestBody);
+    QByteArray requestBodyData = requestBodyDoc.toJson();
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
+
+    connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply *reply) {
+        if (reply->error()) {
+            qDebug() << "Failed to update wrongAttempts in card 2" << ", remaining attempts: " << reply->errorString();
+        }
+        else {
+            QByteArray response = reply->readAll();
+            qDebug() << "Updated wrongAttempts to idcard 2" <<  ", remaining attempts: " << response;
+        }
+        reply->deleteLater();
+    });
+    manager->put(request, requestBodyData);
+}

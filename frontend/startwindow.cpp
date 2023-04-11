@@ -14,7 +14,8 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(pDLLSerialPort, SIGNAL(dataReceived(QString)),
             this, SLOT(openDLLPinCode(QString)));
 
-
+    //create restapi dll class
+    pDLLRestApi = new DLLRestApi();
 
     //test button signal to skip reading the card
     connect(this, SIGNAL(testOhitaKorttiSignal(QString)),
@@ -32,7 +33,7 @@ StartWindow::~StartWindow()
 
 void StartWindow::logout()
 {
-    qDebug() << "Logout initiated";
+    qDebug() << Q_FUNC_INFO << "Logout initiated";
     delete session;
     session = nullptr;
 
@@ -56,6 +57,7 @@ void StartWindow::printReceipt(bool print)
 
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
+    qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
     pDLLPinCode = new DLLPinCode(this);
 
     connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
@@ -70,8 +72,8 @@ void StartWindow::startSession(int returnedCardID)
 {
     if(returnedCardID == 0)
     {
-        qDebug() << "DLLPinCode returned" << returnedCardID <<
-            "startSession aborted...";
+        qDebug() << Q_FUNC_INFO << "DLLPinCode returned" << returnedCardID <<
+            "| startSession aborted...";
         return;
     }
 
@@ -80,11 +82,39 @@ void StartWindow::startSession(int returnedCardID)
     session = new SessionData();
     session->cardID = returnedCardID;
 
-    //test button pressed, initiate test data
-    if(returnedCardID == -313)
+    if(returnedCardID == -333) //test case
     {
-        session->customerID = 2;
-        session->accountID = 5;
+        session->accountID = -333;
+        session->customerID = -333;
+    }
+    else
+    {
+        //this is unique in that it stays the same when changing accounts
+        session->accountID = pDLLRestApi->getAccountId(session->cardID);
+        session->customerID = pDLLRestApi->getCustomerId(session->cardID); //HUOM. tää pitää varmaan sittenki vaihtaa hakemaan accountID:n perusteella että voin tunkee sen toho toisee funktioo
+    }
+
+    //call DLLRestApi to get rest of the data
+    fetchDataWithDLL(session->accountID);
+
+    optionsWindow = new OptionsWindow(this);
+
+    connect(session, SIGNAL(sendLogout()),
+            this, SLOT(logout()));
+    connect(optionsWindow, SIGNAL(changeToAccount(int)),
+            this, SLOT(swapToAccount(int)));
+
+    optionsWindow->putSessionData(session);
+    optionsWindow->show();
+
+    ui->labelInfo->setText("Lue Kortti");
+}
+
+void StartWindow::fetchDataWithDLL(int returnedAccountID)
+{
+    if(returnedAccountID == -333) //test button pressed, initiate test data
+    {
+        session->customerID = -333;
         session->accountType = "dual";
         session->customerName = "Markus Korhonen";
 
@@ -99,24 +129,100 @@ void StartWindow::startSession(int returnedCardID)
                                            "Putte Possu - debit",
                                            "Poika Veli - credit"};
 
-        session->additionalAccountIDs = {3,6,13,102,103,222,345};
+        session->additionalAccountIDs = {3,6,13,102,103,-222,345};
 
         session->transactionIDs = {1,2,3,4,
                                    5,6,7,8};
-        session->transactionDates = {"1.2.2012", "5.12.2013", "1.12.2014", "6.11.2015",
-                                     "1.12.2016", "5.10.2018", "1.2.2019", "5.12.2021"};
+        session->transactionDates = {"01.02.2012", "05.12.2013", "01.12.2014", "06.11.2015",
+                                     "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
         session->transactionAmounts = {200.25, 55.00, 60, 20,
                                        20000.1, 60, 100.0, 100.00};
+    }
+    else if(returnedAccountID == -222) //other test case
+    {
+        session->customerID = -222;
+        session->accountType = "debit";
+        session->customerName = "Putte Possu";
+
+        session->accountBalance = 155.62;
+        session->accountCredit = 50000.00;
+
+        session->additionalAccountNames = {"Martti Ahtisaari - debit",
+                                           "Pekka Mahtisaari - dual",
+                                           "Pertti Vahtisaari - credit"};
+
+        session->additionalAccountIDs = {3,6,13};
+
+        session->transactionIDs = {1,2,3,4,
+                                   5,6,7,8};
+        session->transactionDates = {"01.02.2015", "05.12.2016", "01.12.2017", "06.11.2018",
+                                     "01.12.2019", "05.10.2020", "01.02.2021", "05.12.2022"};
+        session->transactionAmounts = {100.25, 155.00, 160, 120,
+                                       20000.11, 560, 1000.0, 200.00};
     }
     else
     {
         //DLLRestApi functions should fetch stuff from database here
+        session->customerID = pDLLRestApi->getCustomerId(session->customerID);
+        session->accountType = pDLLRestApi->getAccountType(session->accountID);
+        session->customerName = pDLLRestApi->getCustomerName(session->customerID);
+
+        //avoid making unnecessary calls to server
+        if(session->accountType == "dual")
+        {
+            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
+            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+        }
+        else if(session->accountType == "debit")
+        {
+            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
+            session->accountCredit = 0.00;
+        }
+        else
+        {
+            session->accountBalance = 0.00;
+            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+        }
+
+        //dummy data, waiting for api function to get implemented
+        session->additionalAccountNames = {"Martti Ahtisaari - debit",
+                                           "Pekka Mahtisaari - dual",
+                                           "Pertti Vahtisaari - credit",
+                                           "Jorma Sahtisaari - debit",
+                                           "Makkis Pekkis - dual",
+                                           "Putte Possu - debit",
+                                           "Poika Veli - credit"};
+
+        //dummy data, waiting for api function to get implemented
+        session->additionalAccountIDs = {3,6,13,102,103,-222,345};
+
+        //dummy data, waiting for api function to get implemented
+        session->transactionIDs = {1,2,3,4,
+                                   5,6,7,8};
+        session->transactionDates = {"01.02.2012", "05.12.2013", "01.12.2014", "06.11.2015",
+                                     "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
+        session->transactionAmounts = {200.25, 55.00, 60, 20,
+                                       20000.1, 60, 100.0, 100.00};
     }
 
+    //put accountType to withdrawMode automatically if card isn't "dual"
     if(session->accountType != "dual")
     {
         session->withdrawMode = session->accountType;
     }
+
+    session->debugPrintData();
+}
+
+void StartWindow::swapToAccount(int accountID)
+{
+    delete optionsWindow;
+    optionsWindow = nullptr;
+
+    session->accountID = accountID;
+
+    //call DLLRestApi to get rest of the data
+    fetchDataWithDLL(session->accountID);
 
     optionsWindow = new OptionsWindow(this);
 
@@ -141,6 +247,6 @@ void StartWindow::on_buttonOhitaKortti_clicked()
 //This button shall get removed on release
 void StartWindow::on_buttonOhitaPIN_clicked()
 {
-    emit testOhitaPINSignal(-313);
+    emit testOhitaPINSignal(-333);
 }
 

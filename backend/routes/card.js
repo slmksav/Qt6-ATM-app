@@ -22,6 +22,23 @@ router.get('/:id', function(request, response) {
     })
 });
 
+router.get('/cardid/:cardhexcode', (req, res) => {
+    const cardhexcode = req.params.cardhexcode;
+    pool.getConnection((err, connection) => {
+      if (err) throw err;
+      const query = 'SELECT idcard FROM card WHERE cardhexcode = ?';
+      connection.query(query, [cardhexcode], (err, results) => {
+        connection.release();
+        if (err) throw err;
+        if (results.length > 0) {
+          res.json({ idcard: results[0].idcard });
+        } else {
+          res.status(404).json({ error: 'Card not found' });
+        }
+      });
+    });
+  });
+
 router.post('/', function(request, response) {
     card.add(request.body, function(err, dbResult) {
         if (err) {

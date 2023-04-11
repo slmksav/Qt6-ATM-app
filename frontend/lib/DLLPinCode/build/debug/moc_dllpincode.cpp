@@ -28,7 +28,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 namespace {
 struct qt_meta_stringdata_DLLPinCode_t {
-    uint offsetsAndSizes[32];
+    uint offsetsAndSizes[34];
     char stringdata0[11];
     char stringdata1[13];
     char stringdata2[1];
@@ -43,8 +43,9 @@ struct qt_meta_stringdata_DLLPinCode_t {
     char stringdata11[18];
     char stringdata12[17];
     char stringdata13[15];
-    char stringdata14[18];
-    char stringdata15[7];
+    char stringdata14[16];
+    char stringdata15[18];
+    char stringdata16[7];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_DLLPinCode_t::offsetsAndSizes) + ofs), len 
@@ -64,8 +65,9 @@ Q_CONSTINIT static const qt_meta_stringdata_DLLPinCode_t qt_meta_stringdata_DLLP
         QT_MOC_LITERAL(152, 17),  // "clearClickHandler"
         QT_MOC_LITERAL(170, 16),  // "stopClickHandler"
         QT_MOC_LITERAL(187, 14),  // "accountFreezed"
-        QT_MOC_LITERAL(202, 17),  // "getCardInfoFromDb"
-        QT_MOC_LITERAL(220, 6)   // "cardId"
+        QT_MOC_LITERAL(202, 15),  // "getCardIDFromDb"
+        QT_MOC_LITERAL(218, 17),  // "getCardInfoFromDb"
+        QT_MOC_LITERAL(236, 6)   // "cardId"
     },
     "DLLPinCode",
     "LoginSuccess",
@@ -81,6 +83,7 @@ Q_CONSTINIT static const qt_meta_stringdata_DLLPinCode_t qt_meta_stringdata_DLLP
     "clearClickHandler",
     "stopClickHandler",
     "accountFreezed",
+    "getCardIDFromDb",
     "getCardInfoFromDb",
     "cardId"
 };
@@ -93,7 +96,7 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -101,17 +104,18 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   68,    2, 0x06,    1 /* Public */,
+       1,    1,   74,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    1,   71,    2, 0x0a,    3 /* Public */,
-       5,    3,   74,    2, 0x08,    5 /* Private */,
-       9,    0,   81,    2, 0x08,    9 /* Private */,
-      10,    0,   82,    2, 0x08,   10 /* Private */,
-      11,    0,   83,    2, 0x08,   11 /* Private */,
-      12,    0,   84,    2, 0x08,   12 /* Private */,
-      13,    0,   85,    2, 0x08,   13 /* Private */,
-      14,    1,   86,    2, 0x08,   14 /* Private */,
+       3,    1,   77,    2, 0x0a,    3 /* Public */,
+       5,    3,   80,    2, 0x08,    5 /* Private */,
+       9,    0,   87,    2, 0x08,    9 /* Private */,
+      10,    0,   88,    2, 0x08,   10 /* Private */,
+      11,    0,   89,    2, 0x08,   11 /* Private */,
+      12,    0,   90,    2, 0x08,   12 /* Private */,
+      13,    0,   91,    2, 0x08,   13 /* Private */,
+      14,    0,   92,    2, 0x08,   14 /* Private */,
+      15,    1,   93,    2, 0x08,   15 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    2,
@@ -124,7 +128,8 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   15,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   16,
 
        0        // eod
 };
@@ -159,6 +164,8 @@ Q_CONSTINIT const QMetaObject DLLPinCode::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'accountFreezed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'getCardIDFromDb'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'getCardInfoFromDb'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>
@@ -181,7 +188,8 @@ void DLLPinCode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 5: _t->clearClickHandler(); break;
         case 6: _t->stopClickHandler(); break;
         case 7: _t->accountFreezed(); break;
-        case 8: _t->getCardInfoFromDb((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 8: _t->getCardIDFromDb(); break;
+        case 9: _t->getCardInfoFromDb((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -215,13 +223,13 @@ int DLLPinCode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }

@@ -18,19 +18,13 @@ public:
     DLLRestApi();
    QNetworkAccessManager *getManager;
     static QString getBaseUrl();
-    void getAccount2Data(QString samuliAccount); ;     // Samulin Tili
-    void getAccountData(QString sauliAccount); // Saulin tili
-    void getCardData(QString sauliCard);    // Saulin Kortti
-    void getCard2Data(QString samuliCard);        // Samulin Kortti
-    void getCustomerData(QString sauliCustomer);    //SAULIN käyttäjä
-    void getCustomer2Data(QString samuliCustomer);    //Samulin Käyttäjä
-    void getCardId(QString sauliCard);
-    void getAccountId(QString sauliId);
-    void getCustomerId(QString sauliId);
-    void getAccountType(QString sauliType); //Saulin tilin tyyppi
-    QJsonObject getCustomerName(QString sauliName);
-    QJsonObject getAccountBalance(QString sauliSaldo);
-    QJsonObject getAccountCredit(QString sauliCredit);
+    int getCardId(QString hexa);
+    int getAccountId(int cardID);
+    int getCustomerId(int cardID);
+    QString getAccountType(int accountID); //Saulin tilin tyyppi
+    QString getCustomerName(int customerID);
+    double getAccountBalance(int accountID);
+    double getAccountCredit(int accountID);
 
 private slots:
 

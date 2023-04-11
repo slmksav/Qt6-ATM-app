@@ -51,7 +51,7 @@ void WithdrawWindow::withdrawButtonClicked(int buttonID)
     //get button value (text of the button)
     int buttonValue = ui->buttonGroup->button(buttonID)->text().toInt();
 
-    qDebug() << "Withdrawal amount selected: " << buttonValue;
+    qDebug() << Q_FUNC_INFO << "Withdrawal amount selected: " << buttonValue;
     withdrawMoney(buttonValue);
 }
 
@@ -65,18 +65,18 @@ void WithdrawWindow::withdrawMoney(int amount)
 
         if(newAmount < 0.00)
         {
-            qDebug() << "withdrawAmount exceeds accountBalance!\n"
-                     << "Balance: " << session->accountBalance
-                     << "After attempted withdrawal: " << newAmount;
+            qDebug() << Q_FUNC_INFO << "withdrawAmount exceeds accountBalance!\n"
+                     << "\tBalance: " << session->accountBalance
+                     << "| After attempted withdrawal: " << newAmount;
 
             invalidAttempt = true;
             updateUI();
             return;
         }
 
-        qDebug() << "Old accountBalance: " << session->accountBalance;
+        qDebug() << Q_FUNC_INFO << "Old accountBalance: " << session->accountBalance;
         session->accountBalance = newAmount;
-        qDebug() << "New accountBalance: " << session->accountBalance;
+        qDebug() << Q_FUNC_INFO << "New accountBalance: " << session->accountBalance;
 
         //setAccountBalance(session->accountID, session->accountBalance);
     }
@@ -86,18 +86,18 @@ void WithdrawWindow::withdrawMoney(int amount)
 
         if(newAmount < 0.00)
         {
-            qDebug() << "withdrawAmount exceeds accountCredit!\n"
-                     << "Balance: " << session->accountCredit
-                     << "After attempted withdrawal: " << newAmount;
+            qDebug() << Q_FUNC_INFO << "withdrawAmount exceeds accountCredit!\n"
+                     << "\tBalance: " << session->accountCredit
+                     << "| After attempted withdrawal: " << newAmount;
 
             invalidAttempt = true;
             updateUI();
             return;
         }
 
-        qDebug() << "Old accountCredit: " << session->accountCredit;
+        qDebug() << Q_FUNC_INFO << "Old accountCredit: " << session->accountCredit;
         session->accountCredit = newAmount;
-        qDebug() << "New accountCredit: " << session->accountCredit;
+        qDebug() << Q_FUNC_INFO << "New accountCredit: " << session->accountCredit;
 
         //setAccountCredit(session->accountID, session->accountCredit);
     }

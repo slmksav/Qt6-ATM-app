@@ -3,6 +3,7 @@
 
 #include "sessiondata.h"
 
+#include <QAbstractButton>
 #include <QDialog>
 
 namespace Ui {
@@ -17,11 +18,16 @@ public:
     explicit ChangeAccountWindow(QWidget *parent = nullptr);
     ~ChangeAccountWindow();
 
+signals:
+    void changeToAccount(int);
+
 public slots:
     void putSessionData(SessionData *session);
     void updateUI();
 
 private slots:
+    void accountButtonClicked(QAbstractButton *);
+
     void on_buttonPrevious_clicked();
     void on_buttonNext_clicked();
 
