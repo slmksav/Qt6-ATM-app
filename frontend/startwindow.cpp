@@ -58,7 +58,7 @@ void StartWindow::printReceipt(bool print)
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
-    pDLLPinCode = new DLLPinCode(this);
+    pDLLPinCode = new DLLPinCode(this, hexaCode);
 
     connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
             this, SLOT(startSession(int)));

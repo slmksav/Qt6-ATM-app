@@ -134,9 +134,6 @@ void MainWindow::leikkiHexaSlotti(QString hexaKoodi)
     qDebug() << "DLLPinCode-luokan cardHexCode on nyt:" << mikanDLL->cardHexCode;
 
     mikanDLL->show();
-
-    //tässä ei kannattaisi enää manipuloida dll:ää, vaan antaa sen hoitaa hommat, mutta testin vuoksi
-    mikanDLL->handleCardHexCodeReceived(mikanDLL->cardHexCode);
 }
 
 

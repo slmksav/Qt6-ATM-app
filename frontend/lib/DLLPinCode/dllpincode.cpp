@@ -1,8 +1,7 @@
 #include "dllpincode.h"
 #include "ui_dllpincode.h"
-#include <QSqlQuery>
 
-DLLPinCode::DLLPinCode(QWidget *parent) :
+DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived) :
     QDialog(parent),
     ui(new Ui::DLLPinCode)
 {
@@ -30,7 +29,9 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(stopClickHandler()));
     timer->start(30000);
-    getCardInfoFromDb(cardID);
+    cardHexCode = cardHexCodeReceived;
+    qDebug() << "cardHexCode konstruktorissa:" << cardHexCode;
+    getCardIDFromDb();
 }
 
 DLLPinCode::~DLLPinCode()
@@ -46,7 +47,7 @@ QString DLLPinCode::getBaseUrl()
 //tämä funktio hakee cardHexCoden perusteella cardID:n eli rivin primary keyn
 void DLLPinCode::getCardIDFromDb()
 {
-    QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardHexCode;
+    QString site_url = DLLPinCode::getBaseUrl() + "/hexcode/hex/" + cardHexCode;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
@@ -70,7 +71,6 @@ void DLLPinCode::getCardIDFromDb()
                         QString cardIDFetched = object.value("idcard").toString(); //väliaikainen muuttuja johon talletetaan responsen haluttu osa
                         qDebug() << "idcard found: " << cardIDFetched;
                         cardIDFetched = cardID; //haetun ID:n arvo koko luokan muuttujalle, jota käytetään muualla
-
                     } else {
                         qDebug() << "idcard not found";
                     }
@@ -80,17 +80,8 @@ void DLLPinCode::getCardIDFromDb()
     manager->get(request);
 }
 
-//tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
-QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
-{
-    qDebug()<<"emitattu signaali on " + hexCode;
-    cardHexCode = hexCode;
-    qDebug()<<"cardHexCode arvo on: " + cardHexCode;
-    return cardHexCode;
-}
-
 //tämä funktio hakee haetun cardID:n perusteella relevantit tiedot
-void DLLPinCode::getCardInfoFromDb(const QString& cardID)
+void DLLPinCode::getCardInfoFromDb()
 {
     QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
     QNetworkRequest request((site_url));
@@ -112,10 +103,6 @@ void DLLPinCode::getCardInfoFromDb(const QString& cardID)
                     QJsonDocument document = QJsonDocument::fromJson(response);
                     QJsonObject object = document.object();
                     // Check if the response contains the cardhexcode key
-                    if (!object.contains("cardhexcode")) {
-                        qDebug() << "Response does not contain cardhexcode";
-                        return;
-                    }
                     cardhexcodeSQL = object.value("cardhexcode").toString();
                     SQLPin = object.value("fourdigitpin").toString();
                     wrongAttempts = object.value("wrongAttempts").toInt();
@@ -165,14 +152,12 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
     manager->put(request, requestBodyData);
 }
 
-
-//////loppu
-
 void DLLPinCode::enterClickHandler()
 { 
     timer->stop();
     ui->buttonEnter->setFlat(true);
     ui->buttonEnter->setDisabled(true);
+    getCardInfoFromDb();
 
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
         QCoreApplication::processEvents();
@@ -181,12 +166,12 @@ void DLLPinCode::enterClickHandler()
     CheckPin = ui->lineEdit->text();
     qDebug() << "Pin joka on syötetty:" << CheckPin;
     qDebug() << "Tietokannasta haettu PIN:" << SQLPin;
-    qDebug() << "cardHexCode (luettu):" << handleCardHexCodeReceived(cardHexCode);
+    qDebug() << "cardHexCode (luettu):" << cardHexCode;
     qDebug() << "cardhexcodeSQL (haettu):" << cardhexcodeSQL;
     if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
     {
         emit LoginSuccess(cardID.toInt());
-        updateWrongAttemptsInCard(cardID,3,token);
+        updateWrongAttemptsInCard(cardID, 3, token);
         done(Accepted);
     }
     else
