@@ -169,7 +169,6 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
 void DLLPinCode::enterClickHandler()
 {
     timer->stop();
-    getCardIDFromDb();
     getCardInfoFromDb(cardID);
 
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
