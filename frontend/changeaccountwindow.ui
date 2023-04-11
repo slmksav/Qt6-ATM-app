@@ -71,67 +71,77 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QWidget" name="buttonWrapper" native="true">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>170</y>
+     <x>-1</x>
+     <y>90</y>
      <width>641</width>
-     <height>146</height>
+     <height>321</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="buttonAccount1">
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="buttonAccount2">
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="buttonAccount3">
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="buttonAccount4">
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="buttonAccount5">
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-   </layout>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>-10</y>
+      <width>621</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="buttonAccount1">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonAccount2">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonAccount3">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonAccount4">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonAccount5">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>

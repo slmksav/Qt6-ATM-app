@@ -21,7 +21,21 @@ void BalanceWindow::putSessionData(SessionData *session)
 
 void BalanceWindow::updateUI()
 {
-
+    if(session->accountType == "dual")
+    {
+        ui->labelBalance->setText(QString::number(session->accountBalance));
+        ui->labelCredit->setText(QString::number(session->accountCredit));
+    }
+    else if(session->accountType == "debit")
+    {
+        ui->labelBalance->setText(QString::number(session->accountBalance));
+        ui->labelCredit->setText("-");
+    }
+    else
+    {
+        ui->labelBalance->setText("-");
+        ui->labelCredit->setText(QString::number(session->accountCredit));
+    }
 }
 
 

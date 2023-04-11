@@ -50,7 +50,7 @@ void OptionsWindow::on_buttonWithdraw_clicked()
 void OptionsWindow::changeWithdrawType(QString mode)
 {
     session->withdrawMode = mode;
-    qDebug() << "Withdraw mode changed to: " << session->withdrawMode;
+    qDebug() << Q_FUNC_INFO << "Withdraw mode changed to: " << session->withdrawMode;
 
     withdrawWindow->putSessionData(session);
     withdrawWindow->show();
@@ -79,7 +79,11 @@ void OptionsWindow::on_buttonTransactions_clicked()
 void OptionsWindow::on_buttonChangeAccount_clicked()
 {
     changeAccountWindow = new ChangeAccountWindow(this);
+
+    connect(changeAccountWindow, SIGNAL(changeToAccount(int)),
+            this, SIGNAL(changeToAccount(int)));
+
     changeAccountWindow->putSessionData(session);
-    changeAccountWindow->show();
+    changeAccountWindow->show();   
 }
 
