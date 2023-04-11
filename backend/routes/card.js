@@ -22,7 +22,7 @@ router.get('/:id', function(request, response) {
     })
 });
 
-router.get('/cardid/:cardhexcode', (req, res) => {
+router.get('/:cardhexcode', (req, res) => {
     const cardhexcode = req.params.cardhexcode;
     pool.getConnection((err, connection) => {
       if (err) throw err;

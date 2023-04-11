@@ -30,8 +30,6 @@ DLLPinCode::DLLPinCode(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(stopClickHandler()));
     timer->start(30000);
-    getCardIDFromDb();
-
 }
 
 DLLPinCode::~DLLPinCode()
@@ -44,51 +42,48 @@ QString DLLPinCode::getBaseUrl()
     return "https://bankdb-r18.onrender.com";
 }
 
+//tämä funktio hakee cardHexCoden perusteella cardID:n eli rivin primary keyn
+void DLLPinCode::getCardIDFromDb()
+{
+    QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardHexCode;
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+    request.setRawHeader("Authorization", authHeader);
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
+    connect(manager, &QNetworkAccessManager::finished,
+            this, [=](QNetworkReply *reply) {
+                if (reply->error()) {
+                    qDebug() << reply->errorString();
+                }
+                else {
+                    QByteArray response = reply->readAll();
+                    QJsonDocument document = QJsonDocument::fromJson(response);
+                    QJsonObject object = document.object();
+                    qDebug() << "Tämän hexan perusteella haetaan cardID:tä" << cardHexCode;
+                    qDebug() << "Response (pitäisi tulla cardID)" << response;
+                    if (object.contains("idcard")) {
+                        QString cardID = object.value("idcard").toString();
+                        qDebug() << "idcard found: " << cardID;
+
+                    } else {
+                        qDebug() << "idcard not found";
+                    }
+                }
+                reply->deleteLater();
+            });
+    manager->get(request);
+}
+
 
 //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. DLLPinCode.cpp:n signaalit)
 QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
 {
     qDebug()<<"emitattu signaali on " + hexCode;
     cardHexCode = hexCode;
+    getCardIDFromDb();
     qDebug()<<"cardHexCode arvo on: " + cardHexCode;
     return cardHexCode;
-}
-
-void DLLPinCode::getCardIDFromDb()
-{
-    // Build the URL to retrieve card information based on the cardhexcode value
-    QString site_url = DLLPinCode::getBaseUrl() + "/cardid/" + cardHexCode;
-    // Create a network request with authentication headers
-    QNetworkRequest request((site_url));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
-    request.setRawHeader("Authorization", authHeader);
-    // Create a network manager and connect to the finished signal
-    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-    connect(manager, &QNetworkAccessManager::finished,
-            this, [=](QNetworkReply *reply) {
-                if (reply->error()) {
-                    // Handle network errors
-                    qDebug() << reply->errorString();
-                }
-                else {
-                    // Read the response and extract the idcard value
-                    QByteArray response = reply->readAll();
-                    QJsonDocument document = QJsonDocument::fromJson(response);
-                    QJsonObject object = document.object();
-                    if (object.contains("idcard")) {
-                        QString idcard = object.value("idcard").toString();
-                        qDebug() << "idcard found: " << idcard;
-                        // Do something with the idcard value here
-                    } else {
-                        qDebug() << "idcard not found";
-                    }
-                }
-                // Clean up the network reply object
-                reply->deleteLater();
-            });
-    // Send the network request
-    manager->get(request);
 }
 
 //tämä funktio hakee haetun cardID:n perusteella relevantit tiedot
