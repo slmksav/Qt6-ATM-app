@@ -237,8 +237,9 @@ int DLLRestApi::getCustomerId(int accountID)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
-        QString idcustomer = object.value("idcustomer").toString();
+        qDebug() << "Response JSON:" << object;
 
+        QString idcustomer = QString::number(object.value("idcustomer").toInt());
         qDebug() << "idcustomer: " << idcustomer;
 
         return idcustomer.toInt();
@@ -249,6 +250,7 @@ int DLLRestApi::getCustomerId(int accountID)
     }
 
     networkReply->deleteLater();
+    return -1;
 }
 
 
@@ -302,7 +304,6 @@ QString DLLRestApi::getCustomerName(int customerID)
             return errorMessage;
         }
 }
-
 
 ////////// Loppuuu ////////////////////////
 /// //////////////////////////////////////
