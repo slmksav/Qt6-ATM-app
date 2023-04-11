@@ -67,12 +67,11 @@ void DLLPinCode::getCardIDFromDb()
                     QJsonObject object = document.object();
                     qDebug() << "Tämän hexan perusteella haetaan cardID:tä" << cardHexCode;
                     qDebug() << "Response (pitäisi tulla raw response)" << response;
-                    if (object.contains("idcard")) {
-                        QString cardIDFetched = object.value("idcard").toString(); //väliaikainen muuttuja johon talletetaan responsen haluttu osa
-                        qDebug() << "idcard found: " << cardIDFetched;
-                        cardIDFetched = cardID; //haetun ID:n arvo koko luokan muuttujalle, jota käytetään muualla
-                    } else {
+                    if (!object.contains("idcard")) {
                         qDebug() << "idcard not found";
+                    } else {
+                        cardID = object.value("idcard").toString();
+                        qDebug() << "idcard found: " << cardID;
                     }
                 }
                 reply->deleteLater();
@@ -89,7 +88,7 @@ void DLLPinCode::getCardInfoFromDb()
     QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
     request.setRawHeader("Authorization", authHeader);
     QUrl url = request.url();
-    qDebug() << url.toString();
+    qDebug() << "card info URL: " << url.toString();
 
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished,
