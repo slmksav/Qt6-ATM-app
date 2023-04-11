@@ -61,10 +61,11 @@ void DLLPinCode::getCardIDFromDb()
                     QJsonDocument document = QJsonDocument::fromJson(response);
                     QJsonObject object = document.object();
                     qDebug() << "Tämän hexan perusteella haetaan cardID:tä" << cardHexCode;
-                    qDebug() << "Response (pitäisi tulla cardID)" << response;
+                    qDebug() << "Response (pitäisi tulla raw response)" << response;
                     if (object.contains("idcard")) {
-                        QString cardID = object.value("idcard").toString();
-                        qDebug() << "idcard found: " << cardID;
+                        QString cardIDFetched = object.value("idcard").toString(); //väliaikainen muuttuja johon talletetaan responsen haluttu osa
+                        qDebug() << "idcard found: " << cardIDFetched;
+                        cardIDFetched = cardID; //haetun ID:n arvo koko luokan muuttujalle, jota käytetään muualla
 
                     } else {
                         qDebug() << "idcard not found";
@@ -81,7 +82,6 @@ QString DLLPinCode::handleCardHexCodeReceived(QString hexCode)
 {
     qDebug()<<"emitattu signaali on " + hexCode;
     cardHexCode = hexCode;
-    getCardIDFromDb();
     qDebug()<<"cardHexCode arvo on: " + cardHexCode;
     return cardHexCode;
 }
@@ -169,6 +169,7 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
 void DLLPinCode::enterClickHandler()
 {
     timer->stop();
+    getCardIDFromDb();
     getCardInfoFromDb(cardID);
 
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {

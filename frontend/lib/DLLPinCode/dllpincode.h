@@ -45,7 +45,7 @@ private:
     QString SQLPin;
     QTimer *timer;
     QString token;
-    QString cardID = "2";
+    QString cardID;
     int wrongAttempts;
 };
 
