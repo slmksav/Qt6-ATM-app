@@ -1,10 +1,18 @@
 #include "dllrestapi.h"
 
-DLLRestApi::DLLRestApi(QWidget *parent) :
-    QDialog(parent)
+
+
+DLLRestApi::DLLRestApi()
 {
 
 }
+
+DLLRestApi::~DLLRestApi()
+{
+
+}
+
+
 QString DLLRestApi::getBaseUrl()
 {
      return "https://bankdb-r18.onrender.com";
