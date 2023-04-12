@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    updateWrongAttemptsTest();
     m_serialPort = new DLLSerialPort(this);
     m_DLLPinCode = new DLLPinCode(this);
     // Numeroikaa connectionit, jotta voidaan refrensoida niihin dokumentaatiossa.
