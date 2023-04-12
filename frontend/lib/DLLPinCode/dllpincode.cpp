@@ -87,7 +87,6 @@ void DLLPinCode::getCardIDFromDb()
                 reply->deleteLater();
             });
     manager->get(request);
-
 }
 
 //tämä funktio hakee haetun cardID:n perusteella relevantit tiedot

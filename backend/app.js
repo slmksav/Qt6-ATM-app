@@ -12,6 +12,7 @@ var accountRouter = require('./routes/account');
 var loginRouter = require('./routes/login');
 var cardRouter = require('./routes/card');
 var hexcodeRouter = require('./routes/hexcode');
+var getAccountIDRouter = require('./routes/getAccountID');
 
 
 var app = express();
@@ -34,6 +35,7 @@ app.use('/customer', customerRouter);
 app.use('/account', accountRouter);
 app.use('/card', cardRouter);
 app.use('/hexcode', hexcodeRouter);
+app.use('/getAccountID', getAccountIDRouter);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
