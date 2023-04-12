@@ -11,11 +11,16 @@ TransactionsWindow::TransactionsWindow(QWidget *parent) :
 TransactionsWindow::~TransactionsWindow()
 {
     delete ui;
+
+    session->resetTimer();
 }
 
 void TransactionsWindow::putSessionData(SessionData *session)
 {
     this->session = session;
+
+    session->resetTimer();
+
     updateUI();
 }
 
@@ -73,7 +78,7 @@ void TransactionsWindow::updateUI()
         {
             qDebug() << Q_FUNC_INFO << "Index inside of list, outputting transaction[" << i + listIndex;
             transactionLabels[i]->setText(transactionDates.previous() +
-                    ": " + QString::number(-1 * transactionAmounts.previous()));
+                    ": " + QString::number(-1 * transactionAmounts.previous(), 'f', 2));
         }
     }
 }
@@ -94,6 +99,8 @@ void TransactionsWindow::on_buttonPrevious_clicked()
 {
     listIndex -= 5;
     updateUI();
+
+    session->resetTimer();
 }
 
 
@@ -101,5 +108,7 @@ void TransactionsWindow::on_buttonNext_clicked()
 {
     listIndex += 5;
     updateUI();
+
+    session->resetTimer();
 }
 

@@ -16,6 +16,8 @@ WithdrawWindow::WithdrawWindow(QWidget *parent) :
 WithdrawWindow::~WithdrawWindow()
 {
     delete ui;
+
+    session->resetTimer();
 }
 
 void WithdrawWindow::withdrawExceedWarning()
@@ -33,6 +35,9 @@ void WithdrawWindow::withdrawExceedWarning()
 void WithdrawWindow::putSessionData(SessionData *session)
 {
     this->session = session;
+
+    session->resetTimer();
+
     updateUI();
 }
 

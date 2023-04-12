@@ -10,11 +10,16 @@ OptionsWindow::OptionsWindow(QWidget *parent) :
 OptionsWindow::~OptionsWindow()
 {
     delete ui;
+
+    session->resetTimer();
 }
 
 void OptionsWindow::putSessionData(SessionData *session)
 {
     this->session = session;
+
+    session->resetTimer();
+
     updateUI();
 }
 

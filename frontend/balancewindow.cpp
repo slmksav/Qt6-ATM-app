@@ -11,11 +11,16 @@ BalanceWindow::BalanceWindow(QWidget *parent) :
 BalanceWindow::~BalanceWindow()
 {
     delete ui;
+
+    session->resetTimer();
 }
 
 void BalanceWindow::putSessionData(SessionData *session)
 {
     this->session = session;
+
+    session->resetTimer();
+
     updateUI();
 }
 
@@ -23,18 +28,18 @@ void BalanceWindow::updateUI()
 {
     if(session->accountType == "dual")
     {
-        ui->labelBalance->setText(QString::number(session->accountBalance));
-        ui->labelCredit->setText(QString::number(session->accountCredit));
+        ui->labelBalance->setText(QString::number(session->accountBalance, 'f', 2));
+        ui->labelCredit->setText(QString::number(session->accountCredit, 'f', 2));
     }
     else if(session->accountType == "debit")
     {
-        ui->labelBalance->setText(QString::number(session->accountBalance));
+        ui->labelBalance->setText(QString::number(session->accountBalance, 'f', 2));
         ui->labelCredit->setText("-");
     }
     else
     {
         ui->labelBalance->setText("-");
-        ui->labelCredit->setText(QString::number(session->accountCredit));
+        ui->labelCredit->setText(QString::number(session->accountCredit, 'f', 2));
     }
 }
 

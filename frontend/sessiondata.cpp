@@ -3,15 +3,6 @@
 
 SessionData::SessionData()
 {
-//    //call data from database
-//    cardID = getCardID();
-//    accountID = getAccountID();
-//    accountType = getAccountType();
-//    customerName = getCustomerName();
-
-//    accountBalance = getAccountBalance();
-//    accountCredit = getAccountCredit();
-
     //start timer to track inactivity
     connect(&inactivity, SIGNAL(timeout()),
             this, SLOT(handleTimeout()));

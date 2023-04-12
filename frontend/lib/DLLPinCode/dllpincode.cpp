@@ -33,6 +33,14 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived) :
     cardHexCode = cardHexCodeReceived;
     qDebug() << "cardHexCode konstruktorissa:" << cardHexCode;
     getCardIDFromDb();
+    QString imagePath = "C:/Pankkiautomaatti/group_18/englanninlippu.jpg"; // specify the file path of the image
+    QString imagePath2 = "C:/Pankkiautomaatti/group_18/suomenlippu.png";
+    QPixmap pixmap(imagePath);  // load the image from the file path
+    QPixmap pixmap2(imagePath2);
+    QIcon icon(pixmap);  // create an icon from the pixmap
+    QIcon icon2(pixmap2);
+    ui->buttonEnglish->setIcon(icon);
+    ui->buttonSuomi->setIcon(icon2);
 }
 
 DLLPinCode::~DLLPinCode()

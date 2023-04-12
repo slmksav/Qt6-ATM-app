@@ -18,13 +18,13 @@ ModeSelectWindow::~ModeSelectWindow()
 void ModeSelectWindow::on_buttonDebit_clicked()
 {
     qDebug() << Q_FUNC_INFO << "Clicked debit";
-    emit clickMode("debit");
+    emit clickMode("debit"); //send to OptionsWindow
 }
 
 
 void ModeSelectWindow::on_buttonCredit_clicked()
 {
     qDebug() << Q_FUNC_INFO << "Clicked credit";
-    emit clickMode("credit");
+    emit clickMode("credit"); //send to OptionsWindow
 }
 
