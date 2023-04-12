@@ -45,7 +45,7 @@ double DLLRestApi::getAccountCredit(int accountID)
 
 void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString withdrawType)
 {
-    if (withdrawType == debit) {
+    if (withdrawType == "debit") {
         QString site_url = DLLRestApi::getBaseUrl() + "/account/" + QString::number(accountID);;
         QNetworkRequest request((site_url));
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");

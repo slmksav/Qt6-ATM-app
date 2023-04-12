@@ -31,6 +31,8 @@ private slots:
 private:
     QString username;
     QString token;
+    int debitSaldoonTehtäväMuutos = 1;
+    int creditSaldoonTehtäväMuutos = 1;
 
 };
 
