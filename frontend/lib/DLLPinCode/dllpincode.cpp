@@ -79,6 +79,7 @@ void DLLPinCode::getCardIDFromDb()
                 reply->deleteLater();
             });
     manager->get(request);
+
 }
 
 //tämä funktio hakee haetun cardID:n perusteella relevantit tiedot
@@ -155,7 +156,6 @@ void DLLPinCode::enterClickHandler()
     ui->buttonEnter->setFlat(true);
     ui->buttonEnter->setDisabled(true);
 
-
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
         QCoreApplication::processEvents();
     }
@@ -174,7 +174,6 @@ void DLLPinCode::enterClickHandler()
     else
     {
         wrongAttempts--;
-
         if(wrongAttempts <= 0)
         {
             accountFreezed();

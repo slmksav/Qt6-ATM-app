@@ -21,6 +21,8 @@ public:
     explicit DLLPinCode(QWidget *parent = nullptr, QString cardHexCodeReceived = "");
     ~DLLPinCode();
     static QString getBaseUrl();
+    QString cardhexcodeSQL;
+    QString cardHexCode;
 signals:
     void LoginSuccess(int);
 private slots:
@@ -40,8 +42,6 @@ private:
     QTimer *timer;
     QString token;
     QString cardID;
-    QString cardhexcodeSQL;
-    QString cardHexCode;
     int wrongAttempts; 
 };
 
