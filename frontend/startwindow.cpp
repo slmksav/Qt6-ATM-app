@@ -8,6 +8,12 @@ StartWindow::StartWindow(QWidget *parent) :
     ui(new Ui::StartWindow)
 {
     ui->setupUi(this);
+
+    //language buttons
+    connect(ui->buttonGroupLang, SIGNAL(idClicked(int)),
+            this, SLOT(languageButtonClicked(int)));
+
+
     //create and connect signals from DLLSerialPort
     pDLLSerialPort = new DLLSerialPort;
     connect(pDLLSerialPort, SIGNAL(dataReceived(QString)),
@@ -28,6 +34,16 @@ StartWindow::StartWindow(QWidget *parent) :
 StartWindow::~StartWindow()
 {
     delete ui;
+}
+
+void StartWindow::languageButtonClicked(int buttonID)
+{
+    //get button value (text of the button)
+    QString buttonValue = ui->buttonGroupLang->button(buttonID)->text();
+
+    qDebug() << Q_FUNC_INFO << "Language selected: " << buttonValue;
+
+    language = buttonValue;
 }
 
 void StartWindow::logout()
@@ -63,7 +79,6 @@ void StartWindow::openDLLPinCode(QString hexaCode)
     connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
             this, SLOT(startSession(int)));
 
-    pDLLPinCode->cardHexCode = hexaCode;
     pDLLPinCode->show();
 }
 

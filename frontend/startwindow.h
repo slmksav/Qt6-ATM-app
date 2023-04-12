@@ -27,6 +27,8 @@ signals:
     void testOhitaPINSignal(int);
 
 private slots:
+    void languageButtonClicked(int);
+
     void logout();
     void printReceipt(bool); //this might be redundant
 
@@ -49,6 +51,8 @@ private:
     DLLPinCode * pDLLPinCode;
     DLLRestApi * pDLLRestApi;
     DLLSerialPort * pDLLSerialPort;
+
+    QString language = "fi";
 
     void updateUI();
 };

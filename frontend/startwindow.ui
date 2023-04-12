@@ -48,15 +48,15 @@ OHITA PIN</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>20</y>
       <width>151</width>
-      <height>91</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
      <string>skipataan pindll
 ja kirjaudutaan
-suoraan ID:llä 2</string>
+suoraan ID:llä -333</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -88,11 +88,62 @@ hexakoodi
 OHITA KORTTI</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>0</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nää voi vaihtaa
+myöhemmin
+paremman
+näköseks</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonLangFI">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>80</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>fi</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroupLang</string>
+    </attribute>
+   </widget>
+   <widget class="QPushButton" name="buttonLangEN">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>110</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>en</string>
+    </property>
+    <attribute name="buttonGroup">
+     <string notr="true">buttonGroupLang</string>
+    </attribute>
+   </widget>
    <zorder>labelInfo</zorder>
    <zorder>buttonOhitaPIN</zorder>
    <zorder>label_3</zorder>
    <zorder>buttonOhitaKortti</zorder>
    <zorder>label_2</zorder>
+   <zorder>label</zorder>
+   <zorder>buttonLangFI</zorder>
+   <zorder>buttonLangEN</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -100,7 +151,7 @@ OHITA KORTTI</string>
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -108,4 +159,7 @@ OHITA KORTTI</string>
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroupLang"/>
+ </buttongroups>
 </ui>
