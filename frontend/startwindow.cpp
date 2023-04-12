@@ -34,11 +34,12 @@ StartWindow::~StartWindow()
 void StartWindow::logout()
 {
     qDebug() << Q_FUNC_INFO << "Logout initiated";
-    delete session;
-    session = nullptr;
 
     delete optionsWindow;
     optionsWindow = nullptr;
+
+    delete session;
+    session = nullptr;
 }
 
 //this might be redundant
@@ -79,8 +80,11 @@ void StartWindow::startSession(int returnedCardID)
 
     ui->labelInfo->setText("Odota...");
 
+    //create new session
     session = new SessionData();
     session->cardID = returnedCardID;
+    connect(session, SIGNAL(sendTimeout()),
+            this, SLOT(logout()));
 
     if(returnedCardID == -333) //test case
     {

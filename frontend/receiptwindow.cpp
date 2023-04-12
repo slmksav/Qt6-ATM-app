@@ -11,11 +11,15 @@ ReceiptWindow::ReceiptWindow(QWidget *parent) :
 ReceiptWindow::~ReceiptWindow()
 {
     delete ui;
+
+    session->resetTimer();
 }
 
 void ReceiptWindow::putSessionData(SessionData *session)
 {
     this->session = session;
+
+    session->resetTimer();
 }
 
 void ReceiptWindow::on_buttonYes_clicked()
