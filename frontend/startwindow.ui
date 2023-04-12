@@ -88,6 +88,11 @@ hexakoodi
 OHITA KORTTI</string>
     </property>
    </widget>
+   <zorder>labelInfo</zorder>
+   <zorder>buttonOhitaPIN</zorder>
+   <zorder>label_3</zorder>
+   <zorder>buttonOhitaKortti</zorder>
+   <zorder>label_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -95,7 +100,7 @@ OHITA KORTTI</string>
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>17</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

@@ -8,7 +8,6 @@ StartWindow::StartWindow(QWidget *parent) :
     ui(new Ui::StartWindow)
 {
     ui->setupUi(this);
-
     //create and connect signals from DLLSerialPort
     pDLLSerialPort = new DLLSerialPort;
     connect(pDLLSerialPort, SIGNAL(dataReceived(QString)),
@@ -249,4 +248,3 @@ void StartWindow::on_buttonOhitaPIN_clicked()
 {
     emit testOhitaPINSignal(-333);
 }
-

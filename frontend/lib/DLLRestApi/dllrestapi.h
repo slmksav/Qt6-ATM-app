@@ -4,19 +4,18 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QDebug>
+#include <QDialog>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
-
-
 #include "DLLRestApi_global.h"
 
-class DLLRESTAPI_EXPORT DLLRestApi
+class DLLRESTAPI_EXPORT DLLRestApi : public QDialog
 {
 public:
-    DLLRestApi();
-    QNetworkAccessManager *getManager;
+    DLLRestApi(QWidget *parent = nullptr);
+    ~DLLRestApi();
     static QString getBaseUrl();
     int getCardId(QString hexa);
     int getAccountId(int cardID);
@@ -25,12 +24,11 @@ public:
     QString getCustomerName(int customerID);
     double getAccountBalance(int accountID);
     double getAccountCredit(int accountID);
+    void setAccountBalance(int accountID, int withdrawAmount, QString withdrawType);
 
 private slots:
 
 private:
-    QNetworkReply *reply;
-    QByteArray response_data;
     QString username;
     QString token;
 
