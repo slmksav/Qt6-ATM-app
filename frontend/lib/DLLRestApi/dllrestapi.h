@@ -1,6 +1,5 @@
 #ifndef DLLRESTAPI_H
 #define DLLRESTAPI_H
-#include <QObject>
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
@@ -10,13 +9,14 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+
 #include "DLLRestApi_global.h"
 
 class DLLRESTAPI_EXPORT DLLRestApi
 {
 public:
     DLLRestApi();
-   QNetworkAccessManager *getManager;
+    QNetworkAccessManager *getManager;
     static QString getBaseUrl();
     int getCardId(QString hexa);
     int getAccountId(int cardID);
