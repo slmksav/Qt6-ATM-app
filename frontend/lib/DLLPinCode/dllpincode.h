@@ -25,8 +25,6 @@ public:
     QString cardHexCode;
 signals:
     void LoginSuccess(int);
-public slots:
-    //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
 private slots:
     void updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token);
     void numberClickHandler();
@@ -36,7 +34,6 @@ private slots:
     void accountFreezed();
     void getCardIDFromDb();
     void getCardInfoFromDb();
-
 private:
     Ui::DLLPinCode *ui;
     QString InsertingPin;
@@ -45,7 +42,7 @@ private:
     QTimer *timer;
     QString token;
     QString cardID;
-    int wrongAttempts;
+    int wrongAttempts; 
 };
 
 #endif // DLLPINCODE_H
