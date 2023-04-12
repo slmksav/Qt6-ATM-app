@@ -21,12 +21,8 @@ public:
     explicit DLLPinCode(QWidget *parent = nullptr, QString cardHexCodeReceived = "");
     ~DLLPinCode();
     static QString getBaseUrl();
-    QString cardhexcodeSQL;
-    QString cardHexCode;
 signals:
     void LoginSuccess(int);
-public slots:
-    //tämä funktio vastaanottaa cardhexcoden Mikan DLLpincoden käyttöön (kts. mainwindow.cpp:n signaalit)
 private slots:
     void updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token);
     void numberClickHandler();
@@ -36,7 +32,6 @@ private slots:
     void accountFreezed();
     void getCardIDFromDb();
     void getCardInfoFromDb();
-
 private:
     Ui::DLLPinCode *ui;
     QString InsertingPin;
@@ -45,7 +40,9 @@ private:
     QTimer *timer;
     QString token;
     QString cardID;
-    int wrongAttempts;
+    QString cardhexcodeSQL;
+    QString cardHexCode;
+    int wrongAttempts; 
 };
 
 #endif // DLLPINCODE_H

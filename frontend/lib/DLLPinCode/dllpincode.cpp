@@ -10,6 +10,7 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived) :
      ui->labelInterrupt->setVisible(false);
      ui->labelFreezed1->setVisible(false);
      ui->labelFreezed2->setVisible(false);
+     ui->labelAttempts->setVisible(false);
      ui->lineEdit->setMaxLength(4); // Set the maximum length to 4 digits
      ui->lineEdit->setReadOnly(true); //Cannot write t
      ui->lineEdit->setEchoMode(QLineEdit::Password);
@@ -74,6 +75,7 @@ void DLLPinCode::getCardIDFromDb()
                         qDebug() << "idcard found: " << cardID;
                     }
                 }
+                getCardInfoFromDb();
                 reply->deleteLater();
             });
     manager->get(request);
@@ -110,13 +112,9 @@ void DLLPinCode::getCardInfoFromDb()
                     ui->labeljee->setText(cardhexcodeSQL);
                     ui->cardhexcodeLabel->setText(cardHexCode);
                     ui->labelpin->setText(SQLPin);
-                    if(wrongAttempts > 0)
+                    if(wrongAttempts <= 0)
                     {
-                       ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
-                    }
-                    else
-                    {
-                       accountFreezed();
+                        accountFreezed();
                     }
                 }
                 reply->deleteLater();
@@ -156,7 +154,7 @@ void DLLPinCode::enterClickHandler()
     timer->stop();
     ui->buttonEnter->setFlat(true);
     ui->buttonEnter->setDisabled(true);
-    getCardInfoFromDb();
+
 
     while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
         QCoreApplication::processEvents();
@@ -169,18 +167,23 @@ void DLLPinCode::enterClickHandler()
     qDebug() << "cardhexcodeSQL (haettu):" << cardhexcodeSQL;
     if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
     {
-        emit LoginSuccess(cardID.toInt());
         updateWrongAttemptsInCard(cardID, 3, token);
+        emit LoginSuccess(cardID.toInt());
         done(Accepted);
     }
     else
     {
-        emit LoginSuccess(0);
+        wrongAttempts--;
+
+        if(wrongAttempts <= 0)
+        {
+            accountFreezed();
+        }
         ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
         timer->start(30000);
-        wrongAttempts--;
         updateWrongAttemptsInCard(cardID,wrongAttempts,token);
         ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
+        ui->labelAttempts->setVisible(true);
         clearClickHandler();
     }
     ui->buttonEnter->setFlat(false);
@@ -198,7 +201,6 @@ void DLLPinCode::numberClickHandler()
         InsertingPin += clickedValue;
         ui->lineEdit->setText(InsertingPin);
         CheckPin = clickedValue;
-
 }
 
 
@@ -208,13 +210,13 @@ void DLLPinCode::clearClickHandler()
       ui->lineEdit->clear();
       timer->stop();
       timer->start(30000);
-
 }
 
 void DLLPinCode::stopClickHandler()
 {
       timer->stop();
       timer->start(5000);
+      emit LoginSuccess(0);
       ui->labelInterrupt->setVisible(true);
       ui->label->setVisible(false);
       ui->label_3->setVisible(false);
@@ -240,6 +242,7 @@ void DLLPinCode::accountFreezed()
 {
       timer->stop();
       timer->start(5000);
+      emit LoginSuccess(0);
       ui->labelFreezed1->setVisible(true);
       ui->labelFreezed2->setVisible(true);
       ui->label->setVisible(false);
@@ -259,4 +262,5 @@ void DLLPinCode::accountFreezed()
       ui->ButtonClear->setVisible(false);
       ui->buttonEnter->setVisible(false);
       ui->lineEdit->setVisible(false);
+      connect(timer, &QTimer::timeout, this, &QDialog::reject);
 }
