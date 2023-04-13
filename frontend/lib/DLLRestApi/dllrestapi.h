@@ -24,24 +24,23 @@ public:
     virtual ~DLLRestApi();
 
     static QString getBaseUrl();
-    void getCardId(QString hexa);
-    void getAccountId(int cardID);
-    void getCustomerId(int accountID);
-    void getAccountType(int accountID);
-    void getCustomerName(int customerID);
-    void getAccountBalance(int accountID);
-    void getAccountCredit(int accountID);
+    int getCardId(QString hexa);
+    int getAccountId(int cardID);
+    int getCustomerId(int accountID);
+    QString getAccountType(int accountID);
+    QString getCustomerName(int customerID);
+    double getAccountBalance(int accountID);
+    double getAccountCredit(int accountID);
     void setAccountBalance(int accountID, int withdrawAmount, QString withdrawType);
 
 private slots:
 
 private:
+    QNetworkReply *reply;
+    QByteArray response_data;
     QString username;
     QString token;
     int accountIDFetchedByCard;
-    int debitSaldoonTehtäväMuutos = 1;
-    int creditSaldoonTehtäväMuutos = 1;
-
 };
 
 #endif // DLLRESTAPI_H
