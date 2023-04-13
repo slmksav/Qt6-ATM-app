@@ -20,11 +20,11 @@ int DLLRestApi::getAccountId(int cardID)
     QString site_url = DLLRestApi::getBaseUrl() + "/getAccountID/withcardID/" + QString::number(cardID);
 
     QUrlQuery query;
-    query.addQueryItem("id", QString::number(cardID));
+    query.addQueryItem("cardID", QString::number(cardID));
 
     QUrl urlWithQuery(site_url);
     urlWithQuery.setQuery(query);
-    qDebug() << Q_FUNC_INFO << site_url;
+    qDebug() << Q_FUNC_INFO << "Täällä haetaan getAccountID:n avulla accountID" << site_url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -45,9 +45,9 @@ int DLLRestApi::getAccountId(int cardID)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
-        int idaccount = object.value("idaccount").toInt();
+        int idaccount = object.value("id_account").toInt();
 
-        qDebug() << "idaccount: " << idaccount;
+        qDebug() << "idaccount (haettu cardID avulla): " << idaccount;
         return idaccount;
     }
     else {
@@ -95,11 +95,11 @@ QString DLLRestApi::getAccountType(int accountID)
 
         QString accountType;
         if (accNumCredit && !accNumDebit) {
-            accountType = "Debit";
+            accountType = "debit";
         } else if (!accNumCredit && accNumDebit) {
-            accountType = "Credit";
+            accountType = "credit";
         } else if (!accNumCredit && !accNumDebit) {
-            accountType = "Dual";
+            accountType = "dual";
         } else {
             accountType = "Unknown";
         }
@@ -146,18 +146,26 @@ double DLLRestApi::getAccountBalance(int accountID)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
+        qDebug() << "JSON object: (getAccountBalancessa)" << object; // Print the JSON object
 
-        saldo = object.value("debitSaldo").toDouble();
-
+        QJsonValue saldoValue = object.value("debitSaldo");
+        QString saldoFetched = saldoValue.toString();
+        qDebug() << "saldoFetched (Qstring ennen double conversiota" << saldoFetched;
+        if (saldoFetched.isNull()) {
+            qDebug() << "Error: debitSaldo value is null";
+        } else {
+            saldo = saldoFetched.toDouble();
+            qDebug() << Q_FUNC_INFO << "Debit saldo for account " << accountID << " is " << saldo;
+        }
         networkReply->deleteLater();
     }
     else {
         qDebug() << "Network error: " << networkReply->errorString();
         networkReply->deleteLater();
     }
-
     return saldo;
 }
+
 
 double DLLRestApi::getAccountCredit(int accountID)
 {
@@ -189,18 +197,23 @@ double DLLRestApi::getAccountCredit(int accountID)
 
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
+        qDebug() << "JSON object: (getAccountBalancessa)" << object; // Print the JSON object
 
-        QString creditSaldoString = object.value("creditSaldo").toString();
-        creditSaldo = creditSaldoString.toDouble();
-
+        QJsonValue creditSaldoValue = object.value("creditSaldo");
+        QString creditSaldoFetched = creditSaldoValue.toString();
+        qDebug() << "saldoFetched (Qstring ennen double conversiota" << creditSaldoFetched;
+        if (creditSaldoFetched.isNull()) {
+            qDebug() << "Error: debitSaldo value is null";
+        } else {
+            creditSaldo = creditSaldoFetched.toDouble();
+            qDebug() << Q_FUNC_INFO << "Debit saldo for account " << accountID << " is " << creditSaldo;
+        }
         networkReply->deleteLater();
     }
     else {
         qDebug() << "Network error: " << networkReply->errorString();
         networkReply->deleteLater();
-        return -1.0;
     }
-
     return creditSaldo;
 }
 
