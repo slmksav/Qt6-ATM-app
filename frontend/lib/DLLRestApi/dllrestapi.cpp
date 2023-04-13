@@ -198,10 +198,11 @@ int DLLRestApi::getCustomerId(int accountID)
     QString url = getBaseUrl() + "/customer/" + QString::number(accountID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(accountID));
 
     QUrl urlWithQuery(url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -243,10 +244,11 @@ QString DLLRestApi::getCustomerName(int customerID)
     QString url = getBaseUrl() + "/customer/" + QString::number(customerID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(customerID));
 
     QUrl urlWithQuery(url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
