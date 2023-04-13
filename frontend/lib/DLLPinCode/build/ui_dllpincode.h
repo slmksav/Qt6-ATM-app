@@ -45,8 +45,6 @@ public:
     QLabel *labelFreezed1;
     QLabel *labelFreezed2;
     QLabel *labelinfo;
-    QPushButton *buttonEnglish;
-    QPushButton *buttonSuomi;
 
     void setupUi(QDialog *DLLPinCode)
     {
@@ -140,14 +138,6 @@ public:
         font2.setFamilies({QString::fromUtf8("Sitka Banner")});
         font2.setPointSize(25);
         labelinfo->setFont(font2);
-        buttonEnglish = new QPushButton(DLLPinCode);
-        buttonEnglish->setObjectName("buttonEnglish");
-        buttonEnglish->setGeometry(QRect(10, 600, 51, 29));
-        buttonEnglish->setIconSize(QSize(51, 29));
-        buttonSuomi = new QPushButton(DLLPinCode);
-        buttonSuomi->setObjectName("buttonSuomi");
-        buttonSuomi->setGeometry(QRect(70, 600, 51, 29));
-        buttonSuomi->setIconSize(QSize(51, 29));
 
         retranslateUi(DLLPinCode);
 
@@ -180,8 +170,6 @@ public:
         labelFreezed1->setText(QCoreApplication::translate("DLLPinCode", "Tili j\303\244\303\244dytetty", nullptr));
         labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567", nullptr));
         labelinfo->setText(QCoreApplication::translate("DLLPinCode", "Login tiedot:", nullptr));
-        buttonEnglish->setText(QString());
-        buttonSuomi->setText(QString());
     } // retranslateUi
 
 };

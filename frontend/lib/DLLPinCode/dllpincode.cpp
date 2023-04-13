@@ -6,15 +6,15 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
     ui(new Ui::DLLPinCode)
 {
     ui->setupUi(this);
-//    languageGlobal = language;
-//    if(language == "fi")
-//    {
-//        finnish();
-//    }
-//    else
-//    {
-//        english();
-//    }
+    languageGlobal = language;
+    if(languageGlobal == "fi")
+    {
+        finnish();
+    }
+    else
+    {
+        english();
+    }
      ui->labelInterrupt->setVisible(false);
      ui->labelFreezed1->setVisible(false);
      ui->labelFreezed2->setVisible(false);
@@ -41,14 +41,6 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
     cardHexCode = cardHexCodeReceived;
     qDebug() << "cardHexCode konstruktorissa:" << cardHexCode;
     getCardIDFromDb();
-    QString imagePath = "C:/Pankkiautomaatti/group_18/englanninlippu.jpg"; // specify the file path of the image
-    QString imagePath2 = "C:/Pankkiautomaatti/group_18/suomenlippu.png";
-    QPixmap pixmap(imagePath);  // load the image from the file path
-    QPixmap pixmap2(imagePath2);
-    QIcon icon(pixmap);  // create an icon from the pixmap
-    QIcon icon2(pixmap2);
-    ui->buttonEnglish->setIcon(icon);
-    ui->buttonSuomi->setIcon(icon2);
 }
 
 DLLPinCode::~DLLPinCode()
