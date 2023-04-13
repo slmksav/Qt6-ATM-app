@@ -23,7 +23,7 @@ public:
     double accountCredit; //getAccountCredit(int accountID);
 
     QString withdrawMode;
-    int withdrawAmount;
+    int withdrawAmount = 0;
 
     QList<QString> additionalAccountNames; //getAdditionalAccountNames(int customerID);
     QList<int> additionalAccountIDs; //getAdditionalAccountIDs(int customerID);
