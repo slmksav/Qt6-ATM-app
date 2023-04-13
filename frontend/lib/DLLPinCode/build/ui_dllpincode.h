@@ -51,6 +51,12 @@ public:
         if (DLLPinCode->objectName().isEmpty())
             DLLPinCode->setObjectName("DLLPinCode");
         DLLPinCode->resize(693, 644);
+        DLLPinCode->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(C:/Pankkiautomaatti/group_18/frontend/img/blueblue.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}\n"
+""));
         cardhexcodeLabel = new QLabel(DLLPinCode);
         cardhexcodeLabel->setObjectName("cardhexcodeLabel");
         cardhexcodeLabel->setGeometry(QRect(450, 410, 231, 20));
