@@ -20,10 +20,11 @@ int DLLRestApi::getAccountId(int cardID)
     QString site_url = DLLRestApi::getBaseUrl() + "/getAccountID/withcardID/" + QString::number(cardID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(cardID));
 
     QUrl urlWithQuery(site_url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << site_url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -63,10 +64,11 @@ QString DLLRestApi::getAccountType(int accountID)
     QString url = getBaseUrl() + "/account/" + QString::number(accountID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(accountID));
 
     QUrl urlWithQuery(url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -88,13 +90,19 @@ QString DLLRestApi::getAccountType(int accountID)
         QJsonDocument document = QJsonDocument::fromJson(responseData);
         QJsonObject object = document.object();
 
-        QString accountType = object.value("accountType").toString();
-        bool creditSaldoIsNull = object.value("creditSaldo").isNull();
-        bool debitSaldoIsNull = object.value("debitSaldo").isNull();
+        bool accNumCredit = object.value("accNumCredit").isNull();
+        bool accNumDebit = object.value("accNumDebit").isNull();
 
-        qDebug() << "accountType: " << accountType;
-        qDebug() << "creditSaldo is null: " << creditSaldoIsNull;
-        qDebug() << "debitSaldo is null: " << debitSaldoIsNull;
+        QString accountType;
+        if (accNumCredit && !accNumDebit) {
+            accountType = "Debit";
+        } else if (!accNumCredit && accNumDebit) {
+            accountType = "Credit";
+        } else if (!accNumCredit && !accNumDebit) {
+            accountType = "Dual";
+        } else {
+            accountType = "Unknown";
+        }
 
         networkReply->deleteLater();
 
@@ -107,15 +115,17 @@ QString DLLRestApi::getAccountType(int accountID)
     }
 }
 
+
 double DLLRestApi::getAccountBalance(int accountID)
 {
     QString url = getBaseUrl() + "/account/" + QString::number(accountID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(accountID));
 
     QUrl urlWithQuery(url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -154,10 +164,11 @@ double DLLRestApi::getAccountCredit(int accountID)
     QString url = getBaseUrl() + "/account/" + QString::number(accountID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(accountID));
 
     QUrl urlWithQuery(url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -198,10 +209,11 @@ int DLLRestApi::getCustomerId(int accountID)
     QString url = getBaseUrl() + "/customer/" + QString::number(accountID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(accountID));
 
     QUrl urlWithQuery(url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -243,10 +255,11 @@ QString DLLRestApi::getCustomerName(int customerID)
     QString url = getBaseUrl() + "/customer/" + QString::number(customerID);
 
     QUrlQuery query;
-    query.addQueryItem("id", "1");
+    query.addQueryItem("id", QString::number(customerID));
 
     QUrl urlWithQuery(url);
     urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -287,12 +300,56 @@ QString DLLRestApi::getCustomerName(int customerID)
 //TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI
 void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString withdrawType)
 {
-    //Jos kyse on debit-nostosta
-    if (withdrawType == "debit") {
+    double accountBalance = 0.0;
+    QString site_url = DLLRestApi::getBaseUrl() + "/account/" + QString::number(accountID);
+    QNetworkRequest request((site_url));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+    request.setRawHeader("Authorization", authHeader);
+    QNetworkAccessManager *manager = new QNetworkAccessManager();
 
-    }
-    //Jos kyse on credit-nostosta
-    else {
+    connect(manager, &QNetworkAccessManager::finished, [=, &accountBalance](QNetworkReply *reply) {
+        if (reply->error()) {
+            // Handle the error
+        } else {
+            QByteArray response = reply->readAll();
+            QJsonDocument jsonResponse = QJsonDocument::fromJson(response);
+            QJsonObject jsonObject = jsonResponse.object();
+            accountBalance = jsonObject["balance"].toDouble();
+        }
+        reply->deleteLater();
+    });
+    manager->get(request);
 
+    QEventLoop loop;
+    QObject::connect(manager, &QNetworkAccessManager::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    if (withdrawType == "debit" && accountBalance < (double)withdrawAmount) {
+        double newBalance = accountBalance - withdrawAmount;
+
+        QJsonObject requestBody;
+        requestBody["balance"] = newBalance;
+        QJsonDocument requestBodyDoc(requestBody);
+        QByteArray requestBodyData = requestBodyDoc.toJson();
+        site_url = DLLRestApi::getBaseUrl() + "/account/" + QString::number(accountID);
+        request.setUrl(site_url);
+        manager->put(request, requestBodyData);
+        emit withdrawalSuccess(true);
+    } else if (withdrawType == "credit" && accountBalance < (double)withdrawAmount) {
+        double newBalance = accountBalance + withdrawAmount;
+
+        QJsonObject requestBody;
+        requestBody["balance"] = newBalance;
+        QJsonDocument requestBodyDoc(requestBody);
+        QByteArray requestBodyData = requestBodyDoc.toJson();
+        site_url = DLLRestApi::getBaseUrl() + "/account/" + QString::number(accountID);
+        request.setUrl(site_url);
+        manager->put(request, requestBodyData);
+        emit withdrawalSuccess(true);
+    } else {
+        // Invalid withdrawal!
+        qDebug() << "Withdrawal failure!";
+        emit withdrawalSuccess(false);
     }
 }
