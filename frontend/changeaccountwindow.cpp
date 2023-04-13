@@ -15,11 +15,16 @@ ChangeAccountWindow::ChangeAccountWindow(QWidget *parent) :
 ChangeAccountWindow::~ChangeAccountWindow()
 {
     delete ui;
+
+    session->resetTimer();
 }
 
 void ChangeAccountWindow::putSessionData(SessionData *session)
 {
     this->session = session;
+
+    session->resetTimer();
+
     updateUI();
 }
 
@@ -115,6 +120,8 @@ void ChangeAccountWindow::on_buttonPrevious_clicked()
 {
     listIndex -= 5;
     updateUI();
+
+    session->resetTimer();
 }
 
 
@@ -122,6 +129,8 @@ void ChangeAccountWindow::on_buttonNext_clicked()
 {
     listIndex += 5;
     updateUI();
+
+    session->resetTimer();
 }
 
 

@@ -1,22 +1,28 @@
 #ifndef DLLRESTAPI_H
 #define DLLRESTAPI_H
+
+#include "DLLRestApi_global.h"
+
 #include <QObject>
+
 #include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QDebug>
+
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "DLLRestApi_global.h"
-
-class DLLRESTAPI_EXPORT DLLRestApi
+class DLLRESTAPI_EXPORT DLLRestApi : public QObject
 {
+    Q_OBJECT
+
 public:
     DLLRestApi();
-   QNetworkAccessManager *getManager;
+    virtual ~DLLRestApi();
+
     static QString getBaseUrl();
     int getCardId(QString hexa);
     int getAccountId(int cardID);
@@ -25,6 +31,7 @@ public:
     QString getCustomerName(int customerID);
     double getAccountBalance(int accountID);
     double getAccountCredit(int accountID);
+    void setAccountBalance(int accountID, int withdrawAmount, QString withdrawType);
 
 private slots:
 
@@ -33,7 +40,7 @@ private:
     QByteArray response_data;
     QString username;
     QString token;
-
+    int accountIDFetchedByCard;
 };
 
 #endif // DLLRESTAPI_H

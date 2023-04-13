@@ -5,25 +5,24 @@ DLLRestApi::DLLRestApi()
 
 }
 
+DLLRestApi::~DLLRestApi()
+{
+
+}
 
 QString DLLRestApi::getBaseUrl()
 {
      return "https://bankdb-r18.onrender.com";
 }
 
-
-
-////////// tästä alkaa CARD-funktio///////
-////////////////////////////////////////////
-
 int DLLRestApi::getAccountId(int cardID)
 {
-    QString url = getBaseUrl() + "/account/" + QString::number(cardID);
+    QString site_url = DLLRestApi::getBaseUrl() + "/getAccountID/withcardID/" + QString::number(cardID);
 
     QUrlQuery query;
     query.addQueryItem("id", "1");
 
-    QUrl urlWithQuery(url);
+    QUrl urlWithQuery(site_url);
     urlWithQuery.setQuery(query);
 
     QNetworkRequest request;
@@ -58,10 +57,6 @@ int DLLRestApi::getAccountId(int cardID)
     networkReply->deleteLater();
     return -1;
 }
-
-
-
-
 
 QString DLLRestApi::getAccountType(int accountID)
 {
@@ -112,9 +107,6 @@ QString DLLRestApi::getAccountType(int accountID)
     }
 }
 
-
-
-
 double DLLRestApi::getAccountBalance(int accountID)
 {
     QString url = getBaseUrl() + "/account/" + QString::number(accountID);
@@ -156,7 +148,6 @@ double DLLRestApi::getAccountBalance(int accountID)
 
     return saldo;
 }
-
 
 double DLLRestApi::getAccountCredit(int accountID)
 {
@@ -202,18 +193,6 @@ double DLLRestApi::getAccountCredit(int accountID)
     return creditSaldo;
 }
 
-
-
-////////// Loppuuu ////////////////////////
-/// //////////////////////////////////////
-
-
-
-
-
-////////// tästä alkaa CUSTOMER-funktio///////
-////////////////////////////////////////////
-
 int DLLRestApi::getCustomerId(int accountID)
 {
     QString url = getBaseUrl() + "/customer/" + QString::number(accountID);
@@ -258,12 +237,6 @@ int DLLRestApi::getCustomerId(int accountID)
     networkReply->deleteLater();
     return -1;
 }
-
-
-
-
-
-
 
 QString DLLRestApi::getCustomerName(int customerID)
 {
@@ -311,9 +284,15 @@ QString DLLRestApi::getCustomerName(int customerID)
         }
 }
 
-////////// Loppuuu ////////////////////////
-/// //////////////////////////////////////
+//TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI
+void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString withdrawType)
+{
+    //Jos kyse on debit-nostosta
+    if (withdrawType == "debit") {
 
+    }
+    //Jos kyse on credit-nostosta
+    else {
 
-
-
+    }
+}

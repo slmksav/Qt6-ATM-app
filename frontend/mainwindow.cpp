@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    updateWrongAttemptsTest();
     m_serialPort = new DLLSerialPort(this);
     m_DLLPinCode = new DLLPinCode(this);
     // Numeroikaa connectionit, jotta voidaan refrensoida niihin dokumentaatiossa.
@@ -105,66 +104,3 @@ void MainWindow::getCardhexcodeFromDb()
 
     manager->get(request);
 }
-
-void MainWindow::on_cardhexcodePushbutton_clicked()
-{
-    getCardhexcodeFromDb();
-    if (cardhexcode == cardhexcodeSQLTest)
-    {
-        qDebug() << "Sarjaportin cardhexcode on sama kun cardhexcodeSQL.";
-    }
-}
-
-
-void MainWindow::on_buttonTestHexaToDLL_clicked()
-{
-    qDebug() << "leikkiHexaSignaali lähetetään";
-    emit leikkiHexaSignaali("0d0a2d303630303035343246450d0a3e");
-}
-
-void MainWindow::leikkiHexaSlotti(QString hexaKoodi)
-{
-    qDebug() << "leikkiHexaSlotti vastaanotti seuraavaa:" << hexaKoodi;
-
-    mikanDLL = new DLLPinCode(this);
-    //voidaan myös antaa constructorissa tyyliin
-    //mikanDLL = new DLLPinCode(this, hexaKoodi)
-    mikanDLL->cardHexCode = hexaKoodi;
-
-    qDebug() << "DLLPinCode-luokan cardHexCode on nyt:" << mikanDLL->cardHexCode;
-
-    mikanDLL->show();
-
-    //tässä ei kannattaisi enää manipuloida dll:ää, vaan antaa sen hoitaa hommat, mutta testin vuoksi
-    mikanDLL->handleCardHexCodeReceived(mikanDLL->cardHexCode);
-}
-
-
-void MainWindow::updateWrongAttemptsTest()
-{
-    int wrongAttempts = 2;
-    QString site_url = DLLPinCode::getBaseUrl() + "/card/2";
-    QNetworkRequest request((site_url));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
-    request.setRawHeader("Authorization", authHeader);
-    QJsonObject requestBody;
-    requestBody.insert("wrongAttempts", wrongAttempts);
-    QJsonDocument requestBodyDoc(requestBody);
-    QByteArray requestBodyData = requestBodyDoc.toJson();
-
-    QNetworkAccessManager *manager = new QNetworkAccessManager();
-
-    connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply *reply) {
-        if (reply->error()) {
-            qDebug() << "Failed to update wrongAttempts in card 2" << ", remaining attempts: " << reply->errorString();
-        }
-        else {
-            QByteArray response = reply->readAll();
-            qDebug() << "Updated wrongAttempts to idcard 2" <<  ", remaining attempts: " << response;
-        }
-        reply->deleteLater();
-    });
-    manager->put(request, requestBodyData);
-}
-

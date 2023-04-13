@@ -22,16 +22,6 @@ router.get('/:id', function(request, response) {
     })
 });
 
-router.get('/hex/:cardhexcode', (request, response) => {
-    card.getCardIdByHexCode(request.params.id, function(err, dbResult) {
-        if (err) {
-            response.json(err);
-        } else {
-            response.json(dbResult[0]);
-        }
-    })
-  });
-
 router.post('/', function(request, response) {
     card.add(request.body, function(err, dbResult) {
         if (err) {

@@ -9,6 +9,11 @@ StartWindow::StartWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //language buttons
+    connect(ui->buttonGroupLang, SIGNAL(idClicked(int)),
+            this, SLOT(languageButtonClicked(int)));
+
+
     //create and connect signals from DLLSerialPort
     pDLLSerialPort = new DLLSerialPort;
     connect(pDLLSerialPort, SIGNAL(dataReceived(QString)),
@@ -31,14 +36,25 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
+void StartWindow::languageButtonClicked(int buttonID)
+{
+    //get button value (text of the button)
+    QString buttonValue = ui->buttonGroupLang->button(buttonID)->text();
+
+    qDebug() << Q_FUNC_INFO << "Language selected: " << buttonValue;
+
+    language = buttonValue;
+}
+
 void StartWindow::logout()
 {
     qDebug() << Q_FUNC_INFO << "Logout initiated";
-    delete session;
-    session = nullptr;
 
     delete optionsWindow;
     optionsWindow = nullptr;
+
+    delete session;
+    session = nullptr;
 }
 
 //this might be redundant
@@ -58,12 +74,11 @@ void StartWindow::printReceipt(bool print)
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
-    pDLLPinCode = new DLLPinCode(this);
+    pDLLPinCode = new DLLPinCode(this, hexaCode);
 
     connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
             this, SLOT(startSession(int)));
 
-    pDLLPinCode->cardHexCode = hexaCode;
     pDLLPinCode->show();
 }
 
@@ -79,8 +94,11 @@ void StartWindow::startSession(int returnedCardID)
 
     ui->labelInfo->setText("Odota...");
 
+    //create new session
     session = new SessionData();
     session->cardID = returnedCardID;
+    connect(session, SIGNAL(sendTimeout()),
+            this, SLOT(logout()));
 
     if(returnedCardID == -333) //test case
     {
@@ -249,4 +267,3 @@ void StartWindow::on_buttonOhitaPIN_clicked()
 {
     emit testOhitaPINSignal(-333);
 }
-
