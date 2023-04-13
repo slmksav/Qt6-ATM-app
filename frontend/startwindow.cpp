@@ -110,7 +110,7 @@ void StartWindow::startSession(int returnedCardID)
     {
         //this is unique in that it stays the same when changing accounts
         session->accountID = pDLLRestApi->getAccountId(session->cardID);
-        session->customerID = pDLLRestApi->getCustomerId(session->cardID); //HUOM. tää pitää varmaan sittenki vaihtaa hakemaan accountID:n perusteella että voin tunkee sen toho toisee funktioo
+        //session->customerID = pDLLRestApi->getCustomerId(session->cardID);
     }
 
     //call DLLRestApi to get rest of the data
@@ -131,6 +131,8 @@ void StartWindow::startSession(int returnedCardID)
 
 void StartWindow::fetchDataWithDLL(int returnedAccountID)
 {
+    session->accountID = returnedAccountID;
+
     if(returnedAccountID == -333) //test button pressed, initiate test data
     {
         session->customerID = -333;
@@ -182,7 +184,7 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
     else
     {
         //DLLRestApi functions should fetch stuff from database here
-        session->customerID = pDLLRestApi->getCustomerId(session->customerID);
+        session->customerID = pDLLRestApi->getCustomerId(session->accountID);
         session->accountType = pDLLRestApi->getAccountType(session->accountID);
         session->customerName = pDLLRestApi->getCustomerName(session->customerID);
 
