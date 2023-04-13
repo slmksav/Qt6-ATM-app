@@ -1,12 +1,20 @@
 #include "dllpincode.h"
 #include "ui_dllpincode.h"
 
-DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived) :
+DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString language) :
     QDialog(parent),
     ui(new Ui::DLLPinCode)
 {
     ui->setupUi(this);
-    //cardHexCode = "060006491c";
+//    languageGlobal = language;
+//    if(language == "fi")
+//    {
+//        finnish();
+//    }
+//    else
+//    {
+//        english();
+//    }
      ui->labelInterrupt->setVisible(false);
      ui->labelFreezed1->setVisible(false);
      ui->labelFreezed2->setVisible(false);
@@ -185,10 +193,20 @@ void DLLPinCode::enterClickHandler()
         {
             accountFreezed();
         }
-        ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
+        if(languageGlobal == "fi")
+        {
+            ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
+            ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
+        }
+        else
+        {
+            ui->label->setText("Wrong password, please enter password again.");
+            ui->labelAttempts->setText(QString::number(wrongAttempts) + " attempts left");
+        }
+
         timer->start(30000);
         updateWrongAttemptsInCard(cardID,wrongAttempts,token);
-        ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
+
         ui->labelAttempts->setVisible(true);
         clearClickHandler();
     }
@@ -269,4 +287,24 @@ void DLLPinCode::accountFreezed()
       ui->buttonEnter->setVisible(false);
       ui->lineEdit->setVisible(false);
       connect(timer, &QTimer::timeout, this, &QDialog::reject);
+}
+
+void DLLPinCode::finnish()
+{
+      ui->label->setText("Näppäile tunnusluku");
+      ui->labelAttempts->setText(" Yritystä jäljellä");
+      ui->labelFreezed1->setText("Tili jäädytetty");
+      ui->labelFreezed2->setText("Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567");
+      ui->labelInterrupt->setText("Tapahtuma Keskeytetty");
+      ui->label_3->setText("Lopuksi paina ENTER");
+}
+
+void DLLPinCode::english()
+{
+      ui->label->setText("Please enter your PIN code:");
+      ui->labelAttempts->setText(" Attempts left");
+      ui->labelFreezed1->setText("Account freezed");
+      ui->labelFreezed2->setText("Please contact our customer service number +358 10 1234567");
+      ui->labelInterrupt->setText("event aborted");
+      ui->label_3->setText("Finally press ENTER");
 }

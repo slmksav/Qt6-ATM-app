@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     m_serialPort = new DLLSerialPort(this);
-    m_DLLPinCode = new DLLPinCode(this);
+    //m_DLLPinCode = new DLLPinCode(this);
     // Numeroikaa connectionit, jotta voidaan refrensoida niihin dokumentaatiossa.
     //connect(m_serialPort, &DLLSerialPort::dataReceived, this, &MainWindow::handleSerialDataReceived); //1. signaali
 
