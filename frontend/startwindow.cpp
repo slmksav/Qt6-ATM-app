@@ -29,6 +29,15 @@ StartWindow::StartWindow(QWidget *parent) :
     //test button signal to skip pin window altogether
     connect(this, SIGNAL(testOhitaPINSignal(int)),
             this, SLOT(startSession(int)));
+
+    QString imagePath = "C:/Pankkiautomaatti/group_18/englanninlippu.jpg"; // specify the file path of the image
+    QString imagePath2 = "C:/Pankkiautomaatti/group_18/suomenlippu.png";
+    QPixmap pixmap(imagePath);  // load the image from the file path
+    QPixmap pixmap2(imagePath2);
+    QIcon icon(pixmap);  // create an icon from the pixmap
+    QIcon icon2(pixmap2);
+    ui->buttonLangFI->setIcon(icon2);
+    ui->buttonLangEN->setIcon(icon);
 }
 
 StartWindow::~StartWindow()
@@ -74,7 +83,7 @@ void StartWindow::printReceipt(bool print)
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
-    pDLLPinCode = new DLLPinCode(this, hexaCode);
+    pDLLPinCode = new DLLPinCode(this, hexaCode, language);
 
     connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
             this, SLOT(startSession(int)));

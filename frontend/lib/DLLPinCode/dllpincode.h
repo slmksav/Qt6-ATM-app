@@ -18,7 +18,7 @@ class DLLPINCODE_EXPORT DLLPinCode : public QDialog
     Q_OBJECT
 
 public:
-    explicit DLLPinCode(QWidget *parent = nullptr, QString cardHexCodeReceived = "");
+    explicit DLLPinCode(QWidget *parent = nullptr, QString cardHexCodeReceived = "", QString language = "fi");
     ~DLLPinCode();
     static QString getBaseUrl();
     QString cardhexcodeSQL;
@@ -42,7 +42,12 @@ private:
     QTimer *timer;
     QString token;
     QString cardID;
-    int wrongAttempts; 
+    QString languageGlobal;
+    int wrongAttempts;
+    void finnish();
+    void english();
+
+
 };
 
 #endif // DLLPINCODE_H

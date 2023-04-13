@@ -116,6 +116,12 @@ näköseks</string>
     <property name="text">
      <string>fi</string>
     </property>
+    <property name="iconSize">
+     <size>
+      <width>35</width>
+      <height>35</height>
+     </size>
+    </property>
     <attribute name="buttonGroup">
      <string notr="true">buttonGroupLang</string>
     </attribute>
@@ -131,6 +137,12 @@ näköseks</string>
     </property>
     <property name="text">
      <string>en</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>35</width>
+      <height>35</height>
+     </size>
     </property>
     <attribute name="buttonGroup">
      <string notr="true">buttonGroupLang</string>
@@ -151,7 +163,7 @@ näköseks</string>
      <x>0</x>
      <y>0</y>
      <width>640</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
