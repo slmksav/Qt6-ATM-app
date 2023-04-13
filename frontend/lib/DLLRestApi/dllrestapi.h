@@ -32,7 +32,8 @@ public:
     double getAccountBalance(int accountID);
     double getAccountCredit(int accountID);
     void setAccountBalance(int accountID, int withdrawAmount, QString withdrawType);
-
+signals:
+    void withdrawalSuccess(bool);
 private slots:
 
 private:
