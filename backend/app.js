@@ -9,6 +9,7 @@ const cors=require('cors');
 var indexRouter = require('./routes/index');
 var customerRouter = require('./routes/customer');
 var accountRouter = require('./routes/account');
+var additionalsRouter = require('./routes/additionals');
 var loginRouter = require('./routes/login');
 var cardRouter = require('./routes/card');
 var hexcodeRouter = require('./routes/hexcode');
@@ -33,6 +34,7 @@ app.use('/login', loginRouter);
 //suojatut endpointit
 app.use('/customer', customerRouter);
 app.use('/account', accountRouter);
+app.use('/additionals', additionalsRouter);
 app.use('/card', cardRouter);
 app.use('/hexcode', hexcodeRouter);
 app.use('/getAccountID', getAccountIDRouter);
