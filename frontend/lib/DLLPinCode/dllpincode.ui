@@ -15,7 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
-    background-image: url(C:/Pankkiautomaatti/group_18/frontend/img/blueblue.jpg);
+    background-image: url(:/images/pincodeimgs/blueblue.jpg);
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -221,6 +221,13 @@
      <pointsize>16</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+    background-image: url(:/images/dllpincodeimgs/blueblue.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
+   </property>
    <property name="text">
     <string>Näppäile tunnusluku</string>
    </property>
@@ -347,6 +354,9 @@
     <font>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567</string>
