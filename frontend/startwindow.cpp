@@ -205,34 +205,32 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
             session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
         }
 
+        //additional accounts
         session->additionalAccountIDs.clear();
         session->additionalAccountIDs.append(
                     pDLLRestApi->getAdditionalAccountIDs(session->cardID));
         qDebug() << Q_FUNC_INFO << "Retrieved ID list size:" << session->additionalAccountIDs.count();
-
-        //dummy data, waiting for api function to get implemented
-//        session->additionalAccountNames = {"Martti Ahtisaari - debit",
-//                                           "Pekka Mahtisaari - dual",
-//                                           "Pertti Vahtisaari - credit",
-//                                           "Jorma Sahtisaari - debit",
-//                                           "Makkis Pekkis - dual",
-//                                           "Putte Possu - debit",
-//                                           "Poika Veli - credit",
-//                                          "asdasdasd"};
 
         session->additionalAccountNames.clear();
         session->additionalAccountNames.append(
                     pDLLRestApi->getAdditionalAccountNames(session->cardID));
         qDebug() << Q_FUNC_INFO << "Retrieved names list size:" << session->additionalAccountNames.count();
 
+        //transactions
+        session->transactionIDs.clear();
+        session->transactionIDs.append(
+                    pDLLRestApi->getTransactionIDs(session->accountID));
+        qDebug() << Q_FUNC_INFO << "Retrieved transacID list size:" << session->transactionIDs.count();
 
-        //dummy data, waiting for api function to get implemented
-        session->transactionIDs = {1,2,3,4,
-                                   5,6,7,8};
-        session->transactionDates = {"01.02.2012", "05.12.2013", "01.12.2014", "06.11.2015",
-                                     "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
-        session->transactionAmounts = {200.25, 55.00, 60, 20,
-                                       20000.1, 60, 100.0, 100.00};
+        session->transactionDates.clear();
+        session->transactionDates.append(
+                    pDLLRestApi->getTransactionDates(session->accountID));
+        qDebug() << Q_FUNC_INFO << "Retrieved transac dates list size:" << session->transactionDates.count();
+
+        session->transactionAmounts.clear();
+        session->transactionAmounts.append(
+                    pDLLRestApi->getTransactionAmounts(session->accountID));
+        qDebug() << Q_FUNC_INFO << "Retrieved transac amounts list size:" << session->transactionAmounts.count();
     }
 
     //put accountType to withdrawMode automatically if card isn't "dual"

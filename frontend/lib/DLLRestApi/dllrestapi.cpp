@@ -332,6 +332,7 @@ QJsonDocument DLLRestApi::doUrlGetQuery(QString site_url, QUrlQuery query)
 
     if(networkReply->error() == QNetworkReply::NoError) {
         responseData = networkReply->readAll();
+        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
         QJsonDocument document = QJsonDocument::fromJson(responseData);
 
         return document;
@@ -438,17 +439,93 @@ QList<QString> DLLRestApi::getAdditionalAccountNames(int cardID)
 
 QList<int> DLLRestApi::getTransactionIDs(int accountID)
 {
+    QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/ids/" + QString::number(accountID);
 
+    QUrlQuery query;
+    query.addQueryItem("accountID", QString::number(accountID));
+
+    QJsonDocument document = doUrlGetQuery(site_url, query);
+
+    if(document.isNull())
+    {
+        QList<int> err{};
+        return err;
+    }
+
+    QJsonArray idArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << idArr.count();
+
+    QList<int> transactions{};
+    for (int i = 0; i < idArr.count(); ++i) {
+        QJsonObject object = idArr[i].toObject();
+        transactions.append(object.value("idtransactions").toInt());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << transactions.count();
+
+    return transactions;
 }
 
 QList<QString> DLLRestApi::getTransactionDates(int accountID)
 {
+    QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/dates/" + QString::number(accountID);
 
+    QUrlQuery query;
+    query.addQueryItem("accountID", QString::number(accountID));
+
+    QJsonDocument document = doUrlGetQuery(site_url, query);
+
+    if(document.isNull())
+    {
+        QList<QString> err{};
+        return err;
+    }
+
+    QJsonArray datesArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << datesArr.count();
+
+    QList<QString> transactions{};
+    for (int i = 0; i < datesArr.count(); ++i) {
+        QJsonObject object = datesArr[i].toObject();
+        transactions.append(object.value("date_transactions").toString());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << transactions.count();
+
+    return transactions;
 }
 
 QList<double> DLLRestApi::getTransactionAmounts(int accountID)
 {
+    QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/amounts/" + QString::number(accountID);
 
+    QUrlQuery query;
+    query.addQueryItem("accountID", QString::number(accountID));
+
+    QJsonDocument document = doUrlGetQuery(site_url, query);
+
+    if(document.isNull())
+    {
+        QList<double> err{};
+        return err;
+    }
+
+    QJsonArray amountsArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << amountsArr.count();
+
+    QList<double> transactions{};
+    for (int i = 0; i < amountsArr.count(); ++i) {
+        QJsonObject object = amountsArr[i].toObject();
+        QString amountStr = object.value("amount").toString();
+        transactions.append(amountStr.toDouble());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << transactions.count();
+
+    return transactions;
 }
 
 //TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI
