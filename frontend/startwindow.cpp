@@ -208,18 +208,22 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
         session->additionalAccountIDs.clear();
         session->additionalAccountIDs.append(
                     pDLLRestApi->getAdditionalAccountIDs(session->cardID));
-
         qDebug() << Q_FUNC_INFO << "Retrieved ID list size:" << session->additionalAccountIDs.count();
 
         //dummy data, waiting for api function to get implemented
-        session->additionalAccountNames = {"Martti Ahtisaari - debit",
-                                           "Pekka Mahtisaari - dual",
-                                           "Pertti Vahtisaari - credit",
-                                           "Jorma Sahtisaari - debit",
-                                           "Makkis Pekkis - dual",
-                                           "Putte Possu - debit",
-                                           "Poika Veli - credit",
-                                          "asdasdasd"};
+//        session->additionalAccountNames = {"Martti Ahtisaari - debit",
+//                                           "Pekka Mahtisaari - dual",
+//                                           "Pertti Vahtisaari - credit",
+//                                           "Jorma Sahtisaari - debit",
+//                                           "Makkis Pekkis - dual",
+//                                           "Putte Possu - debit",
+//                                           "Poika Veli - credit",
+//                                          "asdasdasd"};
+
+        session->additionalAccountNames.clear();
+        session->additionalAccountNames.append(
+                    pDLLRestApi->getAdditionalAccountNames(session->cardID));
+        qDebug() << Q_FUNC_INFO << "Retrieved names list size:" << session->additionalAccountNames.count();
 
 
         //dummy data, waiting for api function to get implemented
@@ -358,5 +362,5 @@ void StartWindow::on_buttonOhitaKortti_clicked()
 //This button shall get removed on release
 void StartWindow::on_buttonOhitaPIN_clicked()
 {
-    emit testOhitaPINSignal(-333);
+    emit testOhitaPINSignal(2);
 }

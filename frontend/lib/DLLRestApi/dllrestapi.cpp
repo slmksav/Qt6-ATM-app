@@ -311,16 +311,11 @@ QString DLLRestApi::getCustomerName(int customerID)
 }
 
 //TÄSTÄ ALKAA LISTOJA PALAUTTAVAT FUNKTIOT
-QList<int> DLLRestApi::getAdditionalAccountIDs(int cardID)
+QJsonDocument DLLRestApi::doUrlGetQuery(QString site_url, QUrlQuery query)
 {
-    QString site_url = DLLRestApi::getBaseUrl() + "/additionals/ids/" + QString::number(cardID);
-
-    QUrlQuery query;
-    query.addQueryItem("cardID", QString::number(cardID));
-
     QUrl urlWithQuery(site_url);
     urlWithQuery.setQuery(query);
-    qDebug() << Q_FUNC_INFO << "Getting additional account IDs" << site_url;
+    qDebug() << Q_FUNC_INFO << "requesting with url:" << site_url;
 
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
@@ -337,35 +332,123 @@ QList<int> DLLRestApi::getAdditionalAccountIDs(int cardID)
 
     if(networkReply->error() == QNetworkReply::NoError) {
         responseData = networkReply->readAll();
-        qDebug() << "Raw response:" << responseData;
-
         QJsonDocument document = QJsonDocument::fromJson(responseData);
-        QJsonArray objectArr = document.array();
 
-        qDebug() << Q_FUNC_INFO << "QJsonArray size:" << objectArr.count();
-
-        QList<int> accounts{};
-        for (int i = 0; i < objectArr.count(); ++i) {
-            QJsonObject object = objectArr[i].toObject();
-            accounts.append(object.value("idaccount").toInt());
-        }
-
-        qDebug() << Q_FUNC_INFO << "list size:" << accounts.count();
-//        foreach(int account, accounts)
-//        {
-//            qDebug() << Q_FUNC_INFO << QString::number(account);
-//        }
-        return accounts;
+        return document;
     }
     else {
-        qDebug() << "Network error: " << networkReply->errorString();
+        qDebug() << Q_FUNC_INFO << "Network error: " << networkReply->errorString();
+        QJsonDocument document;
+
+        return document;
+    }
+}
+
+QList<int> DLLRestApi::getAdditionalAccountIDs(int cardID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/additionals/ids/" + QString::number(cardID);
+
+    QUrlQuery query;
+    query.addQueryItem("cardID", QString::number(cardID));
+
+    QJsonDocument document = doUrlGetQuery(site_url, query);
+
+    if(document.isNull())
+    {
         QList<int> err{};
         return err;
     }
 
-    networkReply->deleteLater();
-    QList<int> err{};
-    return err;
+    QJsonArray idArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << idArr.count();
+
+    QList<int> accounts{};
+    for (int i = 0; i < idArr.count(); ++i) {
+        QJsonObject object = idArr[i].toObject();
+        accounts.append(object.value("idaccount").toInt());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << accounts.count();
+
+    return accounts;
+}
+
+QList<QString> DLLRestApi::getAdditionalAccountNames(int cardID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/additionals/names/" + QString::number(cardID);
+
+    QUrlQuery query;
+    query.addQueryItem("cardID", QString::number(cardID));
+
+    QJsonDocument document = doUrlGetQuery(site_url, query);
+
+    if(document.isNull())
+    {
+        QList<QString> err{};
+        return err;
+    }
+    QJsonArray nameArr = document.array();
+
+    site_url = DLLRestApi::getBaseUrl() + "/additionals/types/" + QString::number(cardID);
+
+    query.clear();
+    query.addQueryItem("cardID", QString::number(cardID));
+
+    document = doUrlGetQuery(site_url, query);
+
+    if(document.isNull())
+    {
+        QList<QString> err{};
+        return err;
+    }
+    QJsonArray typeArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "nameArr size:" << nameArr.count() <<
+                "| typeArr size:" << typeArr.count();
+
+    QList<QString> accounts{};
+    for (int i = 0; i < nameArr.count(); ++i) {
+        QJsonObject name = nameArr[i].toObject();
+        QJsonObject type = typeArr[i].toObject();
+
+        bool accNumCredit = type.value("accNumCredit").isNull();
+        bool accNumDebit = type.value("accNumDebit").isNull();
+
+        QString accountType;
+        if (accNumCredit && !accNumDebit) {
+            accountType = "debit";
+        } else if (!accNumCredit && accNumDebit) {
+            accountType = "credit";
+        } else if (!accNumCredit && !accNumDebit) {
+            accountType = "dual";
+        } else {
+            accountType = "Unknown";
+        }
+
+        accounts.append(name.value("first_name").toString() + " " +
+                        name.value("last_name").toString() + " - " +
+                        accountType);
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << accounts.count();
+
+    return accounts;
+}
+
+QList<int> DLLRestApi::getTransactionIDs(int accountID)
+{
+
+}
+
+QList<QString> DLLRestApi::getTransactionDates(int accountID)
+{
+
+}
+
+QList<double> DLLRestApi::getTransactionAmounts(int accountID)
+{
+
 }
 
 //TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI

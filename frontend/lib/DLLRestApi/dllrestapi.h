@@ -35,6 +35,10 @@ public:
     QList<int> getAdditionalAccountIDs(int cardID);
     QList<QString> getAdditionalAccountNames(int cardID);
 
+    QList<int> getTransactionIDs(int accountID);
+    QList<QString> getTransactionDates(int accountID);
+    QList<double> getTransactionAmounts(int accountID);
+
     void setAccountBalance(int accountID, int withdrawAmount, QString withdrawType);
 signals:
     void withdrawalSuccess(bool);
@@ -46,6 +50,8 @@ private:
     QString username;
     QString token;
     int accountIDFetchedByCard;
+
+    QJsonDocument doUrlGetQuery(QString site_url, QUrlQuery query);
 };
 
 #endif // DLLRESTAPI_H
