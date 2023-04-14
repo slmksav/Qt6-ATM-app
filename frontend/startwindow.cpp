@@ -270,6 +270,8 @@ void StartWindow::swapToAccount(int accountID)
 
     connect(session, SIGNAL(sendLogout()),
             this, SLOT(logout()));
+    connect(optionsWindow, SIGNAL(changeToAccount(int)),
+            this, SLOT(swapToAccount(int)));
 
     optionsWindow->show();
 
