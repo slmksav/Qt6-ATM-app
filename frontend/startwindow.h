@@ -63,7 +63,9 @@ private:
         Logout
     }state = Default;
 
-    void updateUI();
+    void openOptionsWindow();
+
+    void updateUI(); 
 };
 
 #endif // STARTWINDOW_H
