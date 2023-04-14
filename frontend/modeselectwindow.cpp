@@ -23,7 +23,19 @@ ModeSelectWindow::~ModeSelectWindow()
 
 void ModeSelectWindow::updateUI()
 {
-
+    //other ui elements
+    if(session->language == "fi")
+    {
+        ui->labelInfo->setText("Valitse:");
+        ui->buttonDebit->setText("Credit");
+        ui->buttonCredit->setText("Luotto");
+    }
+    if(session->language == "en")
+    {
+        ui->labelInfo->setText("Choose:");
+        ui->buttonDebit->setText("Credit");
+        ui->buttonCredit->setText("Luotto");
+    }
 }
 
 void ModeSelectWindow::on_buttonDebit_clicked()
