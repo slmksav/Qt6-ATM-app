@@ -45,6 +45,7 @@ void StartWindow::languageButtonClicked(int buttonID)
     qDebug() << Q_FUNC_INFO << "Language selected: " << buttonValue;
 
     language = buttonValue;
+    updateUI();
 }
 
 void StartWindow::logout()
@@ -103,6 +104,7 @@ void StartWindow::startSession(int returnedCardID)
 
     //create new session
     session = new SessionData();
+    session->language = language;
     session->cardID = returnedCardID;
     connect(session, SIGNAL(sendTimeout()),
             this, SLOT(logout()));

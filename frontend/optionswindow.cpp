@@ -25,7 +25,26 @@ void OptionsWindow::putSessionData(SessionData *session)
 
 void OptionsWindow::updateUI()
 {
+    //account name and type
     ui->labelAccountName->setText(session->customerName + " - " + session->accountType);
+
+    //other ui elements
+    if(session->language == "fi")
+    {
+        ui->buttonBalance->setText("Saldo");
+        ui->buttonChangeAccount->setText("Vaihda Tiliä");
+        ui->buttonLogout->setText("Kirjaudu Ulos");
+        ui->buttonTransactions->setText("Tapahtumat");
+        ui->buttonWithdraw->setText("Nosto");
+    }
+    if(session->language == "en")
+    {
+        ui->buttonBalance->setText("Balance");
+        ui->buttonChangeAccount->setText("Change Account");
+        ui->buttonLogout->setText("Logout");
+        ui->buttonTransactions->setText("Transactions");
+        ui->buttonWithdraw->setText("Withdraw");
+    }
 }
 
 void OptionsWindow::on_buttonLogout_clicked()

@@ -32,6 +32,8 @@ public:
     QList<QString> transactionDates; //QList<QDate> getTransactionDates(QList<int> transactionIDs);
     QList<double> transactionAmounts; //QList<int> getTransactionAmounts(QList<int> transactionIDs);
 
+    QString language = "fi";
+
 signals:
     void sendTimeout();
     void sendLogout();
