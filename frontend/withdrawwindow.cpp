@@ -26,25 +26,50 @@ WithdrawWindow::~WithdrawWindow()
     session->resetTimer();
 }
 
-void WithdrawWindow::withdrawExceedWarning()
-{
-    if(session->withdrawMode == "debit")
-    {
-        ui->labelWithdrawWarning->setText("Kate ei riitä!");
-    }
-    else
-    {
-        ui->labelWithdrawWarning->setText("Luotto ei riitä!");
-    }
-}
-
 void WithdrawWindow::updateUI()
 {
     ui->labelWithdrawInfo->setText(session->customerName + " - " + session->withdrawMode);
 
     if(invalidAttempt == true)
     {
-        withdrawExceedWarning();
+        if(session->language == "fi")
+        {
+            if(session->withdrawMode == "debit")
+            {
+                ui->labelWithdrawWarning->setText("Kate ei riitä!");
+            }
+            else
+            {
+                ui->labelWithdrawWarning->setText("Luotto ei riitä!");
+            }
+        }
+        if(session->language == "en")
+        {
+            if(session->withdrawMode == "debit")
+            {
+                ui->labelWithdrawWarning->setText("Balance is not Sufficient!");
+            }
+            else
+            {
+                ui->labelWithdrawWarning->setText("Credit is not Sufficient!");
+            }
+        }
+    }
+    else
+    {
+        ui->labelWithdrawWarning->setText("");
+    }
+
+    //other ui elements
+    if(session->language == "fi")
+    {
+        ui->buttonLogout->setText("Kirjaudu Ulos");
+        ui->buttonReturn->setText("Palaa");
+    }
+    if(session->language == "en")
+    {
+        ui->buttonLogout->setText("Logout");
+        ui->buttonReturn->setText("Return");
     }
 }
 

@@ -22,8 +22,6 @@ signals:
     void clickAmount(int);
 
 public slots:
-    void withdrawExceedWarning();
-
     void updateUI();
 
 private slots:
