@@ -1,11 +1,17 @@
 #include "balancewindow.h"
 #include "ui_balancewindow.h"
 
-BalanceWindow::BalanceWindow(QWidget *parent) :
+BalanceWindow::BalanceWindow(QWidget *parent, SessionData *session) :
     QDialog(parent),
     ui(new Ui::BalanceWindow)
 {
     ui->setupUi(this);
+
+    this->session = session;
+
+    session->resetTimer();
+
+    updateUI();
 }
 
 BalanceWindow::~BalanceWindow()
@@ -13,15 +19,6 @@ BalanceWindow::~BalanceWindow()
     delete ui;
 
     session->resetTimer();
-}
-
-void BalanceWindow::putSessionData(SessionData *session)
-{
-    this->session = session;
-
-    session->resetTimer();
-
-    updateUI();
 }
 
 void BalanceWindow::updateUI()

@@ -3,16 +3,27 @@
 
 #include <QDebug>
 
-ModeSelectWindow::ModeSelectWindow(QWidget *parent) :
+ModeSelectWindow::ModeSelectWindow(QWidget *parent, SessionData *session) :
     QDialog(parent),
     ui(new Ui::ModeSelectWindow)
 {
     ui->setupUi(this);
+
+    this->session = session;
+
+    session->resetTimer();
+
+    updateUI();
 }
 
 ModeSelectWindow::~ModeSelectWindow()
 {
     delete ui;
+}
+
+void ModeSelectWindow::updateUI()
+{
+
 }
 
 void ModeSelectWindow::on_buttonDebit_clicked()

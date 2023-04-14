@@ -15,14 +15,13 @@ class ChangeAccountWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ChangeAccountWindow(QWidget *parent = nullptr);
+    explicit ChangeAccountWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~ChangeAccountWindow();
 
 signals:
     void changeToAccount(int);
 
 public slots:
-    void putSessionData(SessionData *session);
     void updateUI();
 
 private slots:

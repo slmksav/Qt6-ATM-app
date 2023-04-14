@@ -123,14 +123,13 @@ void StartWindow::startSession(int returnedCardID)
     fetchDataWithDLL(session->accountID);
 
     //create and show OptionsWindow
-    optionsWindow = new OptionsWindow(this);
+    optionsWindow = new OptionsWindow(this, session);
 
     connect(session, SIGNAL(sendLogout()),
             this, SLOT(logout()));
     connect(optionsWindow, SIGNAL(changeToAccount(int)),
             this, SLOT(swapToAccount(int)));
 
-    optionsWindow->putSessionData(session);
     optionsWindow->show();
 
     //update state and ui
@@ -262,12 +261,11 @@ void StartWindow::swapToAccount(int accountID)
     fetchDataWithDLL(session->accountID);
 
     //create and show OptionsWindow
-    optionsWindow = new OptionsWindow(this);
+    optionsWindow = new OptionsWindow(this, session);
 
     connect(session, SIGNAL(sendLogout()),
             this, SLOT(logout()));
 
-    optionsWindow->putSessionData(session);
     optionsWindow->show();
 
     //update state and ui

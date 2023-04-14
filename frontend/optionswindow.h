@@ -18,7 +18,7 @@ class OptionsWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit OptionsWindow(QWidget *parent = nullptr);
+    explicit OptionsWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~OptionsWindow();
 
 signals:
@@ -32,7 +32,6 @@ signals:
     void changeToAccount(int);
 
 public slots:
-    void putSessionData(SessionData *session);
     void updateUI();
 
 private slots:

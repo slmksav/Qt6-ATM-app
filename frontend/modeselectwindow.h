@@ -1,6 +1,8 @@
 #ifndef MODESELECTWINDOW_H
 #define MODESELECTWINDOW_H
 
+#include "sessiondata.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -12,11 +14,14 @@ class ModeSelectWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ModeSelectWindow(QWidget *parent = nullptr);
+    explicit ModeSelectWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~ModeSelectWindow();
 
 signals:
     void clickMode(QString);
+
+public slots:
+    void updateUI();
 
 private slots:
     void on_buttonDebit_clicked();
@@ -24,6 +29,8 @@ private slots:
 
 private:
     Ui::ModeSelectWindow *ui;
+
+    SessionData * session;
 };
 
 #endif // MODESELECTWINDOW_H

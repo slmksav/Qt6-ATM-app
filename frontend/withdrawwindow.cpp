@@ -3,11 +3,17 @@
 
 #include <QDebug>
 
-WithdrawWindow::WithdrawWindow(QWidget *parent) :
+WithdrawWindow::WithdrawWindow(QWidget *parent, SessionData *session) :
     QDialog(parent),
     ui(new Ui::WithdrawWindow)
 {
     ui->setupUi(this);
+
+    this->session = session;
+
+    session->resetTimer();
+
+    updateUI();
 
     connect(ui->buttonGroup, SIGNAL(idClicked(int)),
             this, SLOT(withdrawButtonClicked(int)));
@@ -30,15 +36,6 @@ void WithdrawWindow::withdrawExceedWarning()
     {
         ui->labelWithdrawWarning->setText("Luotto ei riitä!");
     }
-}
-
-void WithdrawWindow::putSessionData(SessionData *session)
-{
-    this->session = session;
-
-    session->resetTimer();
-
-    updateUI();
 }
 
 void WithdrawWindow::updateUI()
@@ -107,8 +104,7 @@ void WithdrawWindow::withdrawMoney(int amount)
         //setAccountCredit(session->accountID, session->accountCredit);
     }
 
-    receiptWindow = new ReceiptWindow(this);
-    receiptWindow->putSessionData(session);
+    receiptWindow = new ReceiptWindow(this, session);
     receiptWindow->open();
 }
 

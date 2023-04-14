@@ -1,11 +1,17 @@
 #include "transactionswindow.h"
 #include "ui_transactionswindow.h"
 
-TransactionsWindow::TransactionsWindow(QWidget *parent) :
+TransactionsWindow::TransactionsWindow(QWidget *parent, SessionData *session) :
     QDialog(parent),
     ui(new Ui::TransactionsWindow)
 {
     ui->setupUi(this);
+
+    this->session = session;
+
+    session->resetTimer();
+
+    updateUI();
 }
 
 TransactionsWindow::~TransactionsWindow()
@@ -13,15 +19,6 @@ TransactionsWindow::~TransactionsWindow()
     delete ui;
 
     session->resetTimer();
-}
-
-void TransactionsWindow::putSessionData(SessionData *session)
-{
-    this->session = session;
-
-    session->resetTimer();
-
-    updateUI();
 }
 
 void TransactionsWindow::updateUI()

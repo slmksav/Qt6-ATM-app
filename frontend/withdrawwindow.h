@@ -15,7 +15,7 @@ class WithdrawWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit WithdrawWindow(QWidget *parent = nullptr);
+    explicit WithdrawWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~WithdrawWindow();
 
 signals:
@@ -24,7 +24,6 @@ signals:
 public slots:
     void withdrawExceedWarning();
 
-    void putSessionData(SessionData *session);
     void updateUI();
 
 private slots:

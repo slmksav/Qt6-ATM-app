@@ -2,11 +2,17 @@
 #include "ui_changeaccountwindow.h"
 #include <QDebug>
 
-ChangeAccountWindow::ChangeAccountWindow(QWidget *parent) :
+ChangeAccountWindow::ChangeAccountWindow(QWidget *parent, SessionData *session) :
     QDialog(parent),
     ui(new Ui::ChangeAccountWindow)
 {
     ui->setupUi(this);
+
+    this->session = session;
+
+    session->resetTimer();
+
+    updateUI();
 
     connect(ui->buttonGroup, SIGNAL(buttonClicked(QAbstractButton *)),
             this, SLOT(accountButtonClicked(QAbstractButton *)));
@@ -17,15 +23,6 @@ ChangeAccountWindow::~ChangeAccountWindow()
     delete ui;
 
     session->resetTimer();
-}
-
-void ChangeAccountWindow::putSessionData(SessionData *session)
-{
-    this->session = session;
-
-    session->resetTimer();
-
-    updateUI();
 }
 
 void ChangeAccountWindow::updateUI()
