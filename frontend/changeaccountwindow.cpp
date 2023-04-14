@@ -58,13 +58,10 @@ void ChangeAccountWindow::updateUI()
 
     QListIterator<QString> additionalAccountNames(session->additionalAccountNames);
     additionalAccountNames.toFront();
-//    QListIterator<int> additionalAccountIDs(session->additionalAccountIDs);
-//    additionalAccountIDs.toFront();
 
     //reel iterator to index
     for (int i = 0; i < listIndex; ++i) {
         additionalAccountNames.next();
-//        additionalAccountIDs.next();
     }
 
     qDebug() << Q_FUNC_INFO << "accountNames list size: " << session->additionalAccountNames.count() <<
@@ -87,6 +84,24 @@ void ChangeAccountWindow::updateUI()
             accountButtons[i]->setFlat(false);
             accountButtons[i]->setDisabled(false);
         }
+    }
+
+    //other ui elements
+    if(session->language == "fi")
+    {
+        ui->buttonLogout->setText("Kirjaudu Ulos");
+
+        ui->labelInfo->setText("Valitse Tili:");
+        ui->buttonNext->setText("Seuraavat");
+        ui->buttonPrevious->setText("Edelliset");
+    }
+    if(session->language == "en")
+    {
+        ui->buttonLogout->setText("Logout");
+
+        ui->labelInfo->setText("Choose Account:");
+        ui->buttonNext->setText("Next");
+        ui->buttonPrevious->setText("Previous");
     }
 }
 
