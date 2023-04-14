@@ -51,9 +51,12 @@ void StartWindow::logout()
 {
     qDebug() << Q_FUNC_INFO << "Logout initiated";
 
+    //delete windows before SessionData, because their destructors
+    //make calls to SessionData's timeout() function, for example
     delete optionsWindow;
     optionsWindow = nullptr;
 
+    //!can only been deleted after windows have been deleted
     delete session;
     session = nullptr;
 }
@@ -86,6 +89,7 @@ void StartWindow::openDLLPinCode(QString hexaCode)
 
 void StartWindow::startSession(int returnedCardID)
 {
+    //returned invalid cardID
     if(returnedCardID == 0)
     {
         qDebug() << Q_FUNC_INFO << "DLLPinCode returned" << returnedCardID <<
@@ -93,7 +97,9 @@ void StartWindow::startSession(int returnedCardID)
         return;
     }
 
-    ui->labelInfo->setText("Odota...");
+    //update state and ui
+    state = Waiting;
+    updateUI();
 
     //create new session
     session = new SessionData();
@@ -104,18 +110,17 @@ void StartWindow::startSession(int returnedCardID)
     if(returnedCardID == -333) //test case
     {
         session->accountID = -333;
-        session->customerID = -333;
     }
     else
     {
-        //this is unique in that it stays the same when changing accounts
+        //this is unique in that it stays the same even when changing accounts
         session->accountID = pDLLRestApi->getAccountId(session->cardID);
-        //session->customerID = pDLLRestApi->getCustomerId(session->cardID);
     }
 
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
 
+    //create and show OptionsWindow
     optionsWindow = new OptionsWindow(this);
 
     connect(session, SIGNAL(sendLogout()),
@@ -126,7 +131,9 @@ void StartWindow::startSession(int returnedCardID)
     optionsWindow->putSessionData(session);
     optionsWindow->show();
 
-    ui->labelInfo->setText("Lue Kortti");
+    //update state and ui
+    state = Default;
+    updateUI();
 }
 
 void StartWindow::fetchDataWithDLL(int returnedAccountID)
@@ -232,19 +239,27 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
         session->withdrawMode = session->accountType;
     }
 
+    //debug print all session data
     session->debugPrintData();
 }
 
 void StartWindow::swapToAccount(int accountID)
 {
+    //delete old windows
     delete optionsWindow;
     optionsWindow = nullptr;
 
+    //update state and ui
+    state = Waiting;
+    updateUI();
+
+    //accountID changes to new, selected account
     session->accountID = accountID;
 
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
 
+    //create and show OptionsWindow
     optionsWindow = new OptionsWindow(this);
 
     connect(session, SIGNAL(sendLogout()),
@@ -252,11 +267,79 @@ void StartWindow::swapToAccount(int accountID)
 
     optionsWindow->putSessionData(session);
     optionsWindow->show();
+
+    //update state and ui
+    state = Default;
+    updateUI();
 }
 
 void StartWindow::updateUI()
 {
+    switch (state) {
+    case Default:
+        if(language == "fi")
+        {
+            ui->labelInfo->setText("Lue Kortti");
+        }
+        if(language == "en")
+        {
+            ui->labelInfo->setText("Read Card");
+        }
+        break;
 
+    case Waiting:
+        if(language == "fi")
+        {
+            ui->labelInfo->setText("Odota Hetki");
+        }
+        if(language == "en")
+        {
+            ui->labelInfo->setText("Wait a Moment");
+        }
+        break;
+
+    case Timeout:
+        if(language == "fi")
+        {
+            ui->labelInfo->setText("Kirjauduttu Ulos\n"
+                                   "Inaktiivisuuden Vuoksi");
+        }
+        if(language == "en")
+        {
+            ui->labelInfo->setText("Logged Out\n"
+                                   "Due to Inactivity");
+        }
+        break;
+
+    case Error:
+        if(language == "fi")
+        {
+            ui->labelInfo->setText("Odottamaton Virhe\n"
+                                   "Yritä Uudestaan");
+        }
+        if(language == "en")
+        {
+            ui->labelInfo->setText("Unexpected Error\n"
+                                   "Try Again");
+        }
+        break;
+
+    case Logout:
+        if(language == "fi")
+        {
+            ui->labelInfo->setText("Kiitos Asioinnista");
+        }
+        if(language == "en")
+        {
+            ui->labelInfo->setText("Thank You for\n"
+                                   "Using Our Service");
+        }
+        break;
+
+    default:
+        qDebug() << Q_FUNC_INFO << "updateUI switch-case defaulted";
+        break;
+    }
 }
 
 //This button shall get removed on release
