@@ -205,6 +205,12 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
             session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
         }
 
+        session->additionalAccountIDs.clear();
+        session->additionalAccountIDs.append(
+                    pDLLRestApi->getAdditionalAccountIDs(session->cardID));
+
+        qDebug() << Q_FUNC_INFO << "Retrieved ID list size:" << session->additionalAccountIDs.count();
+
         //dummy data, waiting for api function to get implemented
         session->additionalAccountNames = {"Martti Ahtisaari - debit",
                                            "Pekka Mahtisaari - dual",
@@ -212,10 +218,9 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
                                            "Jorma Sahtisaari - debit",
                                            "Makkis Pekkis - dual",
                                            "Putte Possu - debit",
-                                           "Poika Veli - credit"};
+                                           "Poika Veli - credit",
+                                          "asdasdasd"};
 
-        //dummy data, waiting for api function to get implemented
-        session->additionalAccountIDs = {3,6,13,102,103,-222,345};
 
         //dummy data, waiting for api function to get implemented
         session->transactionIDs = {1,2,3,4,

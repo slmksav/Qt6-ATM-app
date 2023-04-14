@@ -31,6 +31,10 @@ public:
     QString getCustomerName(int customerID);
     double getAccountBalance(int accountID);
     double getAccountCredit(int accountID);
+
+    QList<int> getAdditionalAccountIDs(int cardID);
+    QList<QString> getAdditionalAccountNames(int cardID);
+
     void setAccountBalance(int accountID, int withdrawAmount, QString withdrawType);
 signals:
     void withdrawalSuccess(bool);

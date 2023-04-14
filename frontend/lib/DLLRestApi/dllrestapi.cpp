@@ -310,6 +310,64 @@ QString DLLRestApi::getCustomerName(int customerID)
         }
 }
 
+//TÄSTÄ ALKAA LISTOJA PALAUTTAVAT FUNKTIOT
+QList<int> DLLRestApi::getAdditionalAccountIDs(int cardID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/additionals/ids/" + QString::number(cardID);
+
+    QUrlQuery query;
+    query.addQueryItem("cardID", QString::number(cardID));
+
+    QUrl urlWithQuery(site_url);
+    urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << "Getting additional account IDs" << site_url;
+
+    QNetworkRequest request;
+    request.setUrl(urlWithQuery);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << "Raw response:" << responseData;
+
+        QJsonDocument document = QJsonDocument::fromJson(responseData);
+        QJsonArray objectArr = document.array();
+
+        qDebug() << Q_FUNC_INFO << "QJsonArray size:" << objectArr.count();
+
+        QList<int> accounts{};
+        for (int i = 0; i < objectArr.count(); ++i) {
+            QJsonObject object = objectArr[i].toObject();
+            accounts.append(object.value("idaccount").toInt());
+        }
+
+        qDebug() << Q_FUNC_INFO << "list size:" << accounts.count();
+//        foreach(int account, accounts)
+//        {
+//            qDebug() << Q_FUNC_INFO << QString::number(account);
+//        }
+        return accounts;
+    }
+    else {
+        qDebug() << "Network error: " << networkReply->errorString();
+        QList<int> err{};
+        return err;
+    }
+
+    networkReply->deleteLater();
+    QList<int> err{};
+    return err;
+}
+
 //TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI
 void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString withdrawType)
 {
