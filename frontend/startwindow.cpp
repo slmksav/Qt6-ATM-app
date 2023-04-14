@@ -104,6 +104,7 @@ void StartWindow::startSession(int returnedCardID)
 
     //create new session
     session = new SessionData();
+    session->stopTimer(); //stop until all data has been fetched from db
     session->language = language;
     session->cardID = returnedCardID;
     connect(session, SIGNAL(sendTimeout()),
@@ -139,6 +140,8 @@ void StartWindow::startSession(int returnedCardID)
 
 void StartWindow::fetchDataWithDLL(int returnedAccountID)
 {
+    session->stopTimer();
+
     session->accountID = returnedAccountID;
 
     if(returnedAccountID == -333) //test button pressed, initiate test data
@@ -239,6 +242,8 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
     {
         session->withdrawMode = session->accountType;
     }
+
+    session->resetTimer();
 
     //debug print all session data
     session->debugPrintData();

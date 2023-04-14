@@ -20,6 +20,12 @@ void SessionData::resetTimer()
     inactivity.start();
 }
 
+void SessionData::stopTimer()
+{
+    qDebug() << Q_FUNC_INFO << "Inactivity timer was stopped";
+    inactivity.stop();
+}
+
 void SessionData::debugPrintData()
 {
     qDebug() << Q_FUNC_INFO << "cardID:" << cardID;
