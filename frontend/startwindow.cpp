@@ -104,6 +104,7 @@ void StartWindow::startSession(int returnedCardID)
 
     //create new session
     session = new SessionData();
+    session->restApi = pDLLRestApi;
     session->stopTimer(); //stop until all data has been fetched from db
     session->language = language;
     session->cardID = returnedCardID;

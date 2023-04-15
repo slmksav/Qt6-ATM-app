@@ -23,10 +23,12 @@ signals:
 
 public slots:
     void updateUI();
+    void freezeUI(bool);
 
 private slots:
     void withdrawButtonClicked(int);
     void withdrawMoney(int);
+    void handleResponse(bool);
 
     void on_buttonLogout_clicked();
 

@@ -73,6 +73,32 @@ void WithdrawWindow::updateUI()
     }
 }
 
+void WithdrawWindow::freezeUI(bool frozen)
+{
+    if(frozen)
+    {
+        ui->buttonLogout->setDisabled(true);
+        ui->buttonReturn->setDisabled(true);
+
+        QList<QAbstractButton *> accountButtons = ui->buttonGroup->buttons();
+
+        foreach (QAbstractButton * button, accountButtons) {
+            button->setDisabled(true);
+        }
+    }
+    else
+    {
+        ui->buttonLogout->setDisabled(false);
+        ui->buttonReturn->setDisabled(false);
+
+        QList<QAbstractButton *> accountButtons = ui->buttonGroup->buttons();
+
+        foreach (QAbstractButton * button, accountButtons) {
+            button->setDisabled(false);
+        }
+    }
+}
+
 void WithdrawWindow::withdrawButtonClicked(int buttonID)
 {
     //get button value (text of the button)
@@ -84,6 +110,10 @@ void WithdrawWindow::withdrawButtonClicked(int buttonID)
 
 void WithdrawWindow::withdrawMoney(int amount)
 {
+    invalidAttempt = false;
+    freezeUI(true);
+    updateUI();
+
     session->withdrawAmount = amount;
 
     if(session->withdrawMode == "debit")
@@ -97,6 +127,7 @@ void WithdrawWindow::withdrawMoney(int amount)
                      << "| After attempted withdrawal: " << newAmount;
 
             invalidAttempt = true;
+            freezeUI(false);
             updateUI();
             return;
         }
@@ -104,8 +135,6 @@ void WithdrawWindow::withdrawMoney(int amount)
         qDebug() << Q_FUNC_INFO << "Old accountBalance: " << session->accountBalance;
         session->accountBalance = newAmount;
         qDebug() << Q_FUNC_INFO << "New accountBalance: " << session->accountBalance;
-
-        //setAccountBalance(session->accountID, session->accountBalance);
     }
     else
     {
@@ -118,15 +147,32 @@ void WithdrawWindow::withdrawMoney(int amount)
                      << "| After attempted withdrawal: " << newAmount;
 
             invalidAttempt = true;
+            freezeUI(false);
             updateUI();
             return;
         }
-
         qDebug() << Q_FUNC_INFO << "Old accountCredit: " << session->accountCredit;
         session->accountCredit = newAmount;
         qDebug() << Q_FUNC_INFO << "New accountCredit: " << session->accountCredit;
+    }
 
-        //setAccountCredit(session->accountID, session->accountCredit);
+    //communicate changes to server
+    connect(session->restApi, SIGNAL(withdrawalSuccess(bool)),
+            this, SLOT(handleResponse(bool)));
+    session->restApi->setAccountBalance(session->accountID,
+                                        session->withdrawAmount, session->withdrawMode);
+}
+
+void WithdrawWindow::handleResponse(bool success)
+{
+    freezeUI(false);
+
+    if(!success)
+    {
+        qDebug() << Q_FUNC_INFO << "transaction was unsuccessful";
+        invalidAttempt = true;
+        updateUI();
+        return;
     }
 
     receiptWindow = new ReceiptWindow(this, session);

@@ -1,6 +1,8 @@
 #ifndef SESSIONDATA_H
 #define SESSIONDATA_H
 
+#include "dllrestapi.h"
+
 #include <QTimer>
 #include <QObject>
 #include <QList>
@@ -12,6 +14,8 @@ class SessionData : public QObject
 public:
     explicit SessionData();
     ~SessionData();
+
+    DLLRestApi * restApi;
 
     int cardID; //getCardID(QString hexa);
     int accountID; //getAccountID(int cardID);
