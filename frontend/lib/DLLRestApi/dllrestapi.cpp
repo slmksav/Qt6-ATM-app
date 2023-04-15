@@ -16,7 +16,7 @@ QString DLLRestApi::getBaseUrl()
     //return "http://localhost:3000";
 }
 
-void DLLRestApi::postLogin(QString hex, QString pin)
+bool DLLRestApi::postLogin(QString hex, QString pin)
 {
     QJsonObject jsonObj;
     jsonObj.insert("username", hex);
@@ -41,13 +41,15 @@ void DLLRestApi::postLogin(QString hex, QString pin)
         qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
 
         token = QString(responseData);
-        qDebug() << Q_FUNC_INFO << "will return: " << token;
 
-        return;
+        if(token == "false")
+            return false;
+
+        return true;
     }
     else {
         qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
-        return;
+        return false;
     }
 }
 

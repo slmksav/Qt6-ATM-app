@@ -362,7 +362,17 @@ void StartWindow::on_buttonOhitaPIN_clicked()
 {
     qDebug() << Q_FUNC_INFO << "";
 
-    pDLLRestApi->postLogin("0d0a2d303630303035343246450d0a3e", "1234");
+    QString hex = "0d0a2d303630303035343246450d0a3e";
+    QString pin = "1234";
+
+    if(!pDLLRestApi->postLogin(hex, pin))
+    {
+        qDebug() << Q_FUNC_INFO << "wrong login info";
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "correct login info";
+    }
 
     emit testOhitaPINSignal(2);
 }
