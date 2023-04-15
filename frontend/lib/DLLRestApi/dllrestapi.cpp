@@ -601,18 +601,36 @@ QList<double> DLLRestApi::getTransactionAmounts(int accountID)
 //TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI
 void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString withdrawType)
 {
-    double currentBalance = 0.0;
-    if(withdrawType == "debit")
+    double currentBalance = 0.0; //voi olla joko creditsaldo tai debitsaldo edempänä
+    double creditMax = 0.0; //ei jäsenmuuttuja! (sellaista ei ole)
+    bool debitMode = false;
+    if(withdrawType == "debit") {
+        debitMode = true;
         currentBalance = getAccountBalance(accountID);
-    else
+    }
+    else {
+        debitMode = false;
+        creditMax = getCreditMax(accountID);
         currentBalance = getAccountCredit(accountID);
+    }
 
-    if(currentBalance - (double)withdrawAmount < 0)
-    {
-        qDebug() << Q_FUNC_INFO << "currentBalance - (double)withdrawAmount < 0\n" <<
-                    currentBalance << " - " << (double)withdrawAmount;
-        emit withdrawalSuccess(false);
-        return;
+    if(debitMode == true) {
+        if(currentBalance - (double)withdrawAmount < 0)
+        {
+            qDebug() << Q_FUNC_INFO << "currentBalance - (double)withdrawAmount < 0\n" <<
+                        currentBalance << " - " << (double)withdrawAmount;
+            emit withdrawalSuccess(false);
+            return;
+        }
+    }
+    else {
+        if((currentBalance+(double)withdrawAmount) > creditMax)
+        {
+            qDebug() << Q_FUNC_INFO << "currentBalance - (double)withdrawAmount < 0\n" <<
+                        currentBalance << " - " << (double)withdrawAmount;
+            emit withdrawalSuccess(false);
+            return;
+        }
     }
 
     QJsonObject jsonObj;
