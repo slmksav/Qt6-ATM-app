@@ -52,7 +52,7 @@ public:
             DLLPinCode->setObjectName("DLLPinCode");
         DLLPinCode->resize(693, 644);
         DLLPinCode->setStyleSheet(QString::fromUtf8("QWidget {\n"
-"    background-image: url(C:/Pankkiautomaatti/group_18/frontend/img/blueblue.jpg);\n"
+"    background-image: url(:/images/pincodeimgs/blueblue.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
 "}\n"
@@ -106,6 +106,11 @@ public:
         label->setObjectName("label");
         label->setGeometry(QRect(130, 100, 541, 41));
         label->setFont(font);
+        label->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/images/dllpincodeimgs/blueblue.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}"));
         button7 = new QPushButton(DLLPinCode);
         button7->setObjectName("button7");
         button7->setGeometry(QRect(170, 370, 21, 29));
@@ -137,6 +142,7 @@ public:
         QFont font1;
         font1.setPointSize(10);
         labelFreezed2->setFont(font1);
+        labelFreezed2->setStyleSheet(QString::fromUtf8(""));
         labelinfo = new QLabel(DLLPinCode);
         labelinfo->setObjectName("labelinfo");
         labelinfo->setGeometry(QRect(440, 360, 231, 51));

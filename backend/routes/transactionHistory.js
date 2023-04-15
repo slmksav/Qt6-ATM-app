@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const additionals = require('../models/additionals_model');
+const transactionHistory = require('../models/transactionHistory_model');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 router.get('/',function(request,response){
     jwt.verify(request.header('token'), process.env.MY_TOKEN);
-    additionals.getAll(function(err,dbResult){
+    transactionHistory.getAll(function(err,dbResult){
         if(err){
             response.json(err);
         }
@@ -16,13 +16,9 @@ router.get('/',function(request,response){
     })
 });
 
-router.get('/ids/:cardowner', function (request, response) {
-    console.log("request.params.cardowner: ", request.params.cardowner);
-    console.log("request.token: ", request.header('token'));
-
+router.get('/ids/:idaccount', function (request, response) {
     jwt.verify(request.header('token'), process.env.MY_TOKEN);
-    
-    additionals.getAdditionalAccountIDs(request.params.cardowner, function (err, dbResult) {
+    transactionHistory.getTransactionIDs(request.params.idaccount, function (err, dbResult) {
         if (err) {
             response.json(err);
         } else {
@@ -31,9 +27,9 @@ router.get('/ids/:cardowner', function (request, response) {
     })
 });
 
-router.get('/names/:cardowner', function (request, response) {
+router.get('/dates/:idaccount', function (request, response) {
     jwt.verify(request.header('token'), process.env.MY_TOKEN);
-    additionals.getAdditionalAccountNames(request.params.cardowner, function (err, dbResult) {
+    transactionHistory.getTransactionDates(request.params.idaccount, function (err, dbResult) {
         if (err) {
             response.json(err);
         } else {
@@ -42,9 +38,9 @@ router.get('/names/:cardowner', function (request, response) {
     })
 });
 
-router.get('/types/:cardowner', function (request, response) {
+router.get('/amounts/:idaccount', function (request, response) {
     jwt.verify(request.header('token'), process.env.MY_TOKEN);
-    additionals.getAdditionalAccountTypes(request.params.cardowner, function (err, dbResult) {
+    transactionHistory.getTransactionAmounts(request.params.idaccount, function (err, dbResult) {
         if (err) {
             response.json(err);
         } else {

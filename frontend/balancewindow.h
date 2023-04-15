@@ -14,11 +14,10 @@ class BalanceWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit BalanceWindow(QWidget *parent = nullptr);
+    explicit BalanceWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~BalanceWindow();
 
 public slots:
-    void putSessionData(SessionData *session);
     void updateUI();
 
 private slots:

@@ -15,21 +15,20 @@ class WithdrawWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit WithdrawWindow(QWidget *parent = nullptr);
+    explicit WithdrawWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~WithdrawWindow();
 
 signals:
     void clickAmount(int);
 
 public slots:
-    void withdrawExceedWarning();
-
-    void putSessionData(SessionData *session);
     void updateUI();
+    void freezeUI(bool);
 
 private slots:
     void withdrawButtonClicked(int);
     void withdrawMoney(int);
+    void handleResponse(bool);
 
     void on_buttonLogout_clicked();
 

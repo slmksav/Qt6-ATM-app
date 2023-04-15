@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/exeimgs">
+        <file>blueblue.jpg</file>
+        <file>englanninlippu.jpg</file>
+        <file>suomenlippu.png</file>
+    </qresource>
+</RCC>

@@ -50,15 +50,31 @@ function(request, response) {
 });
 
 
-router.put('/:id', 
+router.put('/', 
 function(request, response) {
-  account.update(request.params.id, request.body, function(err, dbResult) {
-    if (err) {
-      response.json(err);
-    } else {
-      response.json(dbResult.affectedRows);
-    }
-  });
+  if(request.body.id && request.body.amount && request.body.type) 
+  {
+    const id = request.body.id;
+    const amount = request.body.amount;
+    const type = request.body.type;
+
+    console.log("id: ", id);
+    console.log("amount: ", amount);
+    console.log("type: ", type);
+
+    account.update(id, amount, type, function(err, dbResult) 
+      {
+      if (err) {
+        response.json(err);
+      } else {
+        response.json(dbResult.affectedRows);
+      }
+    });
+  }
+  else{
+    console.log("account put amount body malformed");
+    response.send(false);
+  }
 });
 
 

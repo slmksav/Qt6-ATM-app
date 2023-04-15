@@ -1,11 +1,17 @@
 #include "receiptwindow.h"
 #include "ui_receiptwindow.h"
 
-ReceiptWindow::ReceiptWindow(QWidget *parent) :
+ReceiptWindow::ReceiptWindow(QWidget *parent, SessionData *session) :
     QDialog(parent),
     ui(new Ui::ReceiptWindow)
 {
     ui->setupUi(this);
+
+    this->session = session;
+
+    session->resetTimer();
+
+    updateUI();
 }
 
 ReceiptWindow::~ReceiptWindow()
@@ -15,11 +21,22 @@ ReceiptWindow::~ReceiptWindow()
     session->resetTimer();
 }
 
-void ReceiptWindow::putSessionData(SessionData *session)
+void ReceiptWindow::updateUI()
 {
-    this->session = session;
+    //other ui elements
+    if(session->language == "fi")
+    {
+        ui->labelInfo->setText("Haluatko Kuitti?");
+        ui->buttonYes->setText("Kyllä");
+        ui->buttonNo->setText("Ei");
+    }
+    if(session->language == "en")
+    {
+        ui->labelInfo->setText("Do You Want a Receipt?");
+        ui->buttonYes->setText("Yes");
+        ui->buttonNo->setText("No");
+    }
 
-    session->resetTimer();
 }
 
 void ReceiptWindow::on_buttonYes_clicked()

@@ -14,11 +14,10 @@ class TransactionsWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit TransactionsWindow(QWidget *parent = nullptr);
+    explicit TransactionsWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~TransactionsWindow();
 
 public slots:
-    void putSessionData(SessionData *session);
     void updateUI();
 
 private slots:

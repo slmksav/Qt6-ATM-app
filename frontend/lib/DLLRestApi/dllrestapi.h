@@ -24,6 +24,9 @@ public:
     virtual ~DLLRestApi();
 
     static QString getBaseUrl();
+
+    bool postLogin(QString hex, QString pin);
+
     int getCardId(QString hexa);
     int getAccountId(int cardID);
     int getCustomerId(int accountID);
@@ -31,6 +34,14 @@ public:
     QString getCustomerName(int customerID);
     double getAccountBalance(int accountID);
     double getAccountCredit(int accountID);
+
+    QList<int> getAdditionalAccountIDs(int cardID);
+    QList<QString> getAdditionalAccountNames(int cardID);
+
+    QList<int> getTransactionIDs(int accountID);
+    QList<QString> getTransactionDates(int accountID);
+    QList<double> getTransactionAmounts(int accountID);
+
     void setAccountBalance(int accountID, int withdrawAmount, QString withdrawType);
 signals:
     void withdrawalSuccess(bool);
@@ -42,6 +53,8 @@ private:
     QString username;
     QString token;
     int accountIDFetchedByCard;
+
+    QJsonDocument doUrlGetQuery(QString site_url);
 };
 
 #endif // DLLRESTAPI_H

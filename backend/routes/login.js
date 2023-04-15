@@ -10,30 +10,51 @@ router.post('/',
     if(request.body.username && request.body.password){
       const user = request.body.username;
       const pass = request.body.password;
+
+      console.log("user: ", user);
+      console.log("pass: ", pass);
       
         login.checkPassword(user, function(err, dbResult) {
-          if(err){
-            response.json(err.errno);
+          if(err || (dbResult.length == 0)){
+            response.json(err);
           }
           else{
-            if (dbResult.length > 0) {
-              bcrypt.compare(pass,dbResult[0].password, function(err,compareResult) {
-                if(compareResult) {
-                  console.log("succes");
+            console.log("dbResult: ", dbResult);
+            console.log("dbResult[0].fourdigitpin: ", dbResult[0].fourdigitpin);
+            console.log("pass: ", pass);
+
+            //comparing plaintext, change to bcrypt.compare when hashing implemented
+            if(pass == dbResult[0].fourdigitpin)
+            {
                   const token = generateAccessToken({ username: user });
                   response.send(token);
-                }
-                else {
-                    console.log("wrong password");
-                    response.send(false);
-                }			
-              }
-              );
             }
-            else{
-              console.log("user does not exists");
+            else {
+              console.log("wrong password");
               response.send(false);
             }
+            // if (dbResult.length > 0) {
+            //   bcrypt.compare('1','1', function(err,compareResult) {
+            //     if (err){
+            //       console.log("bcrypt.compare error");
+            //     }
+            //     console.log("compareResult: ", compareResult);
+            //     if(compareResult) {
+            //       console.log("success");
+            //       const token = generateAccessToken({ username: user });
+            //       response.send(token);
+            //     }
+            //     else {
+            //         console.log("wrong password");
+            //         response.send(false);
+            //     }			
+            //   }
+            //   );
+            // }
+            // else{
+            //   console.log("user does not exists");
+            //   response.send(false);
+            // }
           }
           }
         );

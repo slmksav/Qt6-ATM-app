@@ -16,6 +16,13 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    background-image: url(:/exeimgs/blueblue.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="labelInfo">
     <property name="geometry">
@@ -113,6 +120,13 @@ näköseks</string>
       <height>24</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+    qproperty-icon: url(:/exeimgs/suomenlippu.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
+    </property>
     <property name="text">
      <string>fi</string>
     </property>
@@ -134,6 +148,13 @@ näköseks</string>
       <width>80</width>
       <height>24</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+    qproperty-icon: url(:/exeimgs/englanninlippu.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
     </property>
     <property name="text">
      <string>en</string>

@@ -14,11 +14,11 @@ class ReceiptWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ReceiptWindow(QWidget *parent = nullptr);
+    explicit ReceiptWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~ReceiptWindow();
 
 public slots:
-    void putSessionData(SessionData *session);
+    void updateUI();
 
 signals:
     void clickReceipt(bool);

@@ -17,11 +17,19 @@ const account = {
   delete: function(id, callback) {
     return db.query('delete from account where idaccount=?', [id], callback);
   },
-  update: function(id, account, callback) {
-    return db.query('update account set debitSaldo=?, where idaccount=?',
-      [account.debitSaldo, account.creditSaldo, id],
+  update: function(id, amount, type, callback) {
+    console.log("account update function");
+    if(type == 'debit') {
+      return db.query('update account set debitSaldo = debitSaldo - ? where idaccount=?',
+      [amount, id],
       callback
     );
+    } else if(type == 'credit') { 
+      return db.query('update account set creditSaldo = creditSaldo - ? where idaccount=?',
+      [amount, id],
+      callback
+    );
+    }
   }
 };
 module.exports = account;

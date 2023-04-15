@@ -3,11 +3,17 @@
 
 #include <QDebug>
 
-WithdrawWindow::WithdrawWindow(QWidget *parent) :
+WithdrawWindow::WithdrawWindow(QWidget *parent, SessionData *session) :
     QDialog(parent),
     ui(new Ui::WithdrawWindow)
 {
     ui->setupUi(this);
+
+    this->session = session;
+
+    session->resetTimer();
+
+    updateUI();
 
     connect(ui->buttonGroup, SIGNAL(idClicked(int)),
             this, SLOT(withdrawButtonClicked(int)));
@@ -20,34 +26,76 @@ WithdrawWindow::~WithdrawWindow()
     session->resetTimer();
 }
 
-void WithdrawWindow::withdrawExceedWarning()
-{
-    if(session->withdrawMode == "debit")
-    {
-        ui->labelWithdrawWarning->setText("Kate ei riitä!");
-    }
-    else
-    {
-        ui->labelWithdrawWarning->setText("Luotto ei riitä!");
-    }
-}
-
-void WithdrawWindow::putSessionData(SessionData *session)
-{
-    this->session = session;
-
-    session->resetTimer();
-
-    updateUI();
-}
-
 void WithdrawWindow::updateUI()
 {
     ui->labelWithdrawInfo->setText(session->customerName + " - " + session->withdrawMode);
 
     if(invalidAttempt == true)
     {
-        withdrawExceedWarning();
+        if(session->language == "fi")
+        {
+            if(session->withdrawMode == "debit")
+            {
+                ui->labelWithdrawWarning->setText("Kate ei riitä!");
+            }
+            else
+            {
+                ui->labelWithdrawWarning->setText("Luotto ei riitä!");
+            }
+        }
+        if(session->language == "en")
+        {
+            if(session->withdrawMode == "debit")
+            {
+                ui->labelWithdrawWarning->setText("Balance is not Sufficient!");
+            }
+            else
+            {
+                ui->labelWithdrawWarning->setText("Credit is not Sufficient!");
+            }
+        }
+    }
+    else
+    {
+        ui->labelWithdrawWarning->setText("");
+    }
+
+    //other ui elements
+    if(session->language == "fi")
+    {
+        ui->buttonLogout->setText("Kirjaudu Ulos");
+        ui->buttonReturn->setText("Palaa");
+    }
+    if(session->language == "en")
+    {
+        ui->buttonLogout->setText("Logout");
+        ui->buttonReturn->setText("Return");
+    }
+}
+
+void WithdrawWindow::freezeUI(bool frozen)
+{
+    if(frozen)
+    {
+        ui->buttonLogout->setDisabled(true);
+        ui->buttonReturn->setDisabled(true);
+
+        QList<QAbstractButton *> accountButtons = ui->buttonGroup->buttons();
+
+        foreach (QAbstractButton * button, accountButtons) {
+            button->setDisabled(true);
+        }
+    }
+    else
+    {
+        ui->buttonLogout->setDisabled(false);
+        ui->buttonReturn->setDisabled(false);
+
+        QList<QAbstractButton *> accountButtons = ui->buttonGroup->buttons();
+
+        foreach (QAbstractButton * button, accountButtons) {
+            button->setDisabled(false);
+        }
     }
 }
 
@@ -62,6 +110,10 @@ void WithdrawWindow::withdrawButtonClicked(int buttonID)
 
 void WithdrawWindow::withdrawMoney(int amount)
 {
+    invalidAttempt = false;
+    freezeUI(true);
+    updateUI();
+
     session->withdrawAmount = amount;
 
     if(session->withdrawMode == "debit")
@@ -75,6 +127,7 @@ void WithdrawWindow::withdrawMoney(int amount)
                      << "| After attempted withdrawal: " << newAmount;
 
             invalidAttempt = true;
+            freezeUI(false);
             updateUI();
             return;
         }
@@ -82,8 +135,6 @@ void WithdrawWindow::withdrawMoney(int amount)
         qDebug() << Q_FUNC_INFO << "Old accountBalance: " << session->accountBalance;
         session->accountBalance = newAmount;
         qDebug() << Q_FUNC_INFO << "New accountBalance: " << session->accountBalance;
-
-        //setAccountBalance(session->accountID, session->accountBalance);
     }
     else
     {
@@ -96,19 +147,35 @@ void WithdrawWindow::withdrawMoney(int amount)
                      << "| After attempted withdrawal: " << newAmount;
 
             invalidAttempt = true;
+            freezeUI(false);
             updateUI();
             return;
         }
-
         qDebug() << Q_FUNC_INFO << "Old accountCredit: " << session->accountCredit;
         session->accountCredit = newAmount;
         qDebug() << Q_FUNC_INFO << "New accountCredit: " << session->accountCredit;
-
-        //setAccountCredit(session->accountID, session->accountCredit);
     }
 
-    receiptWindow = new ReceiptWindow(this);
-    receiptWindow->putSessionData(session);
+    //communicate changes to server
+    connect(session->restApi, SIGNAL(withdrawalSuccess(bool)),
+            this, SLOT(handleResponse(bool)));
+    session->restApi->setAccountBalance(session->accountID,
+                                        session->withdrawAmount, session->withdrawMode);
+}
+
+void WithdrawWindow::handleResponse(bool success)
+{
+    freezeUI(false);
+
+    if(!success)
+    {
+        qDebug() << Q_FUNC_INFO << "transaction was unsuccessful";
+        invalidAttempt = true;
+        updateUI();
+        return;
+    }
+
+    receiptWindow = new ReceiptWindow(this, session);
     receiptWindow->open();
 }
 

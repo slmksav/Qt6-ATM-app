@@ -52,9 +52,20 @@ private:
     DLLRestApi * pDLLRestApi;
     DLLSerialPort * pDLLSerialPort;
 
+    //QString state = "default";
     QString language = "fi";
 
-    void updateUI();
+    enum State {
+        Default,
+        Waiting,
+        Timeout,
+        Error,
+        Logout
+    }state = Default;
+
+    void openOptionsWindow();
+
+    void updateUI(); 
 };
 
 #endif // STARTWINDOW_H

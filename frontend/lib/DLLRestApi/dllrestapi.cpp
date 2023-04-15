@@ -12,7 +12,45 @@ DLLRestApi::~DLLRestApi()
 
 QString DLLRestApi::getBaseUrl()
 {
-     return "https://bankdb-r18.onrender.com";
+    return "https://bankdb-r18.onrender.com";
+    //return "http://localhost:3000";
+}
+
+bool DLLRestApi::postLogin(QString hex, QString pin)
+{
+    QJsonObject jsonObj;
+    jsonObj.insert("username", hex);
+    jsonObj.insert("password", pin);
+
+    QString site_url = getBaseUrl() + "/login";
+    QNetworkRequest request(site_url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
+
+    QNetworkReply* networkReply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
+
+        token = QString(responseData);
+
+        if(token == "false")
+            return false;
+
+        return true;
+    }
+    else {
+        qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
+        return false;
+    }
 }
 
 int DLLRestApi::getAccountId(int cardID)
@@ -310,59 +348,255 @@ QString DLLRestApi::getCustomerName(int customerID)
         }
 }
 
+//TÄSTÄ ALKAA LISTOJA PALAUTTAVAT FUNKTIOT
+QJsonDocument DLLRestApi::doUrlGetQuery(QString site_url)
+{
+    qDebug() << Q_FUNC_INFO << "requesting with url:" << site_url;
+
+    QNetworkRequest request(site_url);
+    request.setRawHeader(QByteArray("token"), QByteArray(token.toUtf8()));
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
+        QJsonDocument document = QJsonDocument::fromJson(responseData);
+
+        return document;
+    }
+    else {
+        qDebug() << Q_FUNC_INFO << "Network error: " << networkReply->errorString();
+        QJsonDocument document;
+
+        return document;
+    }
+}
+
+QList<int> DLLRestApi::getAdditionalAccountIDs(int cardID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/additionals/ids/" + QString::number(cardID);
+
+    QJsonDocument document = doUrlGetQuery(site_url);
+
+    if(document.isNull())
+    {
+        QList<int> err{};
+        return err;
+    }
+
+    QJsonArray idArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << idArr.count();
+
+    QList<int> accounts{};
+    for (int i = 0; i < idArr.count(); ++i) {
+        QJsonObject object = idArr[i].toObject();
+        accounts.append(object.value("idaccount").toInt());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << accounts.count();
+
+    return accounts;
+}
+
+QList<QString> DLLRestApi::getAdditionalAccountNames(int cardID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/additionals/names/" + QString::number(cardID);
+
+    QJsonDocument document = doUrlGetQuery(site_url);
+
+    if(document.isNull())
+    {
+        QList<QString> err{};
+        return err;
+    }
+    QJsonArray nameArr = document.array();
+
+    site_url = DLLRestApi::getBaseUrl() + "/additionals/types/" + QString::number(cardID);
+
+    document = doUrlGetQuery(site_url);
+
+    if(document.isNull())
+    {
+        QList<QString> err{};
+        return err;
+    }
+    QJsonArray typeArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "nameArr size:" << nameArr.count() <<
+                "| typeArr size:" << typeArr.count();
+
+    QList<QString> accounts{};
+    for (int i = 0; i < nameArr.count(); ++i) {
+        QJsonObject name = nameArr[i].toObject();
+        QJsonObject type = typeArr[i].toObject();
+
+        bool accNumCredit = type.value("accNumCredit").isNull();
+        bool accNumDebit = type.value("accNumDebit").isNull();
+
+        QString accountType;
+        if (accNumCredit && !accNumDebit) {
+            accountType = "debit";
+        } else if (!accNumCredit && accNumDebit) {
+            accountType = "credit";
+        } else if (!accNumCredit && !accNumDebit) {
+            accountType = "dual";
+        } else {
+            accountType = "Unknown";
+        }
+
+        accounts.append(name.value("first_name").toString() + " " +
+                        name.value("last_name").toString() + " - " +
+                        accountType);
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << accounts.count();
+
+    return accounts;
+}
+
+QList<int> DLLRestApi::getTransactionIDs(int accountID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/ids/" + QString::number(accountID);
+
+    QJsonDocument document = doUrlGetQuery(site_url);
+
+    if(document.isNull())
+    {
+        QList<int> err{};
+        return err;
+    }
+
+    QJsonArray idArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << idArr.count();
+
+    QList<int> transactions{};
+    for (int i = 0; i < idArr.count(); ++i) {
+        QJsonObject object = idArr[i].toObject();
+        transactions.append(object.value("idtransactions").toInt());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << transactions.count();
+
+    return transactions;
+}
+
+QList<QString> DLLRestApi::getTransactionDates(int accountID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/dates/" + QString::number(accountID);
+
+    QJsonDocument document = doUrlGetQuery(site_url);
+
+    if(document.isNull())
+    {
+        QList<QString> err{};
+        return err;
+    }
+
+    QJsonArray datesArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << datesArr.count();
+
+    QList<QString> transactions{};
+    for (int i = 0; i < datesArr.count(); ++i) {
+        QJsonObject object = datesArr[i].toObject();
+        transactions.append(object.value("date_transactions").toString());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << transactions.count();
+
+    return transactions;
+}
+
+QList<double> DLLRestApi::getTransactionAmounts(int accountID)
+{
+    QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/amounts/" + QString::number(accountID);
+
+    QJsonDocument document = doUrlGetQuery(site_url);
+
+    if(document.isNull())
+    {
+        QList<double> err{};
+        return err;
+    }
+
+    QJsonArray amountsArr = document.array();
+
+    qDebug() << Q_FUNC_INFO << "QJsonArray size:" << amountsArr.count();
+
+    QList<double> transactions{};
+    for (int i = 0; i < amountsArr.count(); ++i) {
+        QJsonObject object = amountsArr[i].toObject();
+        QString amountStr = object.value("amount").toString();
+        transactions.append(amountStr.toDouble());
+    }
+
+    qDebug() << Q_FUNC_INFO << "list size:" << transactions.count();
+
+    return transactions;
+}
+
 //TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI
 void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString withdrawType)
 {
-    double accountBalance = 0.0;
-    QString site_url = DLLRestApi::getBaseUrl() + "/account/" + QString::number(accountID);
-    QNetworkRequest request((site_url));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
-    request.setRawHeader("Authorization", authHeader);
-    QNetworkAccessManager *manager = new QNetworkAccessManager();
+    double currentBalance = 0.0;
+    if(withdrawType == "debit")
+        currentBalance = getAccountBalance(accountID);
+    else
+        currentBalance = getAccountCredit(accountID);
 
-    connect(manager, &QNetworkAccessManager::finished, [=, &accountBalance](QNetworkReply *reply) {
-        if (reply->error()) {
-            // Handle the error
-        } else {
-            QByteArray response = reply->readAll();
-            QJsonDocument jsonResponse = QJsonDocument::fromJson(response);
-            QJsonObject jsonObject = jsonResponse.object();
-            accountBalance = jsonObject["balance"].toDouble();
-        }
-        reply->deleteLater();
-    });
-    manager->get(request);
+    if(currentBalance - (double)withdrawAmount < 0)
+    {
+        qDebug() << Q_FUNC_INFO << "currentBalance - (double)withdrawAmount < 0\n" <<
+                    currentBalance << " - " << (double)withdrawAmount;
+        emit withdrawalSuccess(false);
+        return;
+    }
+
+    QJsonObject jsonObj;
+    jsonObj.insert("id", accountID);
+    jsonObj.insert("amount", withdrawAmount);
+    jsonObj.insert("type", withdrawType);
+
+    QString site_url = getBaseUrl() + "/account/";
+    QNetworkRequest request(site_url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
+
+    QNetworkReply* networkReply = loginManager->put(request, QJsonDocument(jsonObj).toJson());
 
     QEventLoop loop;
-    QObject::connect(manager, &QNetworkAccessManager::finished, &loop, &QEventLoop::quit);
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
     loop.exec();
 
-    if (withdrawType == "debit" && accountBalance < (double)withdrawAmount) {
-        double newBalance = accountBalance - withdrawAmount;
+    QByteArray responseData;
 
-        QJsonObject requestBody;
-        requestBody["balance"] = newBalance;
-        QJsonDocument requestBodyDoc(requestBody);
-        QByteArray requestBodyData = requestBodyDoc.toJson();
-        site_url = DLLRestApi::getBaseUrl() + "/account/" + QString::number(accountID);
-        request.setUrl(site_url);
-        manager->put(request, requestBodyData);
-        emit withdrawalSuccess(true);
-    } else if (withdrawType == "credit" && accountBalance < (double)withdrawAmount) {
-        double newBalance = accountBalance + withdrawAmount;
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
 
-        QJsonObject requestBody;
-        requestBody["balance"] = newBalance;
-        QJsonDocument requestBodyDoc(requestBody);
-        QByteArray requestBodyData = requestBodyDoc.toJson();
-        site_url = DLLRestApi::getBaseUrl() + "/account/" + QString::number(accountID);
-        request.setUrl(site_url);
-        manager->put(request, requestBodyData);
+        if(responseData.toInt() == 0)
+        {
+            qDebug() << Q_FUNC_INFO << "zero rows affected, failed";
+            emit withdrawalSuccess(false);
+            return;
+        }
         emit withdrawalSuccess(true);
-    } else {
-        // Invalid withdrawal!
-        qDebug() << "Withdrawal failure!";
+        return;
+    }
+    else {
+        qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
         emit withdrawalSuccess(false);
+        return;
     }
 }
