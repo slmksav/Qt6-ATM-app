@@ -360,5 +360,9 @@ void StartWindow::on_buttonOhitaKortti_clicked()
 //This button shall get removed on release
 void StartWindow::on_buttonOhitaPIN_clicked()
 {
+    qDebug() << Q_FUNC_INFO << "";
+
+    pDLLRestApi->postLogin("0d0a2d303630303035343246450d0a3e", "1234");
+
     emit testOhitaPINSignal(2);
 }

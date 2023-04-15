@@ -24,6 +24,9 @@ public:
     virtual ~DLLRestApi();
 
     static QString getBaseUrl();
+
+    void postLogin(QString hex, QString pin);
+
     int getCardId(QString hexa);
     int getAccountId(int cardID);
     int getCustomerId(int accountID);
@@ -51,7 +54,7 @@ private:
     QString token;
     int accountIDFetchedByCard;
 
-    QJsonDocument doUrlGetQuery(QString site_url, QUrlQuery query);
+    QJsonDocument doUrlGetQuery(QString site_url);
 };
 
 #endif // DLLRESTAPI_H

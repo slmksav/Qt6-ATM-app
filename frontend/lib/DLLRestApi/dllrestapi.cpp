@@ -12,7 +12,43 @@ DLLRestApi::~DLLRestApi()
 
 QString DLLRestApi::getBaseUrl()
 {
-     return "https://bankdb-r18.onrender.com";
+    return "https://bankdb-r18.onrender.com";
+    //return "http://localhost:3000";
+}
+
+void DLLRestApi::postLogin(QString hex, QString pin)
+{
+    QJsonObject jsonObj;
+    jsonObj.insert("username", hex);
+    jsonObj.insert("password", pin);
+
+    QString site_url = getBaseUrl() + "/login";
+    QNetworkRequest request(site_url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
+
+    QNetworkReply* networkReply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
+
+        token = QString(responseData);
+        qDebug() << Q_FUNC_INFO << "will return: " << token;
+
+        return;
+    }
+    else {
+        qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
+        return;
+    }
 }
 
 int DLLRestApi::getAccountId(int cardID)
@@ -311,15 +347,12 @@ QString DLLRestApi::getCustomerName(int customerID)
 }
 
 //TÄSTÄ ALKAA LISTOJA PALAUTTAVAT FUNKTIOT
-QJsonDocument DLLRestApi::doUrlGetQuery(QString site_url, QUrlQuery query)
+QJsonDocument DLLRestApi::doUrlGetQuery(QString site_url)
 {
-    QUrl urlWithQuery(site_url);
-    urlWithQuery.setQuery(query);
     qDebug() << Q_FUNC_INFO << "requesting with url:" << site_url;
 
-    QNetworkRequest request;
-    request.setUrl(urlWithQuery);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkRequest request(site_url);
+    request.setRawHeader(QByteArray("token"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -349,10 +382,7 @@ QList<int> DLLRestApi::getAdditionalAccountIDs(int cardID)
 {
     QString site_url = DLLRestApi::getBaseUrl() + "/additionals/ids/" + QString::number(cardID);
 
-    QUrlQuery query;
-    query.addQueryItem("cardID", QString::number(cardID));
-
-    QJsonDocument document = doUrlGetQuery(site_url, query);
+    QJsonDocument document = doUrlGetQuery(site_url);
 
     if(document.isNull())
     {
@@ -379,10 +409,7 @@ QList<QString> DLLRestApi::getAdditionalAccountNames(int cardID)
 {
     QString site_url = DLLRestApi::getBaseUrl() + "/additionals/names/" + QString::number(cardID);
 
-    QUrlQuery query;
-    query.addQueryItem("cardID", QString::number(cardID));
-
-    QJsonDocument document = doUrlGetQuery(site_url, query);
+    QJsonDocument document = doUrlGetQuery(site_url);
 
     if(document.isNull())
     {
@@ -393,10 +420,7 @@ QList<QString> DLLRestApi::getAdditionalAccountNames(int cardID)
 
     site_url = DLLRestApi::getBaseUrl() + "/additionals/types/" + QString::number(cardID);
 
-    query.clear();
-    query.addQueryItem("cardID", QString::number(cardID));
-
-    document = doUrlGetQuery(site_url, query);
+    document = doUrlGetQuery(site_url);
 
     if(document.isNull())
     {
@@ -441,10 +465,7 @@ QList<int> DLLRestApi::getTransactionIDs(int accountID)
 {
     QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/ids/" + QString::number(accountID);
 
-    QUrlQuery query;
-    query.addQueryItem("accountID", QString::number(accountID));
-
-    QJsonDocument document = doUrlGetQuery(site_url, query);
+    QJsonDocument document = doUrlGetQuery(site_url);
 
     if(document.isNull())
     {
@@ -471,10 +492,7 @@ QList<QString> DLLRestApi::getTransactionDates(int accountID)
 {
     QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/dates/" + QString::number(accountID);
 
-    QUrlQuery query;
-    query.addQueryItem("accountID", QString::number(accountID));
-
-    QJsonDocument document = doUrlGetQuery(site_url, query);
+    QJsonDocument document = doUrlGetQuery(site_url);
 
     if(document.isNull())
     {
@@ -501,10 +519,7 @@ QList<double> DLLRestApi::getTransactionAmounts(int accountID)
 {
     QString site_url = DLLRestApi::getBaseUrl() + "/transactionHistory/amounts/" + QString::number(accountID);
 
-    QUrlQuery query;
-    query.addQueryItem("accountID", QString::number(accountID));
-
-    QJsonDocument document = doUrlGetQuery(site_url, query);
+    QJsonDocument document = doUrlGetQuery(site_url);
 
     if(document.isNull())
     {
