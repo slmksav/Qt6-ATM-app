@@ -130,6 +130,8 @@ void StartWindow::startSession(int returnedCardID)
 
 void StartWindow::fetchDataWithDLL(int returnedAccountID)
 {
+    qDebug() << Q_FUNC_INFO << "Fetchind data with accountID: " << returnedAccountID;
+
     session->stopTimer();
 
     session->accountID = returnedAccountID;
@@ -242,6 +244,8 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
 
 void StartWindow::swapToAccount(int accountID)
 {
+    qDebug() << Q_FUNC_INFO << "Swapping account with accountID: " << accountID;
+
     //delete old windows
     delete optionsWindow;
     optionsWindow = nullptr;
