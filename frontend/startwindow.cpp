@@ -190,20 +190,14 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
         session->customerName = pDLLRestApi->getCustomerName(session->customerID);
 
         //avoid making unnecessary calls to server
-        if(session->accountType == "dual")
+        if(session->accountType == "debit" || session->accountType == "dual")
         {
             session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
-            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
         }
-        else if(session->accountType == "debit")
+        if(session->accountType == "credit" || session->accountType == "dual")
         {
-            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
-            session->accountCredit = 0.00;
-        }
-        else
-        {
-            session->accountBalance = 0.00;
             session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+            session->accountCreditMax = pDLLRestApi->getCreditMax(session->accountID);
         }
 
         //additional accounts
