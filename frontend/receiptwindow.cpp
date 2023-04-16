@@ -26,15 +26,17 @@ void ReceiptWindow::updateUI()
     //other ui elements
     if(session->language == "fi")
     {
-        ui->labelInfo->setText("Haluatko kuitin??");
+        ui->labelInfo->setText("Haluatko kuitin?");
         ui->buttonYes->setText("Kyllä");
         ui->buttonNo->setText("En");
+        ui->receiptLabel->setText("Kuitti lähetetään sähköpostiisi.");
     }
     if(session->language == "en")
     {
         ui->labelInfo->setText("Do you want a receipt?");
         ui->buttonYes->setText("Yes");
         ui->buttonNo->setText("No");
+        ui->receiptLabel->setText("The receipt will be sent to your email.");
     }
 
 }

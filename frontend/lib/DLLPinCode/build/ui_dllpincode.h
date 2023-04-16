@@ -56,47 +56,80 @@ public:
         DLLPinCode->resize(800, 480);
         DLLPinCode->setMinimumSize(QSize(800, 480));
         DLLPinCode->setMaximumSize(QSize(800, 480));
-        DLLPinCode->setStyleSheet(QString::fromUtf8("QWidget {\n"
-"qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:0.373979 rgba(255, 255, 255, 255), stop:0.373991 rgba(33, 30, 255, 255), stop:0.624018 rgba(33, 30, 255, 255), stop:0.624043 rgba(255, 0, 0, 255), stop:1 rgba(255, 0, 0, 255))\n"
-"}\n"
-""));
+        DLLPinCode->setStyleSheet(QString::fromUtf8(""));
         cardhexcodeLabel = new QLabel(DLLPinCode);
         cardhexcodeLabel->setObjectName("cardhexcodeLabel");
-        cardhexcodeLabel->setGeometry(QRect(570, 320, 231, 20));
+        cardhexcodeLabel->setGeometry(QRect(530, 320, 231, 20));
         button4 = new QPushButton(DLLPinCode);
         buttonGroup = new QButtonGroup(DLLPinCode);
         buttonGroup->setObjectName("buttonGroup");
         buttonGroup->addButton(button4);
         button4->setObjectName("button4");
         button4->setGeometry(QRect(20, 180, 91, 81));
+        button4->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}"));
         ButtonClear = new QPushButton(DLLPinCode);
         ButtonClear->setObjectName("ButtonClear");
         ButtonClear->setGeometry(QRect(330, 150, 131, 51));
+        ButtonClear->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         button2 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button2);
         button2->setObjectName("button2");
         button2->setGeometry(QRect(120, 90, 91, 81));
         button2->setTabletTracking(false);
         button2->setAutoFillBackground(false);
+        button2->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         label_3 = new QLabel(DLLPinCode);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(330, 350, 341, 41));
+        label_3->setGeometry(QRect(330, 350, 221, 41));
         QFont font;
         font.setFamilies({QString::fromUtf8("Verdana Pro Semibold")});
         font.setPointSize(11);
         label_3->setFont(font);
+        label_3->setStyleSheet(QString::fromUtf8("QLabel#label_3l {\n"
+"    background-color: none;\n"
+"    border: none;\n"
+"    color: none;\n"
+"    font-size: none;\n"
+"    /* any other styles you want to remove */\n"
+"    stylesheet: \"\";\n"
+"}"));
         label_3->setTextFormat(Qt::AutoText);
         button1 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button1);
         button1->setObjectName("button1");
         button1->setGeometry(QRect(20, 90, 91, 81));
         button1->setAcceptDrops(false);
+        button1->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         buttonEnter = new QPushButton(DLLPinCode);
         buttonEnter->setObjectName("buttonEnter");
         buttonEnter->setGeometry(QRect(330, 210, 131, 141));
+        buttonEnter->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}"));
         labelInterrupt = new QLabel(DLLPinCode);
         labelInterrupt->setObjectName("labelInterrupt");
-        labelInterrupt->setGeometry(QRect(310, 30, 481, 51));
+        labelInterrupt->setGeometry(QRect(310, 30, 431, 51));
         QFont font1;
         font1.setFamilies({QString::fromUtf8("Verdana")});
         font1.setPointSize(16);
@@ -104,7 +137,14 @@ public:
         button9 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button9);
         button9->setObjectName("button9");
-        button9->setGeometry(QRect(220, 270, 101, 81));
+        button9->setGeometry(QRect(220, 270, 91, 81));
+        button9->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}"));
+        button9->setAutoDefault(true);
+        button9->setFlat(false);
         lineEdit = new QLineEdit(DLLPinCode);
         lineEdit->setObjectName("lineEdit");
         lineEdit->setGeometry(QRect(50, 30, 241, 51));
@@ -112,53 +152,99 @@ public:
         font2.setPointSize(16);
         font2.setBold(true);
         lineEdit->setFont(font2);
+        lineEdit->setStyleSheet(QString::fromUtf8(""));
+        lineEdit->setFrame(true);
         lineEdit->setAlignment(Qt::AlignCenter);
         button5 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button5);
         button5->setObjectName("button5");
         button5->setGeometry(QRect(120, 180, 91, 81));
+        button5->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         button8 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button8);
         button8->setObjectName("button8");
         button8->setGeometry(QRect(120, 270, 91, 81));
+        button8->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}"));
         labelAttempts = new QLabel(DLLPinCode);
         labelAttempts->setObjectName("labelAttempts");
         labelAttempts->setGeometry(QRect(540, 90, 211, 41));
         labelAttempts->setFont(font);
         label = new QLabel(DLLPinCode);
         label->setObjectName("label");
-        label->setGeometry(QRect(310, 30, 581, 41));
+        label->setGeometry(QRect(310, 30, 500, 41));
+        label->setMaximumSize(QSize(500, 41));
         QFont font3;
         font3.setFamilies({QString::fromUtf8("Verdana Pro")});
         font3.setPointSize(11);
         font3.setBold(true);
+        font3.setKerning(false);
+        font3.setStyleStrategy(QFont::NoAntialias);
         label->setFont(font3);
-        label->setStyleSheet(QString::fromUtf8("QWidget {\n"
-"    background-image: url(:/images/dllpincodeimgs/blueblue.jpg);\n"
-"    background-repeat: no-repeat;\n"
-"    background-position: center;\n"
+        label->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"    background-color: transparent;\n"
 "}"));
+        label->setFrameShape(QFrame::NoFrame);
+        label->setFrameShadow(QFrame::Plain);
+        label->setLineWidth(0);
         button7 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button7);
         button7->setObjectName("button7");
         button7->setGeometry(QRect(20, 270, 91, 81));
+        button7->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"}"));
         ButtonStop = new QPushButton(DLLPinCode);
         ButtonStop->setObjectName("ButtonStop");
         ButtonStop->setGeometry(QRect(330, 90, 131, 51));
+        ButtonStop->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         button3 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button3);
         button3->setObjectName("button3");
-        button3->setGeometry(QRect(220, 90, 101, 81));
+        button3->setGeometry(QRect(220, 90, 91, 81));
         QFont font4;
         font4.setPointSize(9);
         button3->setFont(font4);
+        button3->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         button0 = new QPushButton(DLLPinCode);
         button0->setObjectName("button0");
         button0->setGeometry(QRect(120, 360, 91, 71));
+        button0->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         button6 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button6);
         button6->setObjectName("button6");
-        button6->setGeometry(QRect(220, 180, 101, 81));
+        button6->setGeometry(QRect(220, 180, 91, 81));
+        button6->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         labeljee = new QLabel(DLLPinCode);
         labeljee->setObjectName("labeljee");
         labeljee->setGeometry(QRect(570, 340, 211, 20));
@@ -193,9 +279,15 @@ public:
         imageLabel = new QLabel(DLLPinCode);
         imageLabel->setObjectName("imageLabel");
         imageLabel->setGeometry(QRect(0, 0, 801, 481));
+        imageLabel->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-repeat: no-repeat;\n"
+"    background-position: center;\n"
+"    background-size: 100% 100%;\n"
+"}"));
         imageLabel->setFrameShape(QFrame::Box);
         imageLabel->setFrameShadow(QFrame::Raised);
-        imageLabel->setLineWidth(7);
+        imageLabel->setLineWidth(2);
         imageLabel->setScaledContents(false);
         imageLabel->raise();
         cardhexcodeLabel->raise();
@@ -224,6 +316,9 @@ public:
         labelinfo->raise();
 
         retranslateUi(DLLPinCode);
+
+        button9->setDefault(false);
+
 
         QMetaObject::connectSlotsByName(DLLPinCode);
     } // setupUi
