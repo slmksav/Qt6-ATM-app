@@ -30,8 +30,8 @@ void OptionsWindow::updateUI()
     if(session->language == "fi")
     {
         ui->buttonBalance->setText("Saldo");
-        ui->buttonChangeAccount->setText("Vaihda Tiliä");
-        ui->buttonLogout->setText("Kirjaudu Ulos");
+        ui->buttonChangeAccount->setText("Vaihda tiliä");
+        ui->buttonLogout->setText("Kirjaudu ulos");
         ui->buttonTransactions->setText("Tapahtumat");
         ui->buttonWithdraw->setText("Nosto");
     }
@@ -39,7 +39,7 @@ void OptionsWindow::updateUI()
     {
         ui->buttonBalance->setText("Balance");
         ui->buttonChangeAccount->setText("Change Account");
-        ui->buttonLogout->setText("Logout");
+        ui->buttonLogout->setText("Log out");
         ui->buttonTransactions->setText("Transactions");
         ui->buttonWithdraw->setText("Withdraw");
     }
