@@ -138,13 +138,14 @@ void WithdrawWindow::withdrawMoney(int amount)
     }
     else
     {
-        double newAmount = session->accountCredit - (double)amount;
+        double newAmount = session->accountCredit + (double)amount;
 
-        if(newAmount < 0.00)
+        if(newAmount > session->accountCreditMax)
         {
-            qDebug() << Q_FUNC_INFO << "withdrawAmount exceeds accountCredit!\n"
+            qDebug() << Q_FUNC_INFO << "withdrawAmount exceeds creditMax!\n"
                      << "\tBalance: " << session->accountCredit
-                     << "| After attempted withdrawal: " << newAmount;
+                     << "| After attempted withdrawal: " << newAmount
+                     << "\n\tcreditMax: " << session->accountCreditMax;
 
             invalidAttempt = true;
             freezeUI(false);
