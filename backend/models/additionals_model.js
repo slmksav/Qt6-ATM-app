@@ -19,7 +19,7 @@ const additionals = {
 
   getAdditionalAccountTypes: function(cardowner, callback) {
     return db.query(
-        'SELECT accNumDebit, accNumCredit FROM account WHERE idaccount IN (SELECT id_account FROM card WHERE id_cardowner=?) ORDER BY id_customers DESC', 
+        'SELECT accNumDebit, accNumCredit FROM account WHERE idaccount IN (SELECT id_account FROM card WHERE id_cardowner=?) ORDER BY id_customers ASC', 
     [cardowner], callback);
   },
 };
