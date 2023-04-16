@@ -348,6 +348,59 @@ QString DLLRestApi::getCustomerName(int customerID)
         }
 }
 
+double DLLRestApi::getCreditMax(int accountID) //HUOM. luotto on siis tilikohtainen, ei korttikohtainen.
+{
+    QString url = getBaseUrl() + "/account/" + QString::number(accountID);
+
+    QUrlQuery query;
+    query.addQueryItem("id", QString::number(accountID));
+
+    QUrl urlWithQuery(url);
+    urlWithQuery.setQuery(query);
+    qDebug() << Q_FUNC_INFO << url;
+
+    QNetworkRequest request;
+    request.setUrl(urlWithQuery);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager networkManager;
+    QNetworkReply* networkReply = networkManager.get(request);
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    double creditMax = 0.0;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        QByteArray responseData = networkReply->readAll();
+        qDebug() << "Raw response:" << responseData;
+
+        QJsonDocument document = QJsonDocument::fromJson(responseData);
+        QJsonObject object = document.object();
+        qDebug() << "JSON object: (getCreditMax)" << object; // Print the JSON object
+
+        QJsonValue creditMaxValue = object.value("creditMax");
+        QString creditMaxFetched = creditMaxValue.toString();
+        qDebug() << "creditMax: (Qstring ennen double conversiota" << creditMaxFetched;
+        if (creditMaxFetched.isNull()) {
+            qDebug() << "Error: credit value is null!";
+        } else {
+            creditMax = creditMaxFetched.toDouble();
+            qDebug() << Q_FUNC_INFO << "Maximum credit is" << creditMax << "for account:" << accountID;
+        }
+        networkReply->deleteLater();
+    }
+    else {
+        qDebug() << "Network error fetching max credit: " << networkReply->errorString();
+        networkReply->deleteLater();
+        return -1;
+    }
+    return creditMax;
+}
+
 //TÄSTÄ ALKAA LISTOJA PALAUTTAVAT FUNKTIOT
 QJsonDocument DLLRestApi::doUrlGetQuery(QString site_url)
 {
@@ -548,18 +601,36 @@ QList<double> DLLRestApi::getTransactionAmounts(int accountID)
 //TÄSTÄ ALKAA SETIT. NÄMÄ PITÄÄ TEHDÄ CONNECT NETWORK MANAGER TYYPPISESTI
 void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString withdrawType)
 {
-    double currentBalance = 0.0;
-    if(withdrawType == "debit")
+    double currentBalance = 0.0; //voi olla joko creditsaldo tai debitsaldo edempänä
+    double creditMax = 0.0; //ei jäsenmuuttuja! (sellaista ei ole)
+    bool debitMode = false;
+    if(withdrawType == "debit") {
+        debitMode = true;
         currentBalance = getAccountBalance(accountID);
-    else
+    }
+    else {
+        debitMode = false;
+        creditMax = getCreditMax(accountID);
         currentBalance = getAccountCredit(accountID);
+    }
 
-    if(currentBalance - (double)withdrawAmount < 0)
-    {
-        qDebug() << Q_FUNC_INFO << "currentBalance - (double)withdrawAmount < 0\n" <<
-                    currentBalance << " - " << (double)withdrawAmount;
-        emit withdrawalSuccess(false);
-        return;
+    if(debitMode == true) {
+        if(currentBalance - (double)withdrawAmount < 0)
+        {
+            qDebug() << Q_FUNC_INFO << "currentBalance - (double)withdrawAmount < 0\n" <<
+                        currentBalance << " - " << (double)withdrawAmount;
+            emit withdrawalSuccess(false);
+            return;
+        }
+    }
+    else {
+        if((currentBalance+(double)withdrawAmount) > creditMax)
+        {
+            qDebug() << Q_FUNC_INFO << "currentBalance - (double)withdrawAmount < 0\n" <<
+                        currentBalance << " - " << (double)withdrawAmount;
+            emit withdrawalSuccess(false);
+            return;
+        }
     }
 
     QJsonObject jsonObj;

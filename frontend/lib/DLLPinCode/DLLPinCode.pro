@@ -28,5 +28,4 @@ unix {
 FORMS += \
     dllpincode.ui
 
-RESOURCES += \
-    ../../img/blueblue.qrc
+RESOURCES +=

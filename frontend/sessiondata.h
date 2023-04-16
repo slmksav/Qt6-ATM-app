@@ -17,24 +17,25 @@ public:
 
     DLLRestApi * restApi;
 
-    int cardID; //getCardID(QString hexa);
-    int accountID; //getAccountID(int cardID);
-    int customerID; //getCustomerID(int cardID);
-    QString accountType; //getAccountType(int accountID);
-    QString customerName; //getCustomerName(int customerID);
+    int cardID = 0; //getCardID(QString hexa);
+    int accountID = 0; //getAccountID(int cardID);
+    int customerID = 0; //getCustomerID(int accountID);
+    QString accountType = "\0"; //getAccountType(int accountID);
+    QString customerName = "\0"; //getCustomerName(int customerID);
 
-    double accountBalance; //getAccountBalance(int accountID);
-    double accountCredit; //getAccountCredit(int accountID);
+    double accountBalance = -1.0; //getAccountBalance(int accountID);
+    double accountCredit = -1.0; //getAccountCredit(int accountID);
+    double accountCreditMax = -1.0; //getCreditMax(int accountID);
 
-    QString withdrawMode;
+    QString withdrawMode = "\0";
     int withdrawAmount = 0;
 
     QList<QString> additionalAccountNames; //getAdditionalAccountNames(int customerID);
     QList<int> additionalAccountIDs; //getAdditionalAccountIDs(int customerID);
 
     QList<int> transactionIDs; //getTransactionIDs(int accountID);
-    QList<QString> transactionDates; //QList<QDate> getTransactionDates(QList<int> transactionIDs);
-    QList<double> transactionAmounts; //QList<int> getTransactionAmounts(QList<int> transactionIDs);
+    QList<QString> transactionDates; //getTransactionDates(int accountID);
+    QList<double> transactionAmounts; //getTransactionAmounts(int accountID);
 
     QString language = "fi";
 
@@ -46,6 +47,7 @@ public slots:
     void resetTimer();
     void stopTimer();
     void debugPrintData();
+    bool checkDataValidity();
 
 private slots:
     void handleTimeout();

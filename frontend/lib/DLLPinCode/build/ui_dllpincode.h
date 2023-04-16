@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -45,6 +46,7 @@ public:
     QLabel *labelFreezed1;
     QLabel *labelFreezed2;
     QLabel *labelinfo;
+    QButtonGroup *buttonGroup;
 
     void setupUi(QDialog *DLLPinCode)
     {
@@ -59,97 +61,130 @@ public:
 ""));
         cardhexcodeLabel = new QLabel(DLLPinCode);
         cardhexcodeLabel->setObjectName("cardhexcodeLabel");
-        cardhexcodeLabel->setGeometry(QRect(450, 410, 231, 20));
+        cardhexcodeLabel->setGeometry(QRect(300, 600, 231, 20));
         button4 = new QPushButton(DLLPinCode);
+        buttonGroup = new QButtonGroup(DLLPinCode);
+        buttonGroup->setObjectName("buttonGroup");
+        buttonGroup->addButton(button4);
         button4->setObjectName("button4");
-        button4->setGeometry(QRect(170, 330, 21, 29));
+        button4->setGeometry(QRect(50, 340, 111, 91));
         ButtonClear = new QPushButton(DLLPinCode);
         ButtonClear->setObjectName("ButtonClear");
-        ButtonClear->setGeometry(QRect(260, 330, 61, 29));
+        ButtonClear->setGeometry(QRect(410, 240, 191, 91));
         button2 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button2);
         button2->setObjectName("button2");
-        button2->setGeometry(QRect(200, 290, 21, 29));
+        button2->setGeometry(QRect(170, 240, 111, 91));
         label_3 = new QLabel(DLLPinCode);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(130, 470, 271, 41));
+        label_3->setGeometry(QRect(420, 540, 341, 41));
         QFont font;
-        font.setPointSize(16);
+        font.setFamilies({QString::fromUtf8("Verdana Pro Semibold")});
+        font.setPointSize(13);
         label_3->setFont(font);
+        label_3->setTextFormat(Qt::AutoText);
         button1 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button1);
         button1->setObjectName("button1");
-        button1->setGeometry(QRect(170, 290, 21, 29));
+        button1->setGeometry(QRect(50, 240, 111, 91));
         buttonEnter = new QPushButton(DLLPinCode);
         buttonEnter->setObjectName("buttonEnter");
-        buttonEnter->setGeometry(QRect(260, 370, 61, 29));
+        buttonEnter->setGeometry(QRect(410, 340, 191, 201));
         labelInterrupt = new QLabel(DLLPinCode);
         labelInterrupt->setObjectName("labelInterrupt");
-        labelInterrupt->setGeometry(QRect(130, 150, 291, 51));
-        labelInterrupt->setFont(font);
+        labelInterrupt->setGeometry(QRect(130, 120, 481, 51));
+        QFont font1;
+        font1.setFamilies({QString::fromUtf8("Sitka Small")});
+        font1.setPointSize(16);
+        labelInterrupt->setFont(font1);
         button9 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button9);
         button9->setObjectName("button9");
-        button9->setGeometry(QRect(230, 370, 21, 29));
+        button9->setGeometry(QRect(290, 440, 111, 101));
         lineEdit = new QLineEdit(DLLPinCode);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(170, 230, 171, 31));
-        lineEdit->setFont(font);
+        lineEdit->setGeometry(QRect(50, 180, 351, 51));
+        QFont font2;
+        font2.setPointSize(16);
+        lineEdit->setFont(font2);
+        lineEdit->setAlignment(Qt::AlignCenter);
         button5 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button5);
         button5->setObjectName("button5");
-        button5->setGeometry(QRect(200, 330, 21, 29));
+        button5->setGeometry(QRect(170, 340, 111, 91));
         button8 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button8);
         button8->setObjectName("button8");
-        button8->setGeometry(QRect(200, 370, 21, 29));
+        button8->setGeometry(QRect(170, 440, 111, 101));
         labelAttempts = new QLabel(DLLPinCode);
         labelAttempts->setObjectName("labelAttempts");
-        labelAttempts->setGeometry(QRect(130, 520, 211, 41));
-        labelAttempts->setFont(font);
+        labelAttempts->setGeometry(QRect(140, 100, 211, 41));
+        QFont font3;
+        font3.setFamilies({QString::fromUtf8("Verdana Pro Semibold")});
+        font3.setPointSize(14);
+        labelAttempts->setFont(font3);
         label = new QLabel(DLLPinCode);
         label->setObjectName("label");
-        label->setGeometry(QRect(130, 100, 541, 41));
-        label->setFont(font);
+        label->setGeometry(QRect(90, 130, 581, 41));
+        QFont font4;
+        font4.setFamilies({QString::fromUtf8("Verdana Pro")});
+        font4.setPointSize(16);
+        font4.setBold(true);
+        label->setFont(font4);
         label->setStyleSheet(QString::fromUtf8("QWidget {\n"
 "    background-image: url(:/images/dllpincodeimgs/blueblue.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
 "}"));
         button7 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button7);
         button7->setObjectName("button7");
-        button7->setGeometry(QRect(170, 370, 21, 29));
+        button7->setGeometry(QRect(50, 440, 111, 101));
         ButtonStop = new QPushButton(DLLPinCode);
         ButtonStop->setObjectName("ButtonStop");
-        ButtonStop->setGeometry(QRect(260, 290, 61, 29));
+        ButtonStop->setGeometry(QRect(410, 180, 191, 51));
         button3 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button3);
         button3->setObjectName("button3");
-        button3->setGeometry(QRect(230, 290, 21, 29));
+        button3->setGeometry(QRect(290, 240, 111, 91));
         button0 = new QPushButton(DLLPinCode);
         button0->setObjectName("button0");
-        button0->setGeometry(QRect(200, 410, 21, 29));
+        button0->setGeometry(QRect(170, 550, 111, 91));
         button6 = new QPushButton(DLLPinCode);
+        buttonGroup->addButton(button6);
         button6->setObjectName("button6");
-        button6->setGeometry(QRect(230, 330, 21, 29));
+        button6->setGeometry(QRect(290, 340, 111, 91));
         labeljee = new QLabel(DLLPinCode);
         labeljee->setObjectName("labeljee");
-        labeljee->setGeometry(QRect(450, 440, 211, 20));
+        labeljee->setGeometry(QRect(300, 620, 211, 20));
         labelpin = new QLabel(DLLPinCode);
         labelpin->setObjectName("labelpin");
-        labelpin->setGeometry(QRect(450, 470, 131, 20));
+        labelpin->setGeometry(QRect(510, 610, 131, 20));
         labelFreezed1 = new QLabel(DLLPinCode);
         labelFreezed1->setObjectName("labelFreezed1");
-        labelFreezed1->setGeometry(QRect(230, 200, 241, 41));
-        labelFreezed1->setFont(font);
+        labelFreezed1->setGeometry(QRect(110, 30, 651, 41));
+        QFont font5;
+        font5.setFamilies({QString::fromUtf8("Verdana")});
+        font5.setPointSize(12);
+        font5.setBold(true);
+        labelFreezed1->setFont(font5);
         labelFreezed2 = new QLabel(DLLPinCode);
         labelFreezed2->setObjectName("labelFreezed2");
-        labelFreezed2->setGeometry(QRect(80, 220, 631, 71));
-        QFont font1;
-        font1.setPointSize(10);
-        labelFreezed2->setFont(font1);
+        labelFreezed2->setGeometry(QRect(110, 80, 581, 41));
+        QFont font6;
+        font6.setFamilies({QString::fromUtf8("Verdana")});
+        font6.setPointSize(10);
+        font6.setBold(true);
+        labelFreezed2->setFont(font6);
         labelFreezed2->setStyleSheet(QString::fromUtf8(""));
         labelinfo = new QLabel(DLLPinCode);
         labelinfo->setObjectName("labelinfo");
-        labelinfo->setGeometry(QRect(440, 360, 231, 51));
-        QFont font2;
-        font2.setFamilies({QString::fromUtf8("Sitka Banner")});
-        font2.setPointSize(25);
-        labelinfo->setFont(font2);
+        labelinfo->setGeometry(QRect(300, 580, 141, 31));
+        QFont font7;
+        font7.setFamilies({QString::fromUtf8("Sitka Banner")});
+        font7.setPointSize(25);
+        labelinfo->setFont(font7);
+        labelinfo->setTextFormat(Qt::AutoText);
 
         retranslateUi(DLLPinCode);
 
@@ -159,29 +194,29 @@ public:
     void retranslateUi(QDialog *DLLPinCode)
     {
         DLLPinCode->setWindowTitle(QCoreApplication::translate("DLLPinCode", "Dialog", nullptr));
-        cardhexcodeLabel->setText(QCoreApplication::translate("DLLPinCode", "cardhexcode tulee t\303\244h\303\244", nullptr));
+        cardhexcodeLabel->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-size:7pt;\">cardhexcode tulee t\303\244h\303\244</span></p></body></html>", nullptr));
         button4->setText(QCoreApplication::translate("DLLPinCode", "4", nullptr));
         ButtonClear->setText(QCoreApplication::translate("DLLPinCode", "CLEAR", nullptr));
         button2->setText(QCoreApplication::translate("DLLPinCode", "2", nullptr));
-        label_3->setText(QCoreApplication::translate("DLLPinCode", "Lopuksi paina ENTER", nullptr));
+        label_3->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-size:11pt;\">Hit &quot;ENTER&quot; when done</span></p></body></html>", nullptr));
         button1->setText(QCoreApplication::translate("DLLPinCode", "1", nullptr));
         buttonEnter->setText(QCoreApplication::translate("DLLPinCode", "ENTER", nullptr));
-        labelInterrupt->setText(QCoreApplication::translate("DLLPinCode", "Tapahtuma Keskeytetty", nullptr));
+        labelInterrupt->setText(QCoreApplication::translate("DLLPinCode", "Login interrupted, cancelling...", nullptr));
         button9->setText(QCoreApplication::translate("DLLPinCode", "9", nullptr));
         button5->setText(QCoreApplication::translate("DLLPinCode", "5", nullptr));
         button8->setText(QCoreApplication::translate("DLLPinCode", "8", nullptr));
-        labelAttempts->setText(QCoreApplication::translate("DLLPinCode", "  yrityst\303\244 j\303\244ljell\303\244", nullptr));
-        label->setText(QCoreApplication::translate("DLLPinCode", "N\303\244pp\303\244ile tunnusluku", nullptr));
+        labelAttempts->setText(QCoreApplication::translate("DLLPinCode", "attempt(s) left!", nullptr));
+        label->setText(QCoreApplication::translate("DLLPinCode", "N\303\244pp\303\244ile nelinumeroinen tunnusluku", nullptr));
         button7->setText(QCoreApplication::translate("DLLPinCode", "7", nullptr));
         ButtonStop->setText(QCoreApplication::translate("DLLPinCode", "STOP", nullptr));
         button3->setText(QCoreApplication::translate("DLLPinCode", "3", nullptr));
         button0->setText(QCoreApplication::translate("DLLPinCode", "0", nullptr));
         button6->setText(QCoreApplication::translate("DLLPinCode", "6", nullptr));
-        labeljee->setText(QCoreApplication::translate("DLLPinCode", "cardhexcodeSQL tulee t\303\244h\303\244", nullptr));
-        labelpin->setText(QCoreApplication::translate("DLLPinCode", "PIN tietokannasta", nullptr));
-        labelFreezed1->setText(QCoreApplication::translate("DLLPinCode", "Tili j\303\244\303\244dytetty", nullptr));
-        labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567", nullptr));
-        labelinfo->setText(QCoreApplication::translate("DLLPinCode", "Login tiedot:", nullptr));
+        labeljee->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-size:7pt;\">cardhexcodeSQL tulee t\303\244h\303\244</span></p></body></html>", nullptr));
+        labelpin->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-size:7pt;\">PIN tietokannasta</span></p></body></html>", nullptr));
+        labelFreezed1->setText(QCoreApplication::translate("DLLPinCode", "The account has been frozen due to excessive amount of attempts", nullptr));
+        labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-weight:700;\">Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567</span></p></body></html>", nullptr));
+        labelinfo->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-size:10pt;\">Login tiedot: (debug)</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };

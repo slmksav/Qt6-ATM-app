@@ -25,7 +25,7 @@ const account = {
       callback
     );
     } else if(type == 'credit') { 
-      return db.query('update account set creditSaldo = creditSaldo - ? where idaccount=?',
+      return db.query('update account set creditSaldo = creditSaldo + ? where idaccount=?',
       [amount, id],
       callback
     );

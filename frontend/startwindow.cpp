@@ -124,12 +124,22 @@ void StartWindow::startSession(int returnedCardID)
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
 
+    //check if data is valid
+    if(session->checkDataValidity() == false)
+    {
+        state = Error;
+        updateUI();
+        return;
+    }
+
     //create and show OptionsWindow
     openOptionsWindow();
 }
 
 void StartWindow::fetchDataWithDLL(int returnedAccountID)
 {
+    qDebug() << Q_FUNC_INFO << "Fetchind data with accountID: " << returnedAccountID;
+
     session->stopTimer();
 
     session->accountID = returnedAccountID;
@@ -190,20 +200,14 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
         session->customerName = pDLLRestApi->getCustomerName(session->customerID);
 
         //avoid making unnecessary calls to server
-        if(session->accountType == "dual")
+        if(session->accountType == "debit" || session->accountType == "dual")
         {
             session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
-            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
         }
-        else if(session->accountType == "debit")
+        if(session->accountType == "credit" || session->accountType == "dual")
         {
-            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
-            session->accountCredit = 0.00;
-        }
-        else
-        {
-            session->accountBalance = 0.00;
             session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+            session->accountCreditMax = pDLLRestApi->getCreditMax(session->accountID);
         }
 
         //additional accounts
@@ -248,6 +252,8 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
 
 void StartWindow::swapToAccount(int accountID)
 {
+    qDebug() << Q_FUNC_INFO << "Swapping account with accountID: " << accountID;
+
     //delete old windows
     delete optionsWindow;
     optionsWindow = nullptr;
@@ -261,6 +267,14 @@ void StartWindow::swapToAccount(int accountID)
 
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
+
+    //check if data is valid
+    if(session->checkDataValidity() == false)
+    {
+        state = Error;
+        updateUI();
+        return;
+    }
 
     //create and show OptionsWindow
     openOptionsWindow();

@@ -188,12 +188,12 @@ void DLLPinCode::enterClickHandler()
         if(languageGlobal == "fi")
         {
             ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
-            ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
+            ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritys(tä) jäljellä!");
         }
         else
         {
-            ui->label->setText("Wrong password, please enter password again.");
-            ui->labelAttempts->setText(QString::number(wrongAttempts) + " attempts left");
+            ui->label->setText("Wrong PIN, please try again again.");
+            ui->labelAttempts->setText(QString::number(wrongAttempts) + " attempt(s) left!");
         }
 
         timer->start(30000);
@@ -283,20 +283,20 @@ void DLLPinCode::accountFreezed()
 
 void DLLPinCode::finnish()
 {
-      ui->label->setText("Näppäile tunnusluku");
-      ui->labelAttempts->setText(" Yritystä jäljellä");
-      ui->labelFreezed1->setText("Tili jäädytetty");
+      ui->label->setText("Näppäile PIN-koodi:");
+      ui->labelAttempts->setText(" yritys(tä) jäljellä");
+      ui->labelFreezed1->setText("Tili jäädytetty liian monen yrityksen takia.");
       ui->labelFreezed2->setText("Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567");
-      ui->labelInterrupt->setText("Tapahtuma Keskeytetty");
-      ui->label_3->setText("Lopuksi paina ENTER");
+      ui->labelInterrupt->setText("Tapahtuma keskeytetty");
+      ui->label_3->setText("ja paina ENTER");
 }
 
 void DLLPinCode::english()
 {
-      ui->label->setText("Please enter your PIN code:");
-      ui->labelAttempts->setText(" Attempts left");
-      ui->labelFreezed1->setText("Account freezed");
+      ui->label->setText("Enter 4-digit PIN code:");
+      ui->labelAttempts->setText(" attempt(s) left");
+      ui->labelFreezed1->setText("Account frozen due to excessive amount of attempts.");
       ui->labelFreezed2->setText("Please contact our customer service number +358 10 1234567");
-      ui->labelInterrupt->setText("event aborted");
-      ui->label_3->setText("Finally press ENTER");
+      ui->labelInterrupt->setText("Login aborted");
+      ui->label_3->setText("and press ENTER");
 }
