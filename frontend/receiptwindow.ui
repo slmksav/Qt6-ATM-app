@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>800</width>
     <height>480</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -19,10 +31,10 @@
   <widget class="QPushButton" name="buttonYes">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>190</y>
-     <width>80</width>
-     <height>24</height>
+     <x>200</x>
+     <y>170</y>
+     <width>341</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
@@ -35,10 +47,10 @@
   <widget class="QPushButton" name="buttonNo">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>200</x>
      <y>260</y>
-     <width>80</width>
-     <height>24</height>
+     <width>341</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
@@ -51,7 +63,7 @@
   <widget class="QLabel" name="labelInfo">
    <property name="geometry">
     <rect>
-     <x>-2</x>
+     <x>50</x>
      <y>120</y>
      <width>641</width>
      <height>20</height>

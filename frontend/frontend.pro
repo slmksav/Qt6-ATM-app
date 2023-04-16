@@ -68,4 +68,5 @@ unix:!macx|win32: LIBS += -L$$PWD/lib/DLLPinCode/build/debug/ -lDLLPinCode
 INCLUDEPATH += $$PWD/lib/DLLPinCode
 DEPENDPATH += $$PWD/lib/DLLPinCode
 
-RESOURCES +=
+RESOURCES += \
+    img/exeimgs.qrc

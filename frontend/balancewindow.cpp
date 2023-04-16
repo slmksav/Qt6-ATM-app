@@ -47,8 +47,14 @@ void BalanceWindow::updateUI()
         double cutoff = (int)(creditAvailable * 100) % 1000;
         creditAvailable -= cutoff / 100.0;
 
+        // jos voi nostaa vähemmön kuin 20, niin ei voi nostaa oikeasti ollenkaan. Eli pistetään nollaksi se paljon voi nostaa.
+        if (creditAvailable < 20) {
+            creditAvailable = 0;
+        }
+
         qDebug() << Q_FUNC_INFO << "creditAvailable: " << creditAvailable;
     }
+
 
     //actual ui stuff below
     //debit and credit values

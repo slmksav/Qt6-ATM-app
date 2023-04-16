@@ -53,6 +53,41 @@ bool DLLRestApi::postLogin(QString hex, QString pin)
     }
 }
 
+bool DLLRestApi::postEmail(int accountID, QString log)
+{
+    QJsonObject jsonObj;
+    jsonObj.insert("idaccount", accountID);
+    jsonObj.insert("log", log);
+
+    QString site_url = getBaseUrl() + "/email";
+    QNetworkRequest request(site_url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
+
+    QNetworkReply* networkReply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
+
+        if(responseData == "false")
+            return false;
+
+        return true;
+    }
+    else {
+        qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
+        return false;
+    }
+}
+
 int DLLRestApi::getAccountId(int cardID)
 {
     QString site_url = DLLRestApi::getBaseUrl() + "/getAccountID/withcardID/" + QString::number(cardID);

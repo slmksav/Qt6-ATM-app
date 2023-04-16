@@ -283,7 +283,7 @@ void DLLPinCode::accountFreezed()
 
 void DLLPinCode::finnish()
 {
-      ui->label->setText("Näppäile PIN-koodi:");
+      ui->label->setText("Näppäile PIN-koodi");
       ui->labelAttempts->setText(" yritys(tä) jäljellä");
       ui->labelFreezed1->setText("Tili jäädytetty liian monen yrityksen takia.");
       ui->labelFreezed2->setText("Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567");
@@ -293,7 +293,7 @@ void DLLPinCode::finnish()
 
 void DLLPinCode::english()
 {
-      ui->label->setText("Enter 4-digit PIN code:");
+      ui->label->setText("Enter 4-digit PIN code");
       ui->labelAttempts->setText(" attempt(s) left");
       ui->labelFreezed1->setText("Account frozen due to excessive amount of attempts.");
       ui->labelFreezed2->setText("Please contact our customer service number +358 10 1234567");
