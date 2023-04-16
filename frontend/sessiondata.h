@@ -47,6 +47,7 @@ public slots:
     void resetTimer();
     void stopTimer();
     void debugPrintData();
+    bool checkDataValidity();
 
 private slots:
     void handleTimeout();

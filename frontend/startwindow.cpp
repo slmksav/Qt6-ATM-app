@@ -124,6 +124,14 @@ void StartWindow::startSession(int returnedCardID)
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
 
+    //check if data is valid
+    if(session->checkDataValidity() == false)
+    {
+        state = Error;
+        updateUI();
+        return;
+    }
+
     //create and show OptionsWindow
     openOptionsWindow();
 }
@@ -259,6 +267,14 @@ void StartWindow::swapToAccount(int accountID)
 
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
+
+    //check if data is valid
+    if(session->checkDataValidity() == false)
+    {
+        state = Error;
+        updateUI();
+        return;
+    }
 
     //create and show OptionsWindow
     openOptionsWindow();
