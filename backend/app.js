@@ -5,6 +5,7 @@ var logger = require('morgan');
 const dotenv=require('dotenv');
 const jwt = require('jsonwebtoken');
 const cors=require('cors');
+const nodemailer = require('nodemailer');
 
 var indexRouter = require('./routes/index');
 var customerRouter = require('./routes/customer');
@@ -15,6 +16,7 @@ var cardRouter = require('./routes/card');
 var hexcodeRouter = require('./routes/hexcode');
 var getAccountIDRouter = require('./routes/getAccountID');
 var transactionHistoryRouter = require('./routes/transactionHistory');
+var email = require('./routes/email');
 
 
 var app = express();
@@ -40,6 +42,7 @@ app.use('/card', cardRouter);
 app.use('/hexcode', hexcodeRouter);
 app.use('/getAccountID', getAccountIDRouter);
 app.use('/transactionHistory', transactionHistoryRouter);
+app.use('/email', email);
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']

@@ -32,6 +32,8 @@ private:
     Ui::ReceiptWindow *ui;
 
     SessionData * session;
+
+    QString generateLog();
 };
 
 #endif // RECEIPTWINDOW_H

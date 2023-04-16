@@ -26,6 +26,7 @@ public:
     static QString getBaseUrl();
 
     bool postLogin(QString hex, QString pin);
+    bool postEmail(int accountID, QString log);
 
     int getCardId(QString hexa);
     int getAccountId(int cardID);

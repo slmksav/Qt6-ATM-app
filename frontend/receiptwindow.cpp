@@ -41,11 +41,9 @@ void ReceiptWindow::updateUI()
 
 void ReceiptWindow::on_buttonYes_clicked()
 {
-    //emit clickReceipt(true); //lets maybe handle logging in this class instead
+    QString log = generateLog();
 
-    //handle logfile code below please
-
-    //
+    session->restApi->postEmail(session->accountID, log); //todo: include cardowner name
 
     emit session->sendLogout();
 }
@@ -53,8 +51,37 @@ void ReceiptWindow::on_buttonYes_clicked()
 
 void ReceiptWindow::on_buttonNo_clicked()
 {
-    //emit clickReceipt(false);
-
     emit session->sendLogout();
+}
+
+QString ReceiptWindow::generateLog()
+{
+    QString log;
+    QDate date;
+
+    log.append("Date: " + date.currentDate().toString());
+    log.append("\nAccount: " + session->customerName + " - " + session->accountType);
+    log.append("\n");
+
+    if(session->withdrawMode == "debit")
+    {
+        log.append("\nDebit withdrawal: "
+                   + QString::number((session->accountBalance + session->withdrawAmount), 'f', 2)
+                   + " - " + QString::number(session->withdrawAmount, 'f', 2));
+        log.append("\nAfter withdrawal: " + QString::number(session->accountBalance, 'f', 2));
+    }
+    else
+    {
+        log.append("\nCredit withdrawal: "
+                   + QString::number((session->accountCredit - session->withdrawAmount), 'f', 2)
+                   + " + " + QString::number(session->withdrawAmount, 'f', 2));
+        log.append("\nUsed credit after withdrawal: " + QString::number(session->accountCredit, 'f', 2));
+        log.append("\nCredit cap: " + QString::number(session->accountCreditMax, 'f', 2));
+    }
+    log.append("\n");
+
+    qDebug() << Q_FUNC_INFO << log;
+
+    return log;
 }
 
