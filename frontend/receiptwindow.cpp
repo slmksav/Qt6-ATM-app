@@ -58,11 +58,11 @@ QString ReceiptWindow::generateLog()
 {
     QString log;
     QDate date;
-
+    log.append("\nHere is your receipt for the withdrawal \n");
     log.append("Date: " + date.currentDate().toString());
     log.append("\nAccount: " + session->customerName + " - " + session->accountType);
     log.append("\n");
-
+    log.append("\nThe amount is specified below:");
     if(session->withdrawMode == "debit")
     {
         log.append("\nDebit withdrawal: "
@@ -79,6 +79,9 @@ QString ReceiptWindow::generateLog()
         log.append("\nCredit cap: " + QString::number(session->accountCreditMax, 'f', 2));
     }
     log.append("\n");
+    log.append("\n");
+    log.append("\n");
+    log.append("\nIf you did not do this transaction please contact support.");
 
     qDebug() << Q_FUNC_INFO << log;
 
