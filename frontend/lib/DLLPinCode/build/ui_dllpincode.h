@@ -76,9 +76,11 @@ public:
         buttonGroup->addButton(button2);
         button2->setObjectName("button2");
         button2->setGeometry(QRect(120, 90, 91, 81));
+        button2->setTabletTracking(false);
+        button2->setAutoFillBackground(false);
         label_3 = new QLabel(DLLPinCode);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(300, 350, 341, 41));
+        label_3->setGeometry(QRect(330, 350, 341, 41));
         QFont font;
         font.setFamilies({QString::fromUtf8("Verdana Pro Semibold")});
         font.setPointSize(11);
@@ -88,6 +90,7 @@ public:
         buttonGroup->addButton(button1);
         button1->setObjectName("button1");
         button1->setGeometry(QRect(20, 90, 91, 81));
+        button1->setAcceptDrops(false);
         buttonEnter = new QPushButton(DLLPinCode);
         buttonEnter->setObjectName("buttonEnter");
         buttonEnter->setGeometry(QRect(330, 210, 131, 141));
@@ -95,7 +98,7 @@ public:
         labelInterrupt->setObjectName("labelInterrupt");
         labelInterrupt->setGeometry(QRect(310, 30, 481, 51));
         QFont font1;
-        font1.setFamilies({QString::fromUtf8("Sitka Small")});
+        font1.setFamilies({QString::fromUtf8("Verdana")});
         font1.setPointSize(16);
         labelInterrupt->setFont(font1);
         button9 = new QPushButton(DLLPinCode);
@@ -107,6 +110,7 @@ public:
         lineEdit->setGeometry(QRect(50, 30, 241, 51));
         QFont font2;
         font2.setPointSize(16);
+        font2.setBold(true);
         lineEdit->setFont(font2);
         lineEdit->setAlignment(Qt::AlignCenter);
         button5 = new QPushButton(DLLPinCode);
@@ -163,7 +167,7 @@ public:
         labelpin->setGeometry(QRect(590, 370, 131, 20));
         labelFreezed1 = new QLabel(DLLPinCode);
         labelFreezed1->setObjectName("labelFreezed1");
-        labelFreezed1->setGeometry(QRect(50, 180, 691, 41));
+        labelFreezed1->setGeometry(QRect(100, 180, 691, 41));
         QFont font5;
         font5.setFamilies({QString::fromUtf8("Verdana")});
         font5.setPointSize(11);
@@ -188,10 +192,11 @@ public:
         labelinfo->setTextFormat(Qt::AutoText);
         imageLabel = new QLabel(DLLPinCode);
         imageLabel->setObjectName("imageLabel");
-        imageLabel->setGeometry(QRect(-10, 0, 800, 480));
+        imageLabel->setGeometry(QRect(0, 0, 801, 481));
         imageLabel->setFrameShape(QFrame::Box);
         imageLabel->setFrameShadow(QFrame::Raised);
         imageLabel->setLineWidth(7);
+        imageLabel->setScaledContents(false);
         imageLabel->raise();
         cardhexcodeLabel->raise();
         button4->raise();

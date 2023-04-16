@@ -82,6 +82,12 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
      <height>81</height>
     </rect>
    </property>
+   <property name="tabletTracking">
+    <bool>false</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>2</string>
    </property>
@@ -92,7 +98,7 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>330</x>
      <y>350</y>
      <width>341</width>
      <height>41</height>
@@ -119,6 +125,9 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
      <width>91</width>
      <height>81</height>
     </rect>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>1</string>
@@ -151,7 +160,7 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
    </property>
    <property name="font">
     <font>
-     <family>Sitka Small</family>
+     <family>Verdana</family>
      <pointsize>16</pointsize>
     </font>
    </property>
@@ -187,6 +196,7 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
    <property name="font">
     <font>
      <pointsize>16</pointsize>
+     <bold>true</bold>
     </font>
    </property>
    <property name="alignment">
@@ -379,7 +389,7 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labelFreezed1">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>100</x>
      <y>180</y>
      <width>691</width>
      <height>41</height>
@@ -444,10 +454,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="imageLabel">
    <property name="geometry">
     <rect>
-     <x>-10</x>
+     <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>480</height>
+     <width>801</width>
+     <height>481</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -461,6 +471,9 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="scaledContents">
+    <bool>false</bool>
    </property>
   </widget>
   <zorder>imageLabel</zorder>
