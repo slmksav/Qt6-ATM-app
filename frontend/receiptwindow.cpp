@@ -26,13 +26,13 @@ void ReceiptWindow::updateUI()
     //other ui elements
     if(session->language == "fi")
     {
-        ui->labelInfo->setText("Haluatko Kuitti?");
+        ui->labelInfo->setText("Haluatko kuitin??");
         ui->buttonYes->setText("Kyllä");
-        ui->buttonNo->setText("Ei");
+        ui->buttonNo->setText("En");
     }
     if(session->language == "en")
     {
-        ui->labelInfo->setText("Do You Want a Receipt?");
+        ui->labelInfo->setText("Do you want a receipt?");
         ui->buttonYes->setText("Yes");
         ui->buttonNo->setText("No");
     }
