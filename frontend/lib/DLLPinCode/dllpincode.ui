@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
-    <height>652</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>700</width>
-    <height>652</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>700</width>
-    <height>652</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,8 +34,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="cardhexcodeLabel">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>600</y>
+     <x>570</x>
+     <y>320</y>
      <width>231</width>
      <height>20</height>
     </rect>
@@ -47,10 +47,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button4">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>330</y>
-     <width>111</width>
-     <height>91</height>
+     <x>20</x>
+     <y>180</y>
+     <width>91</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -63,10 +63,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="ButtonClear">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>230</y>
-     <width>191</width>
-     <height>91</height>
+     <x>330</x>
+     <y>150</y>
+     <width>131</width>
+     <height>51</height>
     </rect>
    </property>
    <property name="text">
@@ -76,10 +76,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button2">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>230</y>
-     <width>111</width>
-     <height>91</height>
+     <x>120</x>
+     <y>90</y>
+     <width>91</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -92,8 +92,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>540</y>
+     <x>300</x>
+     <y>350</y>
      <width>341</width>
      <height>41</height>
     </rect>
@@ -101,11 +101,11 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
    <property name="font">
     <font>
      <family>Verdana Pro Semibold</family>
-     <pointsize>13</pointsize>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Hit &amp;quot;ENTER&amp;quot; when done&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Hit &amp;quot;ENTER&amp;quot; when done&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="textFormat">
     <enum>Qt::AutoText</enum>
@@ -114,10 +114,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button1">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>230</y>
-     <width>111</width>
-     <height>91</height>
+     <x>20</x>
+     <y>90</y>
+     <width>91</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -130,10 +130,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="buttonEnter">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>330</y>
-     <width>191</width>
-     <height>201</height>
+     <x>330</x>
+     <y>210</y>
+     <width>131</width>
+     <height>141</height>
     </rect>
    </property>
    <property name="text">
@@ -143,8 +143,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labelInterrupt">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>120</y>
+     <x>310</x>
+     <y>30</y>
      <width>481</width>
      <height>51</height>
     </rect>
@@ -162,10 +162,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button9">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>430</y>
-     <width>111</width>
-     <height>101</height>
+     <x>220</x>
+     <y>270</y>
+     <width>101</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -179,8 +179,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>170</y>
-     <width>351</width>
+     <y>30</y>
+     <width>241</width>
      <height>51</height>
     </rect>
    </property>
@@ -196,10 +196,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button5">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>330</y>
-     <width>111</width>
-     <height>91</height>
+     <x>120</x>
+     <y>180</y>
+     <width>91</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -212,10 +212,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button8">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>430</y>
-     <width>111</width>
-     <height>101</height>
+     <x>120</x>
+     <y>270</y>
+     <width>91</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -228,8 +228,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labelAttempts">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>100</y>
+     <x>540</x>
+     <y>90</y>
      <width>211</width>
      <height>41</height>
     </rect>
@@ -237,7 +237,7 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
    <property name="font">
     <font>
      <family>Verdana Pro Semibold</family>
-     <pointsize>14</pointsize>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="text">
@@ -247,8 +247,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>130</y>
+     <x>310</x>
+     <y>30</y>
      <width>581</width>
      <height>41</height>
     </rect>
@@ -256,7 +256,7 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
    <property name="font">
     <font>
      <family>Verdana Pro</family>
-     <pointsize>16</pointsize>
+     <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
    </property>
@@ -274,10 +274,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button7">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>430</y>
-     <width>111</width>
-     <height>101</height>
+     <x>20</x>
+     <y>270</y>
+     <width>91</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -290,9 +290,9 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="ButtonStop">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>170</y>
-     <width>191</width>
+     <x>330</x>
+     <y>90</y>
+     <width>131</width>
      <height>51</height>
     </rect>
    </property>
@@ -303,10 +303,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button3">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>230</y>
-     <width>111</width>
-     <height>91</height>
+     <x>220</x>
+     <y>90</y>
+     <width>101</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="font">
@@ -324,10 +324,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button0">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>540</y>
-     <width>111</width>
-     <height>91</height>
+     <x>120</x>
+     <y>360</y>
+     <width>91</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
@@ -337,10 +337,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QPushButton" name="button6">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>330</y>
-     <width>111</width>
-     <height>91</height>
+     <x>220</x>
+     <y>180</y>
+     <width>101</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
@@ -353,8 +353,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labeljee">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>620</y>
+     <x>570</x>
+     <y>340</y>
      <width>211</width>
      <height>20</height>
     </rect>
@@ -366,8 +366,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labelpin">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>610</y>
+     <x>590</x>
+     <y>370</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -379,16 +379,16 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labelFreezed1">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>30</y>
-     <width>651</width>
+     <x>50</x>
+     <y>180</y>
+     <width>691</width>
      <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Verdana</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <bold>true</bold>
     </font>
    </property>
@@ -399,8 +399,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labelFreezed2">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>80</y>
+     <x>100</x>
+     <y>230</y>
      <width>581</width>
      <height>41</height>
     </rect>
@@ -422,8 +422,8 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="labelinfo">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>580</y>
+     <x>570</x>
+     <y>290</y>
      <width>141</width>
      <height>31</height>
     </rect>
@@ -444,10 +444,10 @@ qconicalgradient(cx:0.5, cy:0.5, angle:0, stop:0 rgba(255, 255, 255, 255), stop:
   <widget class="QLabel" name="imageLabel">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>-10</x>
      <y>0</y>
-     <width>701</width>
-     <height>651</height>
+     <width>800</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="frameShape">
