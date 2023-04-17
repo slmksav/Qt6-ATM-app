@@ -34,6 +34,7 @@ private slots:
     void accountFreezed();
     void getCardIDFromDb();
     void getCardInfoFromDb();
+    void setLanguage();
 private:
     Ui::DLLPinCode *ui;
     QString InsertingPin;

@@ -26,6 +26,12 @@ void OptionsWindow::updateUI()
     //account name and type
     ui->labelAccountName->setText(session->customerName + " - " + session->accountType);
 
+    //additional accounts only contains itself
+    if(session->additionalAccountIDs.count() <= 1) {
+        qDebug() << Q_FUNC_INFO << "no additionals accounts";
+        ui->buttonChangeAccount->hide();
+    }
+
     //other ui elements
     if(session->language == "fi")
     {

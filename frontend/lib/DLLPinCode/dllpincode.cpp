@@ -7,20 +7,13 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
 {
     ui->setupUi(this);
     languageGlobal = language;
-    if(languageGlobal == "fi")
-    {
-        finnish();
-    }
-    else
-    {
-        english();
-    }
+    setLanguage();
      ui->labelInterrupt->setVisible(false);
      ui->labelFreezed1->setVisible(false);
      ui->labelFreezed2->setVisible(false);
      ui->labelAttempts->setVisible(false);
-     ui->lineEdit->setMaxLength(4); // Set the maximum length to 4 digits
-     ui->lineEdit->setReadOnly(true); //Cannot write t
+     ui->lineEdit->setMaxLength(4);
+     ui->lineEdit->setReadOnly(true);
      ui->lineEdit->setEchoMode(QLineEdit::Password);
     connect(ui->button1,SIGNAL(clicked()),this,SLOT(numberClickHandler()));
     connect(ui->button2,SIGNAL(clicked()),this,SLOT(numberClickHandler()));
@@ -128,6 +121,18 @@ void DLLPinCode::getCardInfoFromDb()
                 reply->deleteLater();
             });
     manager->get(request);
+}
+
+void DLLPinCode::setLanguage()
+{
+    if(languageGlobal == "fi")
+    {
+        finnish();
+    }
+    else
+    {
+        english();
+    }
 }
 
 void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token)

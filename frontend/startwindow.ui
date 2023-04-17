@@ -9,14 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>800</width>
     <height>480</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
-    <width>640</width>
-    <height>16777215</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="font">
@@ -28,114 +34,57 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget {
-    background-image: url(:/exeimgs/blueblue.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="labelInfo">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>110</y>
-      <width>61</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Lue kortti</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="buttonOhitaPIN">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>80</y>
-      <width>91</width>
+      <x>210</x>
+      <y>160</y>
+      <width>381</width>
       <height>41</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TESTAUS
-OHITA PIN</string>
+    <property name="font">
+     <font>
+      <family>Verdana Pro</family>
+      <pointsize>18</pointsize>
+      <bold>false</bold>
+     </font>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>151</width>
-      <height>51</height>
-     </rect>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
-    <property name="text">
-     <string>skipataan pindll
-ja kirjaudutaan
-suoraan ID:llä -333</string>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>200</y>
-      <width>281</width>
-      <height>61</height>
-     </rect>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
     </property>
     <property name="text">
-     <string>lähetetään pindll:lle
-hexakoodi
-0d0a2d303630303035343246450d0a3e</string>
+     <string>Lue kortti aloittaaksesi</string>
     </property>
-   </widget>
-   <widget class="QPushButton" name="buttonOhitaKortti">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>260</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TESTAUS
-OHITA KORTTI</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>0</y>
-      <width>141</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Nää voi vaihtaa
-myöhemmin
-paremman
-näköseks</string>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonLangFI">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>80</y>
-      <width>80</width>
-      <height>24</height>
+      <x>630</x>
+      <y>20</y>
+      <width>150</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
+	color: rgba(255, 1, 1, 0);
     qproperty-icon: url(:/exeimgs/suomenlippu.png);
     background-repeat: no-repeat;
     background-position: center;
+	background-image: url(:/exeimgs/button150x50.jpg);
 }</string>
     </property>
     <property name="text">
@@ -154,17 +103,22 @@ näköseks</string>
    <widget class="QPushButton" name="buttonLangEN">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>110</y>
-      <width>80</width>
-      <height>24</height>
+      <x>630</x>
+      <y>90</y>
+      <width>150</width>
+      <height>50</height>
      </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
+	color: rgba(255, 1, 1, 0);
     qproperty-icon: url(:/exeimgs/englanninlippu.jpg);
     background-repeat: no-repeat;
     background-position: center;
+	background-image: url(:/exeimgs/button150x50.jpg);
 }</string>
     </property>
     <property name="text">
@@ -180,26 +134,199 @@ näköseks</string>
      <string notr="true">buttonGroupLang</string>
     </attribute>
    </widget>
+   <widget class="QLabel" name="labelLangInfo">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>410</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana Pro Cond Semibold</family>
+      <pointsize>9</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Bank Simulation Program</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelLangInfo_2">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>430</y>
+      <width>251</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>8</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>R18 TVT22SPO</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelTime">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana Pro</family>
+      <pointsize>18</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>time</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelInfo2">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>160</y>
+      <width>381</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana Pro</family>
+      <pointsize>18</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::NoFrame</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <property name="text">
+     <string>Lue kortti aloittaaksesi</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelPhoneInfo">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>400</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>8</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Palvelunumero (ark. 8-17)</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelLangInfo_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>420</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>8</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>+358 10 1234567</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelLangInfo_5">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>440</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Verdana</family>
+      <pointsize>8</pointsize>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>banksimul18@gmail.com</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-image: url(:/exeimgs/blueblue.jpg);
+background-repeat: no-repeat;
+background-position: center;
+</string>
+    </property>
+    <widget class="QPushButton" name="buttonOhitaPIN">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>250</y>
+       <width>83</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>widget</zorder>
    <zorder>labelInfo</zorder>
-   <zorder>buttonOhitaPIN</zorder>
-   <zorder>label_3</zorder>
-   <zorder>buttonOhitaKortti</zorder>
-   <zorder>label_2</zorder>
-   <zorder>label</zorder>
    <zorder>buttonLangFI</zorder>
    <zorder>buttonLangEN</zorder>
+   <zorder>labelLangInfo</zorder>
+   <zorder>labelLangInfo_2</zorder>
+   <zorder>labelTime</zorder>
+   <zorder>labelInfo2</zorder>
+   <zorder>labelPhoneInfo</zorder>
+   <zorder>labelLangInfo_4</zorder>
+   <zorder>labelLangInfo_5</zorder>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>640</width>
-     <height>25</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

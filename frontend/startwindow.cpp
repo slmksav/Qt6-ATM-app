@@ -2,6 +2,7 @@
 #include "startwindow.h"
 #include "ui_startwindow.h"
 #include <QDebug>
+#include <QGraphicsBlurEffect>
 
 StartWindow::StartWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,6 +31,14 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(this, SIGNAL(testOhitaPINSignal(int)),
             this, SLOT(startSession(int)));
 
+
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &StartWindow::updateTime);
+    timer->start(1000);
+
+    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
+    blurEffect->setBlurRadius(4);
+    ui->labelInfo->setGraphicsEffect(blurEffect);
 }
 
 StartWindow::~StartWindow()
@@ -299,26 +308,40 @@ void StartWindow::openOptionsWindow()
 
 void StartWindow::updateUI()
 {
+    if(pSpinner != nullptr)
+    {
+        delete pSpinner;
+        pSpinner = nullptr;  
+    }
     switch (state) {
     case Default:
         if(language == "fi")
         {
-            ui->labelInfo->setText("Lue Kortti");
+            ui->labelInfo->setText("Lue kortti aloittaksesi");
+            ui->labelInfo2->setText("Lue kortti aloittaksesi");
+            ui->labelPhoneInfo->setText("Palvelunumero (ark. 8-17)");
         }
         if(language == "en")
         {
-            ui->labelInfo->setText("Read Card");
+            ui->labelInfo->setText("Read card to begin");
+            ui->labelInfo2->setText("Read card to begin");
+            ui->labelPhoneInfo->setText("Service Number (WD 8-17)");
         }
         break;
 
     case Waiting:
+
+        pSpinner = new Spinner;
+
         if(language == "fi")
         {
             ui->labelInfo->setText("Odota Hetki");
+            ui->labelInfo2->setText("Odota Hetki");
         }
         if(language == "en")
         {
             ui->labelInfo->setText("Wait a Moment");
+            ui->labelInfo2->setText("Wait a Moment");
         }
         break;
 
@@ -327,10 +350,14 @@ void StartWindow::updateUI()
         {
             ui->labelInfo->setText("Kirjauduttu Ulos\n"
                                    "Inaktiivisuuden Vuoksi");
+            ui->labelInfo2->setText("Kirjauduttu Ulos\n"
+                                   "Inaktiivisuuden Vuoksi");
         }
         if(language == "en")
         {
             ui->labelInfo->setText("Logged Out\n"
+                                   "Due to Inactivity");
+            ui->labelInfo2->setText("Logged Out\n"
                                    "Due to Inactivity");
         }
         break;
@@ -340,10 +367,14 @@ void StartWindow::updateUI()
         {
             ui->labelInfo->setText("Odottamaton Virhe\n"
                                    "Yritä Uudestaan");
+            ui->labelInfo2->setText("Odottamaton Virhe\n"
+                                   "Yritä Uudestaan");
         }
         if(language == "en")
         {
             ui->labelInfo->setText("Unexpected Error\n"
+                                   "Try Again");
+            ui->labelInfo2->setText("Unexpected Error\n"
                                    "Try Again");
         }
         break;
@@ -352,10 +383,13 @@ void StartWindow::updateUI()
         if(language == "fi")
         {
             ui->labelInfo->setText("Kiitos Asioinnista");
+            ui->labelInfo2->setText("Kiitos Asioinnista");
         }
         if(language == "en")
         {
             ui->labelInfo->setText("Thank You for\n"
+                                   "Using Our Service");
+            ui->labelInfo2->setText("Thank You for\n"
                                    "Using Our Service");
         }
         break;
@@ -390,4 +424,13 @@ void StartWindow::on_buttonOhitaPIN_clicked()
     }
 
     emit testOhitaPINSignal(2);
+}
+
+void StartWindow::updateTime()
+{
+    // Get the current time
+    QDateTime currentTime = QDateTime::currentDateTime();
+
+    // Update the QLabel with the time
+    ui->labelTime->setText(currentTime.toString("hh:mm:ss"));
 }

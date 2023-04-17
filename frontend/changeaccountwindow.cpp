@@ -124,7 +124,14 @@ void ChangeAccountWindow::accountButtonClicked(QAbstractButton * button)
 
     qDebug() << Q_FUNC_INFO << "Attempting to change to accountID:" << accountID;
 
-    emit changeToAccount(accountID);
+    //check if same account as current one didn't get selected
+    if(accountID != session->accountID) {
+        emit changeToAccount(accountID);
+    }
+    else
+    {
+        done(Rejected);
+    }
 }
 
 
