@@ -20,6 +20,23 @@ ReceiptWindow::ReceiptWindow(QWidget *parent, SessionData *session) :
         QString log = generateLog(session->originalCustomerName);
         session->restApi->postEmail(session->accountID, log);
     }
+
+    player = new QMediaPlayer;
+    audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+
+    QString soundFilePath = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/receiptFI.mp3";
+    qDebug() << "Sound file path:" << soundFilePath;
+
+    if (QFile::exists(soundFilePath)) {
+        player->setSource(QUrl::fromLocalFile(soundFilePath));
+        audioOutput->setVolume(0.5);  // set volume to 50%
+        player->play();
+    } else {
+        qDebug() << "Sound file does not exist!";
+    }
+    audioOutput->setVolume(1);
+    player->play();
 }
 
 ReceiptWindow::~ReceiptWindow()

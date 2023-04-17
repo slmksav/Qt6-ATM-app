@@ -10,6 +10,8 @@
 #include "spinner.h"
 
 #include <QMainWindow>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class StartWindow;
@@ -59,6 +61,8 @@ private:
     //QString state = "default";
     QString language = "fi";
     QTimer *timer;
+    QMediaPlayer *player;
+    QAudioOutput *audioOutput;
 
     enum State {
         Default,

@@ -8,6 +8,8 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QDebug>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class DLLPinCode;
@@ -42,6 +44,9 @@ private:
     QString CheckPin;
     QString SQLPin;
     QTimer *timer;
+    QMediaPlayer *player;
+    QAudioOutput *audioOutput;
+
     QString token;
     QString cardID;
     QString languageGlobal;

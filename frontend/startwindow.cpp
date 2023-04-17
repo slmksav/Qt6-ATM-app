@@ -3,7 +3,6 @@
 #include "ui_startwindow.h"
 #include <QDebug>
 #include <QGraphicsBlurEffect>
-
 StartWindow::StartWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::StartWindow)
@@ -31,7 +30,6 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(this, SIGNAL(testOhitaPINSignal(int, QString)),
             this, SLOT(startSession(int, QString)));
 
-
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &StartWindow::updateTime);
     timer->start(1000);
@@ -39,6 +37,17 @@ StartWindow::StartWindow(QWidget *parent) :
     QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
     blurEffect->setBlurRadius(4);
     ui->labelInfo->setGraphicsEffect(blurEffect);
+
+    player = new QMediaPlayer;
+    audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+
+    QString soundFilePathFI = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/readcardFI.mp3";
+    qDebug() << "Sound file path (english):" << soundFilePathFI;
+
+    player->setSource(QUrl::fromLocalFile(soundFilePathFI));
+    audioOutput->setVolume(0.5);  // set volume to 50%
+    player->play();
 }
 
 StartWindow::~StartWindow()
@@ -117,7 +126,6 @@ void StartWindow::startSession(int returnedCardID, QString token)
 
     //put token to DLLRestApi
     pDLLRestApi->token = token;
-
     //update state and ui
     state = Waiting;
     updateUI();
@@ -340,6 +348,14 @@ void StartWindow::updateUI()
         }
         if(language == "en")
         {
+            //Nää ei voi olla täällä, mihis?
+//            QString soundFilePathEN = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/readcardEN.mp3";
+//            qDebug() << "Sound file path (english):" << soundFilePathEN;
+
+//            player->setSource(QUrl::fromLocalFile(soundFilePathEN));
+//            audioOutput->setVolume(0.5);  // set volume to 50%
+//            player->play();
+
             ui->labelInfo->setText("Read card to begin");
             ui->labelInfo2->setText("Read card to begin");
             ui->labelPhoneInfo->setText("Service Number (WD 8-17)");
