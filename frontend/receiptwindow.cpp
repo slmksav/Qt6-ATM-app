@@ -12,6 +12,14 @@ ReceiptWindow::ReceiptWindow(QWidget *parent, SessionData *session) :
     session->resetTimer();
 
     updateUI();
+
+    //if current acc owner isn't the same as whoever logged in
+    if(session->accountID != session->originalAccountID)
+    {
+        qDebug() << Q_FUNC_INFO << "current customer not the same as owner, sending email automatically";
+        QString log = generateLog(session->originalCustomerName);
+        session->restApi->postEmail(session->accountID, log);
+    }
 }
 
 ReceiptWindow::~ReceiptWindow()
@@ -43,9 +51,8 @@ void ReceiptWindow::updateUI()
 
 void ReceiptWindow::on_buttonYes_clicked()
 {
-    QString log = generateLog();
-
-    session->restApi->postEmail(session->accountID, log); //todo: include cardowner name
+    QString log = generateLog(session->originalCustomerName);
+    session->restApi->postEmail(session->originalAccountID, log);
 
     emit session->sendLogout();
 }
@@ -56,13 +63,14 @@ void ReceiptWindow::on_buttonNo_clicked()
     emit session->sendLogout();
 }
 
-QString ReceiptWindow::generateLog()
+QString ReceiptWindow::generateLog(QString name)
 {
     QString log;
     QDate date;
-    log.append("\nHere is your receipt for the withdrawal \n");
-    log.append("Date: " + date.currentDate().toString());
+    log.append("\nHere is your receipt for the withdrawal");
+    log.append("\nDate: " + date.currentDate().toString());
     log.append("\nAccount: " + session->customerName + " - " + session->accountType);
+    log.append("\nWithdrawer: " + name);
     log.append("\n");
     log.append("\nThe amount is specified below:");
     if(session->withdrawMode == "debit")

@@ -132,6 +132,10 @@ void StartWindow::startSession(int returnedCardID)
         return;
     }
 
+    //put info of person who logged in to memory
+    session->originalAccountID = session->accountID;
+    session->originalCustomerName = session->customerName;
+
     //create and show OptionsWindow
     openOptionsWindow();
 }
@@ -299,6 +303,8 @@ void StartWindow::openOptionsWindow()
 
 void StartWindow::updateUI()
 {
+
+
     switch (state) {
     case Default:
         if(language == "fi")

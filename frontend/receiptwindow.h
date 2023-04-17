@@ -33,7 +33,7 @@ private:
 
     SessionData * session;
 
-    QString generateLog();
+    QString generateLog(QString name);
 };
 
 #endif // RECEIPTWINDOW_H

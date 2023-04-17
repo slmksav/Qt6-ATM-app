@@ -17,6 +17,11 @@ public:
 
     DLLRestApi * restApi;
 
+    //remember who logged in
+    int originalAccountID = 0;
+    QString originalCustomerName = "\0";
+
+    //the data
     int cardID = 0; //getCardID(QString hexa);
     int accountID = 0; //getAccountID(int cardID);
     int customerID = 0; //getCustomerID(int accountID);
