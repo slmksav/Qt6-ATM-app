@@ -23,8 +23,9 @@ public:
     static QString getBaseUrl();
     QString cardhexcodeSQL;
     QString cardHexCode;
+     bool postLogin(QString hex, QString pin);
 signals:
-    void LoginSuccess(int);
+    void LoginSuccess(int, QString);
 private slots:
     void updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token);
     void numberClickHandler();

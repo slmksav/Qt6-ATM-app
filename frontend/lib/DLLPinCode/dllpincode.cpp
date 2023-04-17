@@ -162,6 +162,43 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
     manager->put(request, requestBodyData);
 }
 
+bool DLLPinCode::postLogin(QString hex, QString pin)
+{
+    QJsonObject jsonObj;
+    jsonObj.insert("username", hex);
+    jsonObj.insert("password", pin);
+
+    QString site_url = getBaseUrl() + "/login";
+    QNetworkRequest request(site_url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
+
+    QNetworkReply* networkReply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+
+    QEventLoop loop;
+    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    QByteArray responseData;
+
+    if(networkReply->error() == QNetworkReply::NoError) {
+        responseData = networkReply->readAll();
+        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
+
+        token = QString(responseData);
+
+        if(token == "false")
+            return false;
+
+        return true;
+    }
+    else {
+        qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
+        return false;
+    }
+}
+
 void DLLPinCode::enterClickHandler()
 { 
     timer->stop();
@@ -177,14 +214,15 @@ void DLLPinCode::enterClickHandler()
     qDebug() << "Tietokannasta haettu PIN:" << SQLPin;
     qDebug() << "cardHexCode (luettu):" << cardHexCode;
     qDebug() << "cardhexcodeSQL (haettu):" << cardhexcodeSQL;
-    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
+
+
+
+    QString hex = cardHexCode;
+    QString pin = CheckPin;
+
+    if(!postLogin(hex, pin))
     {
-        updateWrongAttemptsInCard(cardID, 3, token);
-        emit LoginSuccess(cardID.toInt());
-        done(Accepted);
-    }
-    else
-    {
+        qDebug() << Q_FUNC_INFO << "wrong login info";
         wrongAttempts--;
         if(wrongAttempts <= 0)
         {
@@ -206,9 +244,48 @@ void DLLPinCode::enterClickHandler()
 
         ui->labelAttempts->setVisible(true);
         clearClickHandler();
+        ui->buttonEnter->setFlat(false);
+        ui->buttonEnter->setDisabled(false);
     }
-    ui->buttonEnter->setFlat(false);
-    ui->buttonEnter->setDisabled(false);
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "correct login info";
+        updateWrongAttemptsInCard(cardID, 3, token);
+        emit LoginSuccess(cardID.toInt(), token);
+        done(Accepted);
+    }
+//    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
+//    {
+//        updateWrongAttemptsInCard(cardID, 3, token);
+//        emit LoginSuccess(cardID.toInt());
+//        done(Accepted);
+//    }
+//    else
+//    {
+//        wrongAttempts--;
+//        if(wrongAttempts <= 0)
+//        {
+//            accountFreezed();
+//        }
+//        if(languageGlobal == "fi")
+//        {
+//            ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
+//            ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritys(tä) jäljellä!");
+//        }
+//        else
+//        {
+//            ui->label->setText("Wrong PIN, please try again again.");
+//            ui->labelAttempts->setText(QString::number(wrongAttempts) + " attempt(s) left!");
+//        }
+
+//        timer->start(30000);
+//        updateWrongAttemptsInCard(cardID,wrongAttempts,token);
+
+//        ui->labelAttempts->setVisible(true);
+//        clearClickHandler();
+
+//    ui->buttonEnter->setFlat(false);
+//    ui->buttonEnter->setDisabled(false);
 }
 
 
@@ -237,7 +314,7 @@ void DLLPinCode::stopClickHandler()
 {
       timer->stop();
       timer->start(5000);
-      emit LoginSuccess(0);
+      emit LoginSuccess(0, token);
       ui->labelInterrupt->setVisible(true);
       ui->label->setVisible(false);
       ui->label_3->setVisible(false);
@@ -263,7 +340,7 @@ void DLLPinCode::accountFreezed()
 {
       timer->stop();
       timer->start(5000);
-      emit LoginSuccess(0);
+      emit LoginSuccess(0, token);
       ui->labelFreezed1->setVisible(true);
       ui->labelFreezed2->setVisible(true);
       ui->label->setVisible(false);
@@ -305,3 +382,4 @@ void DLLPinCode::english()
       ui->labelInterrupt->setText("Login aborted");
       ui->label_3->setText("and press ENTER");
 }
+

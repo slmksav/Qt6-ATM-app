@@ -301,7 +301,7 @@ background-repeat: no-repeat;
 background-position: center;
 </string>
     </property>
-    <widget class="QPushButton" name="buttonOhitaPIN">
+    <widget class="QPushButton" name="buttonOhitaKortti">
      <property name="geometry">
       <rect>
        <x>150</x>
