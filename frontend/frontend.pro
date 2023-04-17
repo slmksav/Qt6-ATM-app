@@ -21,6 +21,7 @@ SOURCES += \
     optionswindow.cpp \
     receiptwindow.cpp \
     sessiondata.cpp \
+    spinner.cpp \
     startwindow.cpp \
     transactionswindow.cpp \
     withdrawwindow.cpp
@@ -33,6 +34,7 @@ HEADERS += \
     optionswindow.h \
     receiptwindow.h \
     sessiondata.h \
+    spinner.h \
     startwindow.h \
     transactionswindow.h \
     withdrawwindow.h
@@ -44,6 +46,7 @@ FORMS += \
     modeselectwindow.ui \
     optionswindow.ui \
     receiptwindow.ui \
+    spinner.ui \
     startwindow.ui \
     transactionswindow.ui \
     withdrawwindow.ui
