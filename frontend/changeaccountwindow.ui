@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>800</width>
     <height>480</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -19,11 +31,15 @@
   <widget class="QPushButton" name="buttonLogout">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>80</width>
-     <height>24</height>
+     <x>10</x>
+     <y>10</y>
+     <width>201</width>
+     <height>61</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 71, 39);
+</string>
    </property>
    <property name="text">
     <string>Kirjaudu Ulos</string>
@@ -32,11 +48,14 @@
   <widget class="QPushButton" name="buttonPrevious">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>430</y>
-     <width>80</width>
-     <height>24</height>
+     <width>241</width>
+     <height>40</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 195, 5);</string>
    </property>
    <property name="text">
     <string>Edelliset</string>
@@ -45,11 +64,14 @@
   <widget class="QPushButton" name="buttonNext">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>440</y>
-     <width>80</width>
-     <height>24</height>
+     <x>539</x>
+     <y>430</y>
+     <width>231</width>
+     <height>40</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 195, 5);</string>
    </property>
    <property name="text">
     <string>Seuraavat</string>
@@ -58,14 +80,20 @@
   <widget class="QLabel" name="labelInfo">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>70</x>
      <y>60</y>
      <width>641</width>
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro Semibold</family>
+     <pointsize>13</pointsize>
+    </font>
+   </property>
    <property name="text">
-    <string>Valitse Tili:</string>
+    <string>Valitse tili:</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -76,7 +104,7 @@
     <rect>
      <x>-1</x>
      <y>90</y>
-     <width>641</width>
+     <width>771</width>
      <height>321</height>
     </rect>
    </property>
@@ -85,13 +113,23 @@
      <rect>
       <x>10</x>
       <y>-10</y>
-      <width>621</width>
+      <width>761</width>
       <height>341</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QPushButton" name="buttonAccount1">
+       <property name="font">
+        <font>
+         <family>Verdana Pro Cond</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(234, 195, 19);</string>
+       </property>
        <property name="text">
         <string>PushButton</string>
        </property>
@@ -102,6 +140,16 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonAccount2">
+       <property name="font">
+        <font>
+         <family>Verdana Pro Cond</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(234, 195, 19);</string>
+       </property>
        <property name="text">
         <string>PushButton</string>
        </property>
@@ -112,6 +160,16 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonAccount3">
+       <property name="font">
+        <font>
+         <family>Verdana Pro Cond</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(234, 195, 19);</string>
+       </property>
        <property name="text">
         <string>PushButton</string>
        </property>
@@ -122,6 +180,16 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonAccount4">
+       <property name="font">
+        <font>
+         <family>Verdana Pro Cond</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(234, 195, 19);</string>
+       </property>
        <property name="text">
         <string>PushButton</string>
        </property>
@@ -132,6 +200,16 @@
      </item>
      <item>
       <widget class="QPushButton" name="buttonAccount5">
+       <property name="font">
+        <font>
+         <family>Verdana Pro Cond</family>
+         <pointsize>10</pointsize>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(234, 195, 19);</string>
+       </property>
        <property name="text">
         <string>PushButton</string>
        </property>
@@ -143,6 +221,30 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>801</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+    background-image: url(:/exeimgs/blueblue.png);
+    background-repeat: no-repeat;
+    background-position: center;
+
+</string>
+   </property>
+  </widget>
+  <zorder>widget</zorder>
+  <zorder>buttonLogout</zorder>
+  <zorder>buttonPrevious</zorder>
+  <zorder>buttonNext</zorder>
+  <zorder>labelInfo</zorder>
+  <zorder>buttonWrapper</zorder>
  </widget>
  <resources/>
  <connections/>
