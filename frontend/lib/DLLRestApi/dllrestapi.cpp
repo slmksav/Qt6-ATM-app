@@ -62,6 +62,7 @@ bool DLLRestApi::postEmail(int accountID, QString log)
     QString site_url = getBaseUrl() + "/email";
     QNetworkRequest request(site_url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
 
@@ -102,6 +103,7 @@ int DLLRestApi::getAccountId(int cardID)
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -146,6 +148,7 @@ QString DLLRestApi::getAccountType(int accountID)
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -203,6 +206,7 @@ double DLLRestApi::getAccountBalance(int accountID)
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -254,6 +258,7 @@ double DLLRestApi::getAccountCredit(int accountID)
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -304,6 +309,7 @@ int DLLRestApi::getCustomerId(int accountID)
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -350,6 +356,7 @@ QString DLLRestApi::getCustomerName(int customerID)
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -397,6 +404,7 @@ double DLLRestApi::getCreditMax(int accountID) //HUOM. luotto on siis tilikohtai
     QNetworkRequest request;
     request.setUrl(urlWithQuery);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -440,9 +448,11 @@ double DLLRestApi::getCreditMax(int accountID) //HUOM. luotto on siis tilikohtai
 QJsonDocument DLLRestApi::doUrlGetQuery(QString site_url)
 {
     qDebug() << Q_FUNC_INFO << "requesting with url:" << site_url;
+    qDebug() << Q_FUNC_INFO << "requesting with token:" << token;
 
     QNetworkRequest request(site_url);
-    request.setRawHeader(QByteArray("token"), QByteArray(token.toUtf8()));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager networkManager;
     QNetworkReply* networkReply = networkManager.get(request);
@@ -678,6 +688,7 @@ void DLLRestApi::setAccountBalance(int accountID, int withdrawAmount, QString wi
     QString site_url = getBaseUrl() + "/account/";
     QNetworkRequest request(site_url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
 
     QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
 
