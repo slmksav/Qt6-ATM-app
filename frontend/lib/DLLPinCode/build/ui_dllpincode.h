@@ -16,6 +16,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -46,7 +47,9 @@ public:
     QLabel *labelFreezed1;
     QLabel *labelFreezed2;
     QLabel *labelinfo;
-    QLabel *imageLabel;
+    QWidget *widget;
+    QLabel *labelLangInfo_5;
+    QLabel *labelLangInfo_4;
     QButtonGroup *buttonGroup;
 
     void setupUi(QDialog *DLLPinCode)
@@ -73,12 +76,11 @@ public:
 "}"));
         ButtonClear = new QPushButton(DLLPinCode);
         ButtonClear->setObjectName("ButtonClear");
-        ButtonClear->setGeometry(QRect(330, 150, 131, 51));
+        ButtonClear->setGeometry(QRect(330, 150, 130, 50));
         ButtonClear->setStyleSheet(QString::fromUtf8("QWidget {\n"
-"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-image: url(:/exeimgs/button130x50.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         button2 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button2);
@@ -90,7 +92,6 @@ public:
 "    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         label_3 = new QLabel(DLLPinCode);
         label_3->setObjectName("label_3");
@@ -117,22 +118,22 @@ public:
 "    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         buttonEnter = new QPushButton(DLLPinCode);
         buttonEnter->setObjectName("buttonEnter");
-        buttonEnter->setGeometry(QRect(330, 210, 131, 141));
-        buttonEnter->setStyleSheet(QString::fromUtf8("QWidget {\n"
-"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+        buttonEnter->setGeometry(QRect(330, 210, 130, 140));
+        buttonEnter->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-image: url(:/exeimgs/button130x140.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
 "}"));
         labelInterrupt = new QLabel(DLLPinCode);
         labelInterrupt->setObjectName("labelInterrupt");
-        labelInterrupt->setGeometry(QRect(310, 30, 431, 51));
+        labelInterrupt->setGeometry(QRect(220, 200, 431, 51));
         QFont font1;
-        font1.setFamilies({QString::fromUtf8("Verdana")});
+        font1.setFamilies({QString::fromUtf8("Verdana Pro Cond Light")});
         font1.setPointSize(16);
+        font1.setBold(true);
         labelInterrupt->setFont(font1);
         button9 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button9);
@@ -152,7 +153,8 @@ public:
         font2.setPointSize(16);
         font2.setBold(true);
         lineEdit->setFont(font2);
-        lineEdit->setStyleSheet(QString::fromUtf8(""));
+        lineEdit->setStyleSheet(QString::fromUtf8("\n"
+"background-color: rgb(254, 195, 50);"));
         lineEdit->setFrame(true);
         lineEdit->setAlignment(Qt::AlignCenter);
         button5 = new QPushButton(DLLPinCode);
@@ -163,7 +165,6 @@ public:
 "    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         button8 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button8);
@@ -206,9 +207,9 @@ public:
 "}"));
         ButtonStop = new QPushButton(DLLPinCode);
         ButtonStop->setObjectName("ButtonStop");
-        ButtonStop->setGeometry(QRect(330, 90, 131, 51));
+        ButtonStop->setGeometry(QRect(330, 90, 130, 50));
         ButtonStop->setStyleSheet(QString::fromUtf8("QWidget {\n"
-"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+"    background-image: url(:/exeimgs/button130x50.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
 "    background-size: 100% 100%;\n"
@@ -224,7 +225,6 @@ public:
 "    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         button0 = new QPushButton(DLLPinCode);
         button0->setObjectName("button0");
@@ -233,7 +233,6 @@ public:
 "    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         button6 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button6);
@@ -243,7 +242,6 @@ public:
 "    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         labeljee = new QLabel(DLLPinCode);
         labeljee->setObjectName("labeljee");
@@ -253,7 +251,7 @@ public:
         labelpin->setGeometry(QRect(590, 370, 131, 20));
         labelFreezed1 = new QLabel(DLLPinCode);
         labelFreezed1->setObjectName("labelFreezed1");
-        labelFreezed1->setGeometry(QRect(100, 180, 691, 41));
+        labelFreezed1->setGeometry(QRect(50, 250, 691, 41));
         QFont font5;
         font5.setFamilies({QString::fromUtf8("Verdana")});
         font5.setPointSize(11);
@@ -261,7 +259,7 @@ public:
         labelFreezed1->setFont(font5);
         labelFreezed2 = new QLabel(DLLPinCode);
         labelFreezed2->setObjectName("labelFreezed2");
-        labelFreezed2->setGeometry(QRect(100, 230, 581, 41));
+        labelFreezed2->setGeometry(QRect(100, 280, 581, 41));
         QFont font6;
         font6.setFamilies({QString::fromUtf8("Verdana")});
         font6.setPointSize(10);
@@ -276,20 +274,28 @@ public:
         font7.setPointSize(25);
         labelinfo->setFont(font7);
         labelinfo->setTextFormat(Qt::AutoText);
-        imageLabel = new QLabel(DLLPinCode);
-        imageLabel->setObjectName("imageLabel");
-        imageLabel->setGeometry(QRect(0, 0, 801, 481));
-        imageLabel->setStyleSheet(QString::fromUtf8("QWidget {\n"
-"    background-image: url(:/exeimgs/yellowyellow.jpg);\n"
+        widget = new QWidget(DLLPinCode);
+        widget->setObjectName("widget");
+        widget->setGeometry(QRect(0, 0, 801, 481));
+        widget->setLayoutDirection(Qt::RightToLeft);
+        widget->setStyleSheet(QString::fromUtf8("QWidget {\n"
+"    background-image: url(:/exeimgs/blueblue.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
-        imageLabel->setFrameShape(QFrame::Box);
-        imageLabel->setFrameShadow(QFrame::Raised);
-        imageLabel->setLineWidth(2);
-        imageLabel->setScaledContents(false);
-        imageLabel->raise();
+        labelLangInfo_5 = new QLabel(DLLPinCode);
+        labelLangInfo_5->setObjectName("labelLangInfo_5");
+        labelLangInfo_5->setGeometry(QRect(10, 440, 291, 31));
+        QFont font8;
+        font8.setFamilies({QString::fromUtf8("Verdana")});
+        font8.setPointSize(8);
+        font8.setBold(false);
+        labelLangInfo_5->setFont(font8);
+        labelLangInfo_4 = new QLabel(DLLPinCode);
+        labelLangInfo_4->setObjectName("labelLangInfo_4");
+        labelLangInfo_4->setGeometry(QRect(10, 420, 291, 31));
+        labelLangInfo_4->setFont(font8);
+        widget->raise();
         cardhexcodeLabel->raise();
         button4->raise();
         ButtonClear->raise();
@@ -314,6 +320,8 @@ public:
         labelFreezed1->raise();
         labelFreezed2->raise();
         labelinfo->raise();
+        labelLangInfo_5->raise();
+        labelLangInfo_4->raise();
 
         retranslateUi(DLLPinCode);
 
@@ -349,7 +357,8 @@ public:
         labelFreezed1->setText(QCoreApplication::translate("DLLPinCode", "The account has been frozen due to excessive amount of attempts", nullptr));
         labelFreezed2->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-weight:700;\">Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567</span></p></body></html>", nullptr));
         labelinfo->setText(QCoreApplication::translate("DLLPinCode", "<html><head/><body><p><span style=\" font-size:10pt;\">Login tiedot: (debug)</span></p></body></html>", nullptr));
-        imageLabel->setText(QString());
+        labelLangInfo_5->setText(QCoreApplication::translate("DLLPinCode", "banksimul18@gmail.com", nullptr));
+        labelLangInfo_4->setText(QCoreApplication::translate("DLLPinCode", "+358 10 1234567", nullptr));
     } // retranslateUi
 
 };

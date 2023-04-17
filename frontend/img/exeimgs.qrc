@@ -5,5 +5,7 @@
         <file>suomenlippu.png</file>
         <file>yellowyellow.jpg</file>
         <file>button150x50.jpg</file>
+        <file>button130x50.jpg</file>
+        <file>button130x140.jpg</file>
     </qresource>
 </RCC>
