@@ -41,6 +41,8 @@ private slots:
     void on_buttonOhitaKortti_clicked(); //this shall be removed on release
     void on_buttonOhitaPIN_clicked(); //this shall be removed on release
 
+    void updateTime();
+
 private:
     Ui::StartWindow *ui;
 
@@ -54,6 +56,7 @@ private:
 
     //QString state = "default";
     QString language = "fi";
+    QTimer *timer;
 
     enum State {
         Default,
