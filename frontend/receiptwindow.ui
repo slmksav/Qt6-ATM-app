@@ -37,6 +37,9 @@
      <height>71</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 195, 10);</string>
+   </property>
    <property name="text">
     <string>Kyllä</string>
    </property>
@@ -52,6 +55,9 @@
      <width>341</width>
      <height>71</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 71, 39);</string>
    </property>
    <property name="text">
     <string>Ei</string>
@@ -107,7 +113,7 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="imageLabel">
+  <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -116,23 +122,16 @@
      <height>481</height>
     </rect>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::Box</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-   <property name="lineWidth">
-    <number>7</number>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="scaledContents">
-    <bool>false</bool>
+   <property name="styleSheet">
+    <string notr="true">
+    background-image: url(:/exeimgs/blueblue.png);
+    background-repeat: no-repeat;
+    background-position: center;
+
+</string>
    </property>
   </widget>
-  <zorder>imageLabel</zorder>
+  <zorder>widget</zorder>
   <zorder>buttonYes</zorder>
   <zorder>buttonNo</zorder>
   <zorder>labelInfo</zorder>

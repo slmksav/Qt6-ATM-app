@@ -86,15 +86,15 @@ void ChangeAccountWindow::updateUI()
     //other ui elements
     if(session->language == "fi")
     {
-        ui->buttonLogout->setText("Kirjaudu Ulos");
+        ui->buttonLogout->setText("Kirjaudu ulos");
 
-        ui->labelInfo->setText("Valitse Tili:");
+        ui->labelInfo->setText("Valitse tili:");
         ui->buttonNext->setText("Seuraavat");
         ui->buttonPrevious->setText("Edelliset");
     }
     if(session->language == "en")
     {
-        ui->buttonLogout->setText("Logout");
+        ui->buttonLogout->setText("Log out");
 
         ui->labelInfo->setText("Choose Account:");
         ui->buttonNext->setText("Next");

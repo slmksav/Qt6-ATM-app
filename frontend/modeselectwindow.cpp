@@ -27,14 +27,14 @@ void ModeSelectWindow::updateUI()
     if(session->language == "fi")
     {
         ui->labelInfo->setText("Valitse:");
-        ui->buttonDebit->setText("Debit");
-        ui->buttonCredit->setText("Credit");
+        ui->buttonDebit->setText("Debit-nosto");
+        ui->buttonCredit->setText("Credit-nosto");
     }
     if(session->language == "en")
     {
-        ui->labelInfo->setText("Choose:");
-        ui->buttonDebit->setText("Debit");
-        ui->buttonCredit->setText("Credit");
+        ui->labelInfo->setText("Select:");
+        ui->buttonDebit->setText("Debit Withdrawal");
+        ui->buttonCredit->setText("Credit Withdrawal");
     }
 }
 

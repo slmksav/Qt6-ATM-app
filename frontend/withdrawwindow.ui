@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>800</width>
     <height>480</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -19,11 +31,18 @@
   <widget class="QLabel" name="labelWithdrawInfo">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>90</y>
-     <width>641</width>
+     <x>170</x>
+     <y>40</y>
+     <width>481</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro Semibold</family>
+     <pointsize>12</pointsize>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="text">
     <string>Nosta - </string>
@@ -37,9 +56,13 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>80</width>
-     <height>24</height>
+     <width>140</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 71, 39);
+</string>
    </property>
    <property name="text">
     <string>Kirjaudu Ulos</string>
@@ -48,11 +71,15 @@
   <widget class="QPushButton" name="buttonReturn">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>20</y>
-     <width>80</width>
-     <height>24</height>
+     <x>629</x>
+     <y>10</y>
+     <width>151</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(217, 243, 46);</string>
    </property>
    <property name="text">
     <string>Palaa</string>
@@ -61,37 +88,27 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>330</y>
-     <width>168</width>
-     <height>116</height>
+     <x>50</x>
+     <y>110</y>
+     <width>681</width>
+     <height>361</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridAmounts">
-    <item row="1" column="1">
-     <widget class="QPushButton" name="button500">
-      <property name="text">
-       <string>500</string>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="button1000">
+      <property name="font">
+       <font>
+        <family>Verdana Pro Cond Light</family>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
       </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="button100">
-      <property name="text">
-       <string>100</string>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(254, 195, 50);</string>
       </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QPushButton" name="button200">
       <property name="text">
-       <string>200</string>
+       <string>1000</string>
       </property>
       <attribute name="buttonGroup">
        <string notr="true">buttonGroup</string>
@@ -100,6 +117,16 @@
     </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="button60">
+      <property name="font">
+       <font>
+        <family>Verdana Pro Cond Light</family>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(254, 195, 50);</string>
+      </property>
       <property name="text">
        <string>60</string>
       </property>
@@ -108,8 +135,38 @@
       </attribute>
      </widget>
     </item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="button500">
+      <property name="font">
+       <font>
+        <family>Verdana Pro Cond Light</family>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(254, 195, 50);</string>
+      </property>
+      <property name="text">
+       <string>500</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QPushButton" name="button20">
+      <property name="font">
+       <font>
+        <family>Verdana Pro Cond Light</family>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(254, 195, 50);</string>
+      </property>
       <property name="text">
        <string>20</string>
       </property>
@@ -118,10 +175,40 @@
       </attribute>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="button1000">
+    <item row="0" column="1">
+     <widget class="QPushButton" name="button200">
+      <property name="font">
+       <font>
+        <family>Verdana Pro Cond Light</family>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(254, 195, 50);</string>
+      </property>
       <property name="text">
-       <string>1000</string>
+       <string>200</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="button100">
+      <property name="font">
+       <font>
+        <family>Verdana Pro Cond Light</family>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(254, 195, 50);</string>
+      </property>
+      <property name="text">
+       <string>100</string>
       </property>
       <attribute name="buttonGroup">
        <string notr="true">buttonGroup</string>
@@ -133,19 +220,74 @@
   <widget class="QLabel" name="labelWithdrawWarning">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>160</y>
-     <width>641</width>
+     <x>210</x>
+     <y>90</y>
+     <width>391</width>
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro Black</family>
+     <pointsize>10</pointsize>
+     <italic>true</italic>
+    </font>
+   </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>varoitus</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>801</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+    background-image: url(:/exeimgs/blueblue.png);
+    background-repeat: no-repeat;
+    background-position: center;
+
+</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelWithMoreInfo">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>130</y>
+     <width>391</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro</family>
+     <pointsize>12</pointsize>
+     <italic>false</italic>
+    </font>
+   </property>
+   <property name="text">
+    <string>tietoa</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <zorder>widget</zorder>
+  <zorder>labelWithdrawInfo</zorder>
+  <zorder>buttonLogout</zorder>
+  <zorder>buttonReturn</zorder>
+  <zorder>gridLayoutWidget</zorder>
+  <zorder>labelWithdrawWarning</zorder>
+  <zorder>labelWithMoreInfo</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -65,11 +65,13 @@ void WithdrawWindow::updateUI()
     {
         ui->buttonLogout->setText("Kirjaudu Ulos");
         ui->buttonReturn->setText("Palaa");
+        ui->labelWithMoreInfo->setText("Valitse summa:");
     }
     if(session->language == "en")
     {
-        ui->buttonLogout->setText("Logout");
+        ui->buttonLogout->setText("Log out");
         ui->buttonReturn->setText("Return");
+        ui->labelWithMoreInfo->setText("Select the amount:");
     }
 }
 
