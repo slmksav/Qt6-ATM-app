@@ -76,6 +76,7 @@ void TransactionsWindow::updateUI()
             QString transactionDate = transactionDates.previous();
             transactionDate.replace("T", " ");
             transactionDate.replace("Z", "");
+            transactionDate.chop(3); // remove last three zeros
 
             qDebug() << Q_FUNC_INFO << "Index inside of list, outputting transaction[" << i + listIndex;
             transactionLabels[i]->setText(transactionDate +
