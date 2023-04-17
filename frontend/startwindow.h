@@ -35,7 +35,7 @@ private slots:
 
     void openDLLPinCode(QString);
 
-    void startSession(int);
+    void startSession(int, QString);
     void fetchDataWithDLL(int);
     void swapToAccount(int);
 
