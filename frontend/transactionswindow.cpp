@@ -73,8 +73,13 @@ void TransactionsWindow::updateUI()
         }
         else
         {
+            QString transactionDate = transactionDates.previous();
+            transactionDate.replace("T", " ");
+            transactionDate.replace("Z", "");
+            transactionDate.chop(3); // remove last three zeros
+
             qDebug() << Q_FUNC_INFO << "Index inside of list, outputting transaction[" << i + listIndex;
-            transactionLabels[i]->setText(transactionDates.previous() +
+            transactionLabels[i]->setText(transactionDate +
                     ": " + QString::number(-1 * transactionAmounts.previous(), 'f', 2));
         }
     }
@@ -99,6 +104,7 @@ void TransactionsWindow::updateUI()
         ui->buttonPrevious->setText("Previous");
     }
 }
+
 
 void TransactionsWindow::on_buttonLogout_clicked()
 {

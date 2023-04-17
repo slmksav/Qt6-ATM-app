@@ -25,7 +25,7 @@ public:
 
 signals:
     void testOhitaKorttiSignal(QString);
-    void testOhitaPINSignal(int);
+    void testOhitaPINSignal(int, QString);
 
 private slots:
     void languageButtonClicked(int);
@@ -35,7 +35,7 @@ private slots:
 
     void openDLLPinCode(QString);
 
-    void startSession(int);
+    void startSession(int, QString);
     void fetchDataWithDLL(int);
     void swapToAccount(int);
 
@@ -47,14 +47,14 @@ private slots:
 private:
     Ui::StartWindow *ui;
 
-    OptionsWindow * optionsWindow;
+    OptionsWindow * optionsWindow = nullptr;
 
-    SessionData * session;
+    SessionData * session = nullptr;
 
-    DLLPinCode * pDLLPinCode;
-    DLLRestApi * pDLLRestApi;
-    DLLSerialPort * pDLLSerialPort;
-    Spinner * pSpinner;
+    DLLPinCode * pDLLPinCode = nullptr;
+    DLLRestApi * pDLLRestApi = nullptr;
+    DLLSerialPort * pDLLSerialPort = nullptr;
+    Spinner * pSpinner = nullptr;
 
     //QString state = "default";
     QString language = "fi";

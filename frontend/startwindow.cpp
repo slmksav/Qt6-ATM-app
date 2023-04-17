@@ -28,8 +28,8 @@ StartWindow::StartWindow(QWidget *parent) :
             this, SLOT(openDLLPinCode(QString)));
 
     //test button signal to skip pin window altogether
-    connect(this, SIGNAL(testOhitaPINSignal(int)),
-            this, SLOT(startSession(int)));
+    connect(this, SIGNAL(testOhitaPINSignal(int, QString)),
+            this, SLOT(startSession(int, QString)));
 
 
     QTimer *timer = new QTimer(this);
@@ -59,16 +59,24 @@ void StartWindow::languageButtonClicked(int buttonID)
 
 void StartWindow::logout()
 {
-    qDebug() << Q_FUNC_INFO << "Logout initiated";
+    qDebug() << Q_FUNC_INFO << "Logout initiated by" << QObject::sender();
 
     //delete windows before SessionData, because their destructors
     //make calls to SessionData's timeout() function, for example
-    delete optionsWindow;
-    optionsWindow = nullptr;
+    if(optionsWindow != nullptr && session != nullptr)
+    {
+        qDebug() << Q_FUNC_INFO << "Deleting OptionsWindow";
+        delete optionsWindow;
+        optionsWindow = nullptr;
+    }
 
     //!can only been deleted after windows have been deleted
-    delete session;
-    session = nullptr;
+    if(session != nullptr)
+    {
+        qDebug() << Q_FUNC_INFO << "Deleting SessionData";
+        delete session;
+        session = nullptr;
+    }
 }
 
 //this might be redundant
@@ -90,14 +98,14 @@ void StartWindow::openDLLPinCode(QString hexaCode)
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
     pDLLPinCode = new DLLPinCode(this, hexaCode, language);
 
-    connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
-            this, SLOT(startSession(int)));
+    connect(pDLLPinCode, SIGNAL(LoginSuccess(int,QString)),
+            this, SLOT(startSession(int,QString)));
 
     pDLLPinCode->show();
 }
 
 
-void StartWindow::startSession(int returnedCardID)
+void StartWindow::startSession(int returnedCardID, QString token)
 {
     //returned invalid cardID
     if(returnedCardID == 0)
@@ -106,6 +114,9 @@ void StartWindow::startSession(int returnedCardID)
             "| startSession aborted...";
         return;
     }
+
+    //put token to DLLRestApi
+    pDLLRestApi->token = token;
 
     //update state and ui
     state = Waiting;
@@ -138,8 +149,13 @@ void StartWindow::startSession(int returnedCardID)
     {
         state = Error;
         updateUI();
+        logout();
         return;
     }
+
+    //put info of person who logged in to memory
+    session->originalAccountID = session->accountID;
+    session->originalCustomerName = session->customerName;
 
     //create and show OptionsWindow
     openOptionsWindow();
@@ -282,6 +298,7 @@ void StartWindow::swapToAccount(int accountID)
     {
         state = Error;
         updateUI();
+        logout();
         return;
     }
 
@@ -423,7 +440,7 @@ void StartWindow::on_buttonOhitaPIN_clicked()
         qDebug() << Q_FUNC_INFO << "correct login info";
     }
 
-    emit testOhitaPINSignal(2);
+    emit testOhitaPINSignal(2, "testtoken");
 }
 
 void StartWindow::updateTime()

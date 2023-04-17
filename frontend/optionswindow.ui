@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
+    <width>800</width>
     <height>480</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>480</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
@@ -19,11 +31,20 @@
   <widget class="QPushButton" name="buttonLogout">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>10</y>
-     <width>80</width>
-     <height>24</height>
+     <width>190</width>
+     <height>60</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro</family>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+background-color: rgb(255, 71, 39);</string>
    </property>
    <property name="text">
     <string>Kirjaudu Ulos</string>
@@ -32,11 +53,20 @@
   <widget class="QPushButton" name="buttonWithdraw">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>360</y>
-     <width>80</width>
-     <height>24</height>
+     <x>320</x>
+     <y>120</y>
+     <width>220</width>
+     <height>70</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro</family>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 195, 14);</string>
    </property>
    <property name="text">
     <string>Nosto</string>
@@ -45,11 +75,20 @@
   <widget class="QPushButton" name="buttonBalance">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>400</y>
-     <width>80</width>
-     <height>24</height>
+     <x>320</x>
+     <y>200</y>
+     <width>220</width>
+     <height>70</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro</family>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 195, 14);</string>
    </property>
    <property name="text">
     <string>Saldo</string>
@@ -58,11 +97,20 @@
   <widget class="QPushButton" name="buttonTransactions">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>440</y>
-     <width>80</width>
-     <height>24</height>
+     <x>320</x>
+     <y>280</y>
+     <width>220</width>
+     <height>70</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro</family>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 195, 14);</string>
    </property>
    <property name="text">
     <string>Tapahtumat</string>
@@ -71,11 +119,19 @@
   <widget class="QPushButton" name="buttonChangeAccount">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>430</y>
-     <width>80</width>
-     <height>24</height>
+     <x>10</x>
+     <y>410</y>
+     <width>190</width>
+     <height>60</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro</family>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(254, 195, 14);</string>
    </property>
    <property name="text">
     <string>Vaihda tiliä</string>
@@ -84,11 +140,17 @@
   <widget class="QLabel" name="labelAccountName">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>160</y>
-     <width>641</width>
-     <height>20</height>
+     <x>-20</x>
+     <y>85</y>
+     <width>261</width>
+     <height>61</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro Black</family>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>tili: x</string>
@@ -97,6 +159,94 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>140</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro Light</family>
+     <italic>true</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Nosta käteistä rahaa</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label2">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>220</y>
+     <width>261</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro Light</family>
+     <italic>true</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Tarkastele tilisi saldoa ja luottoa</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label3">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>300</y>
+     <width>261</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Verdana Pro Light</family>
+     <italic>true</italic>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Selaa tilitapahtumia</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>801</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+    background-image: url(:/exeimgs/blueblue.png);
+    background-repeat: no-repeat;
+    background-position: center;
+
+</string>
+   </property>
+  </widget>
+  <zorder>widget</zorder>
+  <zorder>buttonLogout</zorder>
+  <zorder>buttonWithdraw</zorder>
+  <zorder>buttonBalance</zorder>
+  <zorder>buttonTransactions</zorder>
+  <zorder>labelAccountName</zorder>
+  <zorder>label</zorder>
+  <zorder>label2</zorder>
+  <zorder>label3</zorder>
+  <zorder>buttonChangeAccount</zorder>
  </widget>
  <resources/>
  <connections/>

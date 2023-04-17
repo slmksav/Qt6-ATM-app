@@ -98,21 +98,21 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   74,    2, 0x06,    1 /* Public */,
+       1,    2,   74,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    3,   77,    2, 0x08,    3 /* Private */,
-       7,    0,   84,    2, 0x08,    7 /* Private */,
-       8,    0,   85,    2, 0x08,    8 /* Private */,
-       9,    0,   86,    2, 0x08,    9 /* Private */,
-      10,    0,   87,    2, 0x08,   10 /* Private */,
-      11,    0,   88,    2, 0x08,   11 /* Private */,
-      12,    0,   89,    2, 0x08,   12 /* Private */,
-      13,    0,   90,    2, 0x08,   13 /* Private */,
-      14,    0,   91,    2, 0x08,   14 /* Private */,
+       3,    3,   79,    2, 0x08,    4 /* Private */,
+       7,    0,   86,    2, 0x08,    8 /* Private */,
+       8,    0,   87,    2, 0x08,    9 /* Private */,
+       9,    0,   88,    2, 0x08,   10 /* Private */,
+      10,    0,   89,    2, 0x08,   11 /* Private */,
+      11,    0,   90,    2, 0x08,   12 /* Private */,
+      12,    0,   91,    2, 0x08,   13 /* Private */,
+      13,    0,   92,    2, 0x08,   14 /* Private */,
+      14,    0,   93,    2, 0x08,   15 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::Int,    2,
+    QMetaType::Void, QMetaType::Int, QMetaType::QString,    2,    2,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::QString,    4,    5,    6,
@@ -140,6 +140,7 @@ Q_CONSTINIT const QMetaObject DLLPinCode::staticMetaObject = { {
         // method 'LoginSuccess'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'updateWrongAttemptsInCard'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
@@ -171,7 +172,7 @@ void DLLPinCode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<DLLPinCode *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->LoginSuccess((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 0: _t->LoginSuccess((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
         case 1: _t->updateWrongAttemptsInCard((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
         case 2: _t->numberClickHandler(); break;
         case 3: _t->enterClickHandler(); break;
@@ -186,7 +187,7 @@ void DLLPinCode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (DLLPinCode::*)(int );
+            using _t = void (DLLPinCode::*)(int , QString );
             if (_t _q_method = &DLLPinCode::LoginSuccess; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -226,9 +227,9 @@ int DLLPinCode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void DLLPinCode::LoginSuccess(int _t1)
+void DLLPinCode::LoginSuccess(int _t1, QString _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

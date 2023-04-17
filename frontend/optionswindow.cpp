@@ -40,6 +40,9 @@ void OptionsWindow::updateUI()
         ui->buttonLogout->setText("Kirjaudu ulos");
         ui->buttonTransactions->setText("Tapahtumat");
         ui->buttonWithdraw->setText("Nosto");
+        ui->label->setText("Nosta käteistä rahaa");
+        ui->label2->setText("Tarkastele tilisi saldoa ja luottoa");
+        ui->label3->setText("Selaa tilitapahtumia");
     }
     if(session->language == "en")
     {
@@ -48,6 +51,9 @@ void OptionsWindow::updateUI()
         ui->buttonLogout->setText("Log out");
         ui->buttonTransactions->setText("Transactions");
         ui->buttonWithdraw->setText("Withdraw");
+        ui->label->setText("Withdraw cash from your account");
+        ui->label2->setText("Check your account's thresholds");
+        ui->label3->setText("Browse through transactions");
     }
 }
 
