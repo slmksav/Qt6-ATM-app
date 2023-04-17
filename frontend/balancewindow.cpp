@@ -36,6 +36,14 @@ void BalanceWindow::updateUI()
         double cutoff = (int)(balanceAvailable * 100) % 1000;
         balanceAvailable -= cutoff / 100.0;
 
+        // jos voi nostaa vähemmön kuin 20, niin ei voi nostaa oikeasti ollenkaan. Eli pistetään nollaksi se paljon voi nostaa.
+        if (balanceAvailable < 20.0) {
+            balanceAvailable = 0.0;
+        }
+        else if (balanceAvailable < 40.0) {
+            balanceAvailable = 20.0;
+        }
+
         qDebug() << Q_FUNC_INFO << "balanceAvailable: " << balanceAvailable;
     }
     if(session->accountType == "credit" || session->accountType == "dual")
@@ -48,8 +56,11 @@ void BalanceWindow::updateUI()
         creditAvailable -= cutoff / 100.0;
 
         // jos voi nostaa vähemmön kuin 20, niin ei voi nostaa oikeasti ollenkaan. Eli pistetään nollaksi se paljon voi nostaa.
-        if (creditAvailable < 20) {
-            creditAvailable = 0;
+        if (creditAvailable < 20.0) {
+            creditAvailable = 0.0;
+        }
+        else if (creditAvailable < 40.0) {
+            creditAvailable = 20.0;
         }
 
         qDebug() << Q_FUNC_INFO << "creditAvailable: " << creditAvailable;

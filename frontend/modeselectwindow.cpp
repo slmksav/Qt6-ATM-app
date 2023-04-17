@@ -41,6 +41,7 @@ void ModeSelectWindow::updateUI()
 void ModeSelectWindow::on_buttonDebit_clicked()
 {
     qDebug() << Q_FUNC_INFO << "Clicked debit";
+    session->resetTimer();
     emit clickMode("debit"); //send to OptionsWindow
 }
 
@@ -48,6 +49,7 @@ void ModeSelectWindow::on_buttonDebit_clicked()
 void ModeSelectWindow::on_buttonCredit_clicked()
 {
     qDebug() << Q_FUNC_INFO << "Clicked credit";
+    session->resetTimer();
     emit clickMode("credit"); //send to OptionsWindow
 }
 
