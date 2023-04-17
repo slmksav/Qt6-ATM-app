@@ -23,6 +23,8 @@ public:
     DLLRestApi();
     virtual ~DLLRestApi();
 
+    QString token; //session token
+
     static QString getBaseUrl();
 
     bool postLogin(QString hex, QString pin);
@@ -53,7 +55,7 @@ private:
     QNetworkReply *reply;
     QByteArray response_data;
     QString username;
-    QString token;
+
     int accountIDFetchedByCard;
 
     QJsonDocument doUrlGetQuery(QString site_url);
