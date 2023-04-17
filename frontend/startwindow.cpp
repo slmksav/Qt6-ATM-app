@@ -308,6 +308,11 @@ void StartWindow::openOptionsWindow()
 
 void StartWindow::updateUI()
 {
+    if(pSpinner != nullptr)
+    {
+        delete pSpinner;
+        pSpinner = nullptr;  
+    }
     switch (state) {
     case Default:
         if(language == "fi")
@@ -325,6 +330,9 @@ void StartWindow::updateUI()
         break;
 
     case Waiting:
+
+        pSpinner = new Spinner;
+
         if(language == "fi")
         {
             ui->labelInfo->setText("Odota Hetki");

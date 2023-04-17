@@ -7,6 +7,7 @@
 #include "dllpincode.h"
 #include "dllrestapi.h"
 #include "dllserialport.h"
+#include "spinner.h"
 
 #include <QMainWindow>
 
@@ -53,6 +54,7 @@ private:
     DLLPinCode * pDLLPinCode;
     DLLRestApi * pDLLRestApi;
     DLLSerialPort * pDLLSerialPort;
+    Spinner * pSpinner;
 
     //QString state = "default";
     QString language = "fi";
