@@ -28,6 +28,9 @@ void SessionData::stopTimer()
 
 void SessionData::debugPrintData()
 {
+    qDebug() << Q_FUNC_INFO << "originalAccountID:" << originalAccountID;
+    qDebug() << Q_FUNC_INFO << "originalCustomerName:" << originalCustomerName;
+
     qDebug() << Q_FUNC_INFO << "cardID:" << cardID;
     qDebug() << Q_FUNC_INFO << "customerID:" << customerID;
     qDebug() << Q_FUNC_INFO << "accountID" << accountID;

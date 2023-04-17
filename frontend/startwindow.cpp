@@ -90,14 +90,14 @@ void StartWindow::openDLLPinCode(QString hexaCode)
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
     pDLLPinCode = new DLLPinCode(this, hexaCode, language);
 
-    connect(pDLLPinCode, SIGNAL(LoginSuccess(int)),
-            this, SLOT(startSession(int)));
+    connect(pDLLPinCode, SIGNAL(LoginSuccess(int, QString)),
+            this, SLOT(startSession(int, QString)));
 
     pDLLPinCode->show();
 }
 
 
-void StartWindow::startSession(int returnedCardID)
+void StartWindow::startSession(int returnedCardID, QString token)
 {
     //returned invalid cardID
     if(returnedCardID == 0)
@@ -106,6 +106,9 @@ void StartWindow::startSession(int returnedCardID)
             "| startSession aborted...";
         return;
     }
+
+    //put token to DLLRestApi
+    pDLLRestApi->token = token;
 
     //update state and ui
     state = Waiting;
@@ -140,6 +143,10 @@ void StartWindow::startSession(int returnedCardID)
         updateUI();
         return;
     }
+
+    //put info of person who logged in to memory
+    session->originalAccountID = session->accountID;
+    session->originalCustomerName = session->customerName;
 
     //create and show OptionsWindow
     openOptionsWindow();
