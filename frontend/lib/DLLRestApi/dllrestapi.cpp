@@ -596,8 +596,10 @@ QList<QString> DLLRestApi::getTransactionDates(int accountID)
 
     QList<QString> transactions{};
     for (int i = 0; i < datesArr.count(); ++i) {
-        QJsonObject object = datesArr[i].toObject();
-        transactions.append(object.value("date_transactions").toString());
+        QString transactionDate = datesArr[i].toObject().value("date_transactions").toString();
+        transactionDate.replace("T", " ");
+        transactionDate.replace("Z", "");
+        transactions.append(transactionDate);
     }
 
     qDebug() << Q_FUNC_INFO << "list size:" << transactions.count();
