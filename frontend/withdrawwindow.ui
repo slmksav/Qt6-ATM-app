@@ -40,7 +40,7 @@
    <property name="font">
     <font>
      <family>Verdana Pro Semibold</family>
-     <pointsize>15</pointsize>
+     <pointsize>12</pointsize>
      <bold>false</bold>
     </font>
    </property>
@@ -229,7 +229,7 @@ background-color: rgb(217, 243, 46);</string>
    <property name="font">
     <font>
      <family>Verdana Pro Black</family>
-     <pointsize>12</pointsize>
+     <pointsize>10</pointsize>
      <italic>true</italic>
     </font>
    </property>

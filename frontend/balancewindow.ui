@@ -77,7 +77,10 @@
        <widget class="QLabel" name="labelInfoBalance">
         <property name="font">
          <font>
-          <family>Verdana Pro</family>
+          <family>Verdana Pro Light</family>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -92,7 +95,10 @@
        <widget class="QLabel" name="labelInfoCredit">
         <property name="font">
          <font>
-          <family>Verdana Pro</family>
+          <family>Verdana Pro Light</family>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -107,7 +113,10 @@
        <widget class="QLabel" name="labelInfoCreditMax">
         <property name="font">
          <font>
-          <family>Verdana Pro</family>
+          <family>Verdana Pro Light</family>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -127,6 +136,7 @@
         <property name="font">
          <font>
           <family>Verdana Pro Cond Black</family>
+          <pointsize>10</pointsize>
           <bold>false</bold>
          </font>
         </property>
@@ -140,6 +150,7 @@
         <property name="font">
          <font>
           <family>Verdana Pro Cond Black</family>
+          <pointsize>10</pointsize>
           <bold>false</bold>
          </font>
         </property>
@@ -153,6 +164,7 @@
         <property name="font">
          <font>
           <family>Verdana Pro Cond Black</family>
+          <pointsize>10</pointsize>
           <bold>false</bold>
          </font>
         </property>
@@ -169,7 +181,10 @@
        <widget class="QLabel" name="labelInfoBalanceAvail">
         <property name="font">
          <font>
-          <family>Verdana Pro</family>
+          <family>Verdana Pro Light</family>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -184,7 +199,10 @@
        <widget class="QLabel" name="labelInfoCreditAvail">
         <property name="font">
          <font>
-          <family>Verdana Pro</family>
+          <family>Verdana Pro Light</family>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -199,7 +217,10 @@
        <widget class="QLabel" name="labelInfoEmpty">
         <property name="font">
          <font>
-          <family>Verdana Pro</family>
+          <family>Verdana Pro Light</family>
+          <pointsize>11</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -219,6 +240,7 @@
         <property name="font">
          <font>
           <family>Verdana Pro Cond Black</family>
+          <pointsize>10</pointsize>
           <bold>false</bold>
          </font>
         </property>
@@ -232,6 +254,7 @@
         <property name="font">
          <font>
           <family>Verdana Pro Cond Black</family>
+          <pointsize>10</pointsize>
           <bold>false</bold>
          </font>
         </property>
@@ -245,6 +268,7 @@
         <property name="font">
          <font>
           <family>Verdana Pro Cond Black</family>
+          <pointsize>10</pointsize>
           <bold>false</bold>
          </font>
         </property>

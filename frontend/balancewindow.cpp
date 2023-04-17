@@ -100,19 +100,19 @@ void BalanceWindow::updateUI()
     //other ui elements
     if(session->language == "fi")
     {
-        ui->buttonLogout->setText("Kirjaudu Ulos");
+        ui->buttonLogout->setText("Kirjaudu ulos");
         ui->buttonReturn->setText("Palaa");
 
         ui->labelInfoBalance->setText("Saldo:");
-        ui->labelInfoCredit->setText("Käytetty Luotto:");
+        ui->labelInfoCredit->setText("Kerrytetty luotto:");
         ui->labelInfoCreditMax->setText("Luottokatto:");
 
-        ui->labelInfoBalanceAvail->setText("Nostettavissa:");
-        ui->labelInfoCreditAvail->setText("Nostettavissa:");
+        ui->labelInfoBalanceAvail->setText("Nostettavissa: ");
+        ui->labelInfoCreditAvail->setText("Nostettavissa: ");
     }
     if(session->language == "en")
     {
-        ui->buttonLogout->setText("Logout");
+        ui->buttonLogout->setText("Log out");
         ui->buttonReturn->setText("Return");
 
         ui->labelInfoBalance->setText("Balance:");
