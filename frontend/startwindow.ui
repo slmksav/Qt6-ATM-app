@@ -301,6 +301,19 @@ background-repeat: no-repeat;
 background-position: center;
 </string>
     </property>
+    <widget class="QPushButton" name="buttonOhitaPIN">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>250</y>
+       <width>83</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
    </widget>
    <zorder>widget</zorder>
    <zorder>labelInfo</zorder>
