@@ -25,7 +25,7 @@ public:
 
 signals:
     void testOhitaKorttiSignal(QString);
-    void testOhitaPINSignal(int);
+    void testOhitaPINSignal(int, QString);
 
 private slots:
     void languageButtonClicked(int);
@@ -54,7 +54,7 @@ private:
     DLLPinCode * pDLLPinCode;
     DLLRestApi * pDLLRestApi;
     DLLSerialPort * pDLLSerialPort;
-    Spinner * pSpinner;
+    Spinner * pSpinner = nullptr;
 
     //QString state = "default";
     QString language = "fi";

@@ -28,8 +28,8 @@ StartWindow::StartWindow(QWidget *parent) :
             this, SLOT(openDLLPinCode(QString)));
 
     //test button signal to skip pin window altogether
-    connect(this, SIGNAL(testOhitaPINSignal(int)),
-            this, SLOT(startSession(int)));
+    connect(this, SIGNAL(testOhitaPINSignal(int, QString)),
+            this, SLOT(startSession(int, QString)));
 
 
     QTimer *timer = new QTimer(this);
@@ -90,8 +90,8 @@ void StartWindow::openDLLPinCode(QString hexaCode)
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
     pDLLPinCode = new DLLPinCode(this, hexaCode, language);
 
-    connect(pDLLPinCode, SIGNAL(LoginSuccess(int, QString)),
-            this, SLOT(startSession(int, QString)));
+    connect(pDLLPinCode, SIGNAL(LoginSuccess(int,QString)),
+            this, SLOT(startSession(int,QString)));
 
     pDLLPinCode->show();
 }
@@ -430,7 +430,7 @@ void StartWindow::on_buttonOhitaPIN_clicked()
         qDebug() << Q_FUNC_INFO << "correct login info";
     }
 
-    emit testOhitaPINSignal(2);
+    emit testOhitaPINSignal(2, "testtoken");
 }
 
 void StartWindow::updateTime()
