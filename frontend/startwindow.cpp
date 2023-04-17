@@ -59,16 +59,24 @@ void StartWindow::languageButtonClicked(int buttonID)
 
 void StartWindow::logout()
 {
-    qDebug() << Q_FUNC_INFO << "Logout initiated";
+    qDebug() << Q_FUNC_INFO << "Logout initiated by" << QObject::sender();
 
     //delete windows before SessionData, because their destructors
     //make calls to SessionData's timeout() function, for example
-    delete optionsWindow;
-    optionsWindow = nullptr;
+    if(optionsWindow != nullptr && session != nullptr)
+    {
+        qDebug() << Q_FUNC_INFO << "Deleting OptionsWindow";
+        delete optionsWindow;
+        optionsWindow = nullptr;
+    }
 
     //!can only been deleted after windows have been deleted
-    delete session;
-    session = nullptr;
+    if(session != nullptr)
+    {
+        qDebug() << Q_FUNC_INFO << "Deleting SessionData";
+        delete session;
+        session = nullptr;
+    }
 }
 
 //this might be redundant
@@ -141,6 +149,7 @@ void StartWindow::startSession(int returnedCardID, QString token)
     {
         state = Error;
         updateUI();
+        logout();
         return;
     }
 
@@ -289,6 +298,7 @@ void StartWindow::swapToAccount(int accountID)
     {
         state = Error;
         updateUI();
+        logout();
         return;
     }
 

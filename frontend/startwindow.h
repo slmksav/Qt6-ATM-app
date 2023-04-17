@@ -47,13 +47,13 @@ private slots:
 private:
     Ui::StartWindow *ui;
 
-    OptionsWindow * optionsWindow;
+    OptionsWindow * optionsWindow = nullptr;
 
-    SessionData * session;
+    SessionData * session = nullptr;
 
-    DLLPinCode * pDLLPinCode;
-    DLLRestApi * pDLLRestApi;
-    DLLSerialPort * pDLLSerialPort;
+    DLLPinCode * pDLLPinCode = nullptr;
+    DLLRestApi * pDLLRestApi = nullptr;
+    DLLSerialPort * pDLLSerialPort = nullptr;
     Spinner * pSpinner = nullptr;
 
     //QString state = "default";
