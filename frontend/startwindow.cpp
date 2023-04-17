@@ -43,7 +43,7 @@ StartWindow::StartWindow(QWidget *parent) :
     player->setAudioOutput(audioOutput);
 
     QString soundFilePathFI = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/readcardFI.mp3";
-    qDebug() << "Sound file path (english):" << soundFilePathFI;
+    qDebug() << "Sound file path (finnish):" << soundFilePathFI;
 
     player->setSource(QUrl::fromLocalFile(soundFilePathFI));
     audioOutput->setVolume(0.5);  // set volume to 50%
