@@ -331,6 +331,10 @@ void StartWindow::updateUI()
         }
         break;
 
+    case Running:
+
+        break;
+
     case Timeout:
         if(language == "fi")
         {
