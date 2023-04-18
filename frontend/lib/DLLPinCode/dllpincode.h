@@ -23,9 +23,8 @@ public:
     explicit DLLPinCode(QWidget *parent = nullptr, QString cardHexCodeReceived = "", QString language = "fi");
     ~DLLPinCode();
     static QString getBaseUrl();
-    QString cardhexcodeSQL;
     QString cardHexCode;
-     bool postLogin(QString hex, QString pin);
+    bool postLogin(QString hex, QString pin);
 signals:
     void LoginSuccess(int, QString);
 private slots:
@@ -43,11 +42,9 @@ private:
     Ui::DLLPinCode *ui;
     QString InsertingPin;
     QString CheckPin;
-    QString SQLPin;
     QTimer *timer;
     QMediaPlayer *player;
     QAudioOutput *audioOutput;
-
     QString token;
     QString cardID;
     QString languageGlobal;
@@ -55,8 +52,6 @@ private:
     void finnish();
     void english();
     void sound();
-
-
 };
 
 #endif // DLLPINCODE_H
