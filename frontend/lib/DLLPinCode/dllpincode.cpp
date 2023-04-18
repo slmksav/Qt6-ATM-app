@@ -172,8 +172,7 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
             qDebug() << "Failed to update wrongAttempts in card " << cardID << ", remaining attempts: " << reply->errorString();
         }
         else {
-            QByteArray response = reply->readAll();
-            qDebug() << "Updated wrongAttempts to idcard" << cardID << ", remaining attempts: " << response;
+            qDebug() << "Updated wrongAttempts to idcard" << cardID << ", remaining attempts: " << wrongAttempts;
         }
         reply->deleteLater();
     });
@@ -262,8 +261,7 @@ void DLLPinCode::enterClickHandler()
 
         ui->labelAttempts->setVisible(true);
         clearClickHandler();
-        ui->buttonEnter->setFlat(false);
-        ui->buttonEnter->setDisabled(false);
+        emptyLineEdit();
     }
     else
     {
