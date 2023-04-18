@@ -4,4 +4,4 @@
 # UI-suunnitelma sovellukselle
 
 # ER-kaavio tietokannalle
-![image](https://user-images.githubusercontent.com/87731856/232254760-44f26715-f510-4293-a652-6cb914ce475c.png)
+![image](https://user-images.githubusercontent.com/87731856/232758358-d00e9a1e-7811-4578-a3de-22a5dc6705fa.png)
