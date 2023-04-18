@@ -139,15 +139,8 @@ void StartWindow::startSession(int returnedCardID, QString token)
     connect(session, SIGNAL(sendTimeout()),
             this, SLOT(logout()));
 
-    if(returnedCardID == -333) //test case
-    {
-        session->accountID = -333;
-    }
-    else
-    {
-        //this is unique in that it stays the same even when changing accounts
-        session->accountID = pDLLRestApi->getAccountId(session->cardID);
-    }
+    //this is unique in that it stays the same even when changing accounts
+    session->accountID = pDLLRestApi->getAccountId(session->cardID);
 
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
@@ -177,99 +170,48 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
 
     session->accountID = returnedAccountID;
 
-    if(returnedAccountID == -333) //test button pressed, initiate test data
+    //DLLRestApi functions should fetch stuff from database here
+    session->customerID = pDLLRestApi->getCustomerId(session->accountID);
+    session->accountType = pDLLRestApi->getAccountType(session->accountID);
+    session->customerName = pDLLRestApi->getCustomerName(session->customerID);
+
+    //avoid making unnecessary calls to server
+    if(session->accountType == "debit" || session->accountType == "dual")
     {
-        session->customerID = -333;
-        session->accountType = "dual";
-        session->customerName = "Markus Korhonen";
-
-        session->accountBalance = 255.64;
-        session->accountCredit = 500.00;
-
-        session->additionalAccountNames = {"Martti Ahtisaari - debit",
-                                           "Pekka Mahtisaari - dual",
-                                           "Pertti Vahtisaari - credit",
-                                           "Jorma Sahtisaari - debit",
-                                           "Makkis Pekkis - dual",
-                                           "Putte Possu - debit",
-                                           "Poika Veli - credit"};
-
-        session->additionalAccountIDs = {3,6,13,102,103,-222,345};
-
-        session->transactionIDs = {1,2,3,4,
-                                   5,6,7,8};
-        session->transactionDates = {"01.02.2012", "05.12.2013", "01.12.2014", "06.11.2015",
-                                     "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
-        session->transactionAmounts = {200.25, 55.00, 60, 20,
-                                       20000.1, 60, 100.0, 100.00};
+        session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
     }
-    else if(returnedAccountID == -222) //other test case
+    if(session->accountType == "credit" || session->accountType == "dual")
     {
-        session->customerID = -222;
-        session->accountType = "debit";
-        session->customerName = "Putte Possu";
-
-        session->accountBalance = 155.62;
-        session->accountCredit = 50000.00;
-
-        session->additionalAccountNames = {"Martti Ahtisaari - debit",
-                                           "Pekka Mahtisaari - dual",
-                                           "Pertti Vahtisaari - credit"};
-
-        session->additionalAccountIDs = {3,6,13};
-
-        session->transactionIDs = {1,2,3,4,
-                                   5,6,7,8};
-        session->transactionDates = {"01.02.2015", "05.12.2016", "01.12.2017", "06.11.2018",
-                                     "01.12.2019", "05.10.2020", "01.02.2021", "05.12.2022"};
-        session->transactionAmounts = {100.25, 155.00, 160, 120,
-                                       20000.11, 560, 1000.0, 200.00};
+        session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+        session->accountCreditMax = pDLLRestApi->getCreditMax(session->accountID);
     }
-    else
-    {
-        //DLLRestApi functions should fetch stuff from database here
-        session->customerID = pDLLRestApi->getCustomerId(session->accountID);
-        session->accountType = pDLLRestApi->getAccountType(session->accountID);
-        session->customerName = pDLLRestApi->getCustomerName(session->customerID);
 
-        //avoid making unnecessary calls to server
-        if(session->accountType == "debit" || session->accountType == "dual")
-        {
-            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
-        }
-        if(session->accountType == "credit" || session->accountType == "dual")
-        {
-            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
-            session->accountCreditMax = pDLLRestApi->getCreditMax(session->accountID);
-        }
+    //additional accounts
+    session->additionalAccountIDs.clear();
+    session->additionalAccountIDs.append(
+        pDLLRestApi->getAdditionalAccountIDs(session->cardID));
+    qDebug() << Q_FUNC_INFO << "Retrieved ID list size:" << session->additionalAccountIDs.count();
 
-        //additional accounts
-        session->additionalAccountIDs.clear();
-        session->additionalAccountIDs.append(
-                    pDLLRestApi->getAdditionalAccountIDs(session->cardID));
-        qDebug() << Q_FUNC_INFO << "Retrieved ID list size:" << session->additionalAccountIDs.count();
+    session->additionalAccountNames.clear();
+    session->additionalAccountNames.append(
+        pDLLRestApi->getAdditionalAccountNames(session->cardID));
+    qDebug() << Q_FUNC_INFO << "Retrieved names list size:" << session->additionalAccountNames.count();
 
-        session->additionalAccountNames.clear();
-        session->additionalAccountNames.append(
-                    pDLLRestApi->getAdditionalAccountNames(session->cardID));
-        qDebug() << Q_FUNC_INFO << "Retrieved names list size:" << session->additionalAccountNames.count();
+    //transactions
+    session->transactionIDs.clear();
+    session->transactionIDs.append(
+        pDLLRestApi->getTransactionIDs(session->accountID));
+    qDebug() << Q_FUNC_INFO << "Retrieved transacID list size:" << session->transactionIDs.count();
 
-        //transactions
-        session->transactionIDs.clear();
-        session->transactionIDs.append(
-                    pDLLRestApi->getTransactionIDs(session->accountID));
-        qDebug() << Q_FUNC_INFO << "Retrieved transacID list size:" << session->transactionIDs.count();
+    session->transactionDates.clear();
+    session->transactionDates.append(
+        pDLLRestApi->getTransactionDates(session->accountID));
+    qDebug() << Q_FUNC_INFO << "Retrieved transac dates list size:" << session->transactionDates.count();
 
-        session->transactionDates.clear();
-        session->transactionDates.append(
-                    pDLLRestApi->getTransactionDates(session->accountID));
-        qDebug() << Q_FUNC_INFO << "Retrieved transac dates list size:" << session->transactionDates.count();
-
-        session->transactionAmounts.clear();
-        session->transactionAmounts.append(
-                    pDLLRestApi->getTransactionAmounts(session->accountID));
-        qDebug() << Q_FUNC_INFO << "Retrieved transac amounts list size:" << session->transactionAmounts.count();
-    }
+    session->transactionAmounts.clear();
+    session->transactionAmounts.append(
+        pDLLRestApi->getTransactionAmounts(session->accountID));
+    qDebug() << Q_FUNC_INFO << "Retrieved transac amounts list size:" << session->transactionAmounts.count();
 
     //put accountType to withdrawMode automatically if card isn't "dual"
     if(session->accountType != "dual")
