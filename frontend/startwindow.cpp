@@ -52,7 +52,7 @@ void StartWindow::sound()
           audioOutput = new QAudioOutput;
           player->setAudioOutput(audioOutput);
 
-          QString soundFilePath = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/pincodeFI.mp3";
+          QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardFI.mp3";
           qDebug() << "Sound file path:" << soundFilePath;
 
           if (QFile::exists(soundFilePath)) {
