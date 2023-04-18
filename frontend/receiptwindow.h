@@ -30,6 +30,9 @@ private slots:
 
     void on_buttonNo_clicked();
 
+    void sound();
+
+
 private:
     Ui::ReceiptWindow *ui;
 

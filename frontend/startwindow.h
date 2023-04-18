@@ -31,7 +31,7 @@ signals:
 
 private slots:
     void languageButtonClicked(int);
-
+    void sound();
     void logout();
     void printReceipt(bool); //this might be redundant
 

@@ -38,21 +38,32 @@ StartWindow::StartWindow(QWidget *parent) :
     blurEffect->setBlurRadius(4);
     ui->labelInfo->setGraphicsEffect(blurEffect);
 
-    player = new QMediaPlayer;
-    audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
-
-    QString soundFilePathFI = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/readcardFI.mp3";
-    qDebug() << "Sound file path (finnish):" << soundFilePathFI;
-
-    player->setSource(QUrl::fromLocalFile(soundFilePathFI));
-    audioOutput->setVolume(0.5);  // set volume to 50%
-    player->play();
+    sound();
 }
 
 StartWindow::~StartWindow()
 {
     delete ui;
+}
+
+void StartWindow::sound()
+{
+          player = new QMediaPlayer;
+          audioOutput = new QAudioOutput;
+          player->setAudioOutput(audioOutput);
+
+          QString soundFilePath = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/pincodeFI.mp3";
+          qDebug() << "Sound file path:" << soundFilePath;
+
+          if (QFile::exists(soundFilePath)) {
+              player->setSource(QUrl::fromLocalFile(soundFilePath));
+              audioOutput->setVolume(0.5);  // set volume to 50%
+              player->play();
+          } else {
+              qDebug() << "Sound file does not exist!";
+          }
+          audioOutput->setVolume(1);
+          player->play();
 }
 
 void StartWindow::languageButtonClicked(int buttonID)
