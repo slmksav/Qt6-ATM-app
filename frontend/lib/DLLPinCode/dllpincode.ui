@@ -28,19 +28,6 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <widget class="QLabel" name="cardhexcodeLabel">
-   <property name="geometry">
-    <rect>
-     <x>530</x>
-     <y>320</y>
-     <width>231</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt;&quot;&gt;cardhexcode tulee tähä&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="button4">
    <property name="geometry">
     <rect>
@@ -491,32 +478,6 @@ background-color: rgb(254, 195, 50);</string>
     <string notr="true">buttonGroup</string>
    </attribute>
   </widget>
-  <widget class="QLabel" name="labeljee">
-   <property name="geometry">
-    <rect>
-     <x>570</x>
-     <y>340</y>
-     <width>211</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt;&quot;&gt;cardhexcodeSQL tulee tähä&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelpin">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>370</y>
-     <width>131</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:7pt;&quot;&gt;PIN tietokannasta&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="labelFreezed1">
    <property name="geometry">
     <rect>
@@ -558,28 +519,6 @@ background-color: rgb(254, 195, 50);</string>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Ota yhteys asiakaspalvelumme numeroon: +358 10 1234567&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelinfo">
-   <property name="geometry">
-    <rect>
-     <x>570</x>
-     <y>290</y>
-     <width>141</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Sitka Banner</family>
-     <pointsize>25</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Login tiedot: (debug)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-   <property name="textFormat">
-    <enum>Qt::AutoText</enum>
    </property>
   </widget>
   <widget class="QWidget" name="widget" native="true">
@@ -643,7 +582,6 @@ background-color: rgb(254, 195, 50);</string>
    </property>
   </widget>
   <zorder>widget</zorder>
-  <zorder>cardhexcodeLabel</zorder>
   <zorder>button4</zorder>
   <zorder>ButtonClear</zorder>
   <zorder>button2</zorder>
@@ -662,11 +600,8 @@ background-color: rgb(254, 195, 50);</string>
   <zorder>button3</zorder>
   <zorder>button0</zorder>
   <zorder>button6</zorder>
-  <zorder>labeljee</zorder>
-  <zorder>labelpin</zorder>
   <zorder>labelFreezed1</zorder>
   <zorder>labelFreezed2</zorder>
-  <zorder>labelinfo</zorder>
   <zorder>labelLangInfo_5</zorder>
   <zorder>labelLangInfo_4</zorder>
  </widget>
