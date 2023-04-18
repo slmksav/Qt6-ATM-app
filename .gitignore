@@ -1,6 +1,7 @@
 backend/node_modules/
 backend/.env
 frontend/build/
+frontend/build/release/
 frontend/*.user*
 frontend/lib/DLLPinCode/*.user*
 frontend/lib/DLLSerialPort/*.user*
