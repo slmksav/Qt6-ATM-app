@@ -35,23 +35,7 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
     cardHexCode = cardHexCodeReceived;
     qDebug() << "cardHexCode konstruktorissa:" << cardHexCode;
     getCardIDFromDb();
-
-    player = new QMediaPlayer;
-    audioOutput = new QAudioOutput;
-    player->setAudioOutput(audioOutput);
-
-    QString soundFilePath = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/pincodeFI.mp3";
-    qDebug() << "Sound file path:" << soundFilePath;
-
-    if (QFile::exists(soundFilePath)) {
-        player->setSource(QUrl::fromLocalFile(soundFilePath));
-        audioOutput->setVolume(0.5);  // set volume to 50%
-        player->play();
-    } else {
-        qDebug() << "Sound file does not exist!";
-    }
-    audioOutput->setVolume(1);
-    player->play();
+    sound();
 }
 
 DLLPinCode::~DLLPinCode()
@@ -122,15 +106,9 @@ void DLLPinCode::getCardInfoFromDb()
                     qDebug() << "Raw response:" << response;
                     QJsonDocument document = QJsonDocument::fromJson(response);
                     QJsonObject object = document.object();
-                    // Check if the response contains the cardhexcode key
-       //            cardhexcodeSQL = object.value("cardhexcode").toString();
-        //           SQLPin = object.value("fourdigitpin").toString();
                     wrongAttempts = object.value("wrongAttempts").toInt();
                     ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
                     qDebug() << "wrongAttemptsMäärä" << wrongAttempts;
-//                    ui->labeljee->setText(cardhexcodeSQL);
-//                    ui->cardhexcodeLabel->setText(cardHexCode);
-//                    ui->labelpin->setText(SQLPin);
                     if(wrongAttempts <= 0)
                     {
                         accountFreezed();
@@ -221,19 +199,7 @@ void DLLPinCode::enterClickHandler()
     timer->stop();
     ui->buttonEnter->setFlat(true);
     ui->buttonEnter->setDisabled(true);
-
-  // while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
-   //     QCoreApplication::processEvents();
-    //}
-
     CheckPin = ui->lineEdit->text();
-    qDebug() << "Pin joka on syötetty:" << CheckPin;
-    qDebug() << "Tietokannasta haettu PIN:" << SQLPin;
-    qDebug() << "cardHexCode (luettu):" << cardHexCode;
-    qDebug() << "cardhexcodeSQL (haettu):" << cardhexcodeSQL;
-
-
-
     QString hex = cardHexCode;
     QString pin = CheckPin;
 
@@ -270,38 +236,6 @@ void DLLPinCode::enterClickHandler()
         emit LoginSuccess(cardID.toInt(), token);
         done(Accepted);
     }
-//    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
-//    {
-//        updateWrongAttemptsInCard(cardID, 3, token);
-//        emit LoginSuccess(cardID.toInt());
-//        done(Accepted);
-//    }
-//    else
-//    {
-//        wrongAttempts--;
-//        if(wrongAttempts <= 0)
-//        {
-//            accountFreezed();
-//        }
-//        if(languageGlobal == "fi")
-//        {
-//            ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
-//            ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritys(tä) jäljellä!");
-//        }
-//        else
-//        {
-//            ui->label->setText("Wrong PIN, please try again again.");
-//            ui->labelAttempts->setText(QString::number(wrongAttempts) + " attempt(s) left!");
-//        }
-
-//        timer->start(30000);
-//        updateWrongAttemptsInCard(cardID,wrongAttempts,token);
-
-//        ui->labelAttempts->setVisible(true);
-//        clearClickHandler();
-
-//    ui->buttonEnter->setFlat(false);
-//    ui->buttonEnter->setDisabled(false);
 }
 
 
@@ -415,3 +349,22 @@ void DLLPinCode::emptyLineEdit()
           }
 }
 
+void DLLPinCode::sound()
+{
+          player = new QMediaPlayer;
+          audioOutput = new QAudioOutput;
+          player->setAudioOutput(audioOutput);
+
+          QString soundFilePath = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/pincodeFI.mp3";
+          qDebug() << "Sound file path:" << soundFilePath;
+
+          if (QFile::exists(soundFilePath)) {
+              player->setSource(QUrl::fromLocalFile(soundFilePath));
+              audioOutput->setVolume(0.5);  // set volume to 50%
+              player->play();
+          } else {
+              qDebug() << "Sound file does not exist!";
+          }
+          audioOutput->setVolume(1);
+          player->play();
+}

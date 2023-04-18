@@ -54,6 +54,7 @@ private:
     int wrongAttempts;
     void finnish();
     void english();
+    void sound();
 
 
 };
