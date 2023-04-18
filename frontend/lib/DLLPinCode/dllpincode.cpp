@@ -41,6 +41,7 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
 DLLPinCode::~DLLPinCode()
 {
     delete ui;
+    delete timer;
 }
 
 QString DLLPinCode::getBaseUrl()
@@ -264,28 +265,30 @@ void DLLPinCode::clearClickHandler()
 
 void DLLPinCode::stopClickHandler()
 {
-      timer->stop();
-      timer->start(5000);
-      emit LoginSuccess(0, token);
-      ui->labelInterrupt->setVisible(true);
-      ui->label->setVisible(false);
-      ui->label_3->setVisible(false);
-      ui->labelAttempts->setVisible(false);
-      ui->button0->setVisible(false);
-      ui->button1->setVisible(false);
-      ui->button2->setVisible(false);
-      ui->button3->setVisible(false);
-      ui->button4->setVisible(false);
-      ui->button5->setVisible(false);
-      ui->button6->setVisible(false);
-      ui->button7->setVisible(false);
-      ui->button8->setVisible(false);
-      ui->button9->setVisible(false);
-      ui->ButtonStop->setVisible(false);
-      ui->ButtonClear->setVisible(false);
-      ui->buttonEnter->setVisible(false);
-      ui->lineEdit->setVisible(false);
-      connect(timer, &QTimer::timeout, this, &QDialog::reject);
+    if (timer->isActive()) {
+        timer->stop();
+        timer->disconnect();
+        emit LoginSuccess(0, token);
+        ui->labelInterrupt->setVisible(true);
+        ui->label->setVisible(false);
+        ui->label_3->setVisible(false);
+        ui->labelAttempts->setVisible(false);
+        ui->button0->setVisible(false);
+        ui->button1->setVisible(false);
+        ui->button2->setVisible(false);
+        ui->button3->setVisible(false);
+        ui->button4->setVisible(false);
+        ui->button5->setVisible(false);
+        ui->button6->setVisible(false);
+        ui->button7->setVisible(false);
+        ui->button8->setVisible(false);
+        ui->button9->setVisible(false);
+        ui->ButtonStop->setVisible(false);
+        ui->ButtonClear->setVisible(false);
+        ui->buttonEnter->setVisible(false);
+        ui->lineEdit->setVisible(false);
+        connect(timer, &QTimer::timeout, this, &QDialog::reject);
+    }
 }
 
 void DLLPinCode::accountFreezed()
