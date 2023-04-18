@@ -57,13 +57,13 @@ void ReceiptWindow::on_buttonYes_clicked()
     QString log = generateLog(session->originalCustomerName);
     session->restApi->postEmail(session->originalAccountID, log);
 
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 
 
 void ReceiptWindow::on_buttonNo_clicked()
 {
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 
 void ReceiptWindow::sound()

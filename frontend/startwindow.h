@@ -32,8 +32,7 @@ signals:
 private slots:
     void languageButtonClicked(int);
     void sound();
-    void logout();
-    void printReceipt(bool); //this might be redundant
+    void logout(QObject*);
 
     void openDLLPinCode(QString);
 
@@ -45,6 +44,7 @@ private slots:
     void on_buttonOhitaPIN_clicked(); //this shall be removed on release
 
     void updateTime();
+    void expireTimedStates();
 
 private:
     Ui::StartWindow *ui;

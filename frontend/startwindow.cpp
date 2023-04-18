@@ -27,11 +27,13 @@ StartWindow::StartWindow(QWidget *parent) :
             this, SLOT(openDLLPinCode(QString)));
 
     //test button signal to skip pin window altogether
-    connect(this, SIGNAL(testOhitaPINSignal(int, QString)),
-            this, SLOT(startSession(int, QString)));
+    connect(this, SIGNAL(testOhitaPINSignal(int,QString)),
+            this, SLOT(startSession(int,QString)));
 
     QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &StartWindow::updateTime);
+    connect(timer, &QTimer::timeout, this, &StartWindow::updateTime); //connect to clock
+    connect(timer, SIGNAL(timeout()),
+            this, SLOT(expireTimedStates())); //connect to states
     timer->start(1000);
 
     QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
@@ -77,9 +79,15 @@ void StartWindow::languageButtonClicked(int buttonID)
     updateUI();
 }
 
-void StartWindow::logout()
+void StartWindow::logout(QObject* initiator)
 {
-    qDebug() << Q_FUNC_INFO << "Logout initiated by" << QObject::sender();
+    qDebug() << Q_FUNC_INFO << "Logout initiated by" << initiator;
+    qDebug() << Q_FUNC_INFO << "QObject::sender()" << QObject::sender();
+    if(initiator == session)
+    {
+        qDebug() << Q_FUNC_INFO << "Session probably sent out a timeout signal";
+        state = Timeout;
+    }
 
     //delete windows before SessionData, because their destructors
     //make calls to SessionData's timeout() function, for example
@@ -97,24 +105,23 @@ void StartWindow::logout()
         delete session;
         session = nullptr;
     }
+
+    if(state != Error && state != Timeout)
+        state = Logout;
+
+    updateUI();
 }
-
-//this might be redundant
-void StartWindow::printReceipt(bool print)
-{
-    //store transaction
-
-    if(print)
-    {
-       //print transaction to a logfile or something else
-    }
-
-    logout();
-}
-
 
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
+    if(state != Default)
+    {
+        qDebug() << Q_FUNC_INFO << "invalid state for card reading";
+        return;
+    }
+
+    state = Running;
+
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
     pDLLPinCode = new DLLPinCode(this, hexaCode, language);
 
@@ -128,10 +135,13 @@ void StartWindow::openDLLPinCode(QString hexaCode)
 void StartWindow::startSession(int returnedCardID, QString token)
 {
     //returned invalid cardID
-    if(returnedCardID == 0)
+    if(returnedCardID <= 0)
     {
         qDebug() << Q_FUNC_INFO << "DLLPinCode returned" << returnedCardID <<
             "| startSession aborted...";
+        state = Default;
+        updateUI();
+
         return;
     }
 
@@ -147,8 +157,8 @@ void StartWindow::startSession(int returnedCardID, QString token)
     session->stopTimer(); //stop until all data has been fetched from db
     session->language = language;
     session->cardID = returnedCardID;
-    connect(session, SIGNAL(sendTimeout()),
-            this, SLOT(logout()));
+    connect(session, SIGNAL(sendTimeout(QObject*)),
+            this, SLOT(logout(QObject*)));
 
     //this is unique in that it stays the same even when changing accounts
     session->accountID = pDLLRestApi->getAccountId(session->cardID);
@@ -161,7 +171,7 @@ void StartWindow::startSession(int returnedCardID, QString token)
     {
         state = Error;
         updateUI();
-        logout();
+        logout(this);
         return;
     }
 
@@ -259,7 +269,7 @@ void StartWindow::swapToAccount(int accountID)
     {
         state = Error;
         updateUI();
-        logout();
+        logout(this);
         return;
     }
 
@@ -272,15 +282,15 @@ void StartWindow::openOptionsWindow()
     //create and show OptionsWindow
     optionsWindow = new OptionsWindow(this, session);
 
-    connect(session, SIGNAL(sendLogout()),
-            this, SLOT(logout()));
+    connect(session, SIGNAL(sendLogout(QObject*)),
+            this, SLOT(logout(QObject*)));
     connect(optionsWindow, SIGNAL(changeToAccount(int)),
             this, SLOT(swapToAccount(int)));
 
     optionsWindow->show();
 
     //update state and ui
-    state = Default;
+    state = Running;
     updateUI();
 }
 
@@ -291,6 +301,7 @@ void StartWindow::updateUI()
         delete pSpinner;
         pSpinner = nullptr;  
     }
+
     switch (state) {
     case Default:
         if(language == "fi")
@@ -301,14 +312,6 @@ void StartWindow::updateUI()
         }
         if(language == "en")
         {
-            //Nää ei voi olla täällä, mihis?
-//            QString soundFilePathEN = "C:/Users/Sauli/Documents/BankSimul/group_18/frontend/sounds/readcardEN.mp3";
-//            qDebug() << "Sound file path (english):" << soundFilePathEN;
-
-//            player->setSource(QUrl::fromLocalFile(soundFilePathEN));
-//            audioOutput->setVolume(0.5);  // set volume to 50%
-//            player->play();
-
             ui->labelInfo->setText("Read card to begin");
             ui->labelInfo2->setText("Read card to begin");
             ui->labelPhoneInfo->setText("Service Number (WD 8-17)");
@@ -423,4 +426,25 @@ void StartWindow::updateTime()
 
     // Update the QLabel with the time
     ui->labelTime->setText(currentTime.toString("hh:mm:ss"));
+}
+
+void StartWindow::expireTimedStates()
+{
+    //not a timed state
+    if(state == Default || state == Waiting || state == Running)
+    {
+        return;
+    }
+
+    //count to n seconds and then set state to Default
+    static int countSeconds;
+    countSeconds++;
+
+    if(countSeconds >= 10)
+    {
+        qDebug() << Q_FUNC_INFO << "expiring timed states";
+        //countSeconds = 0;
+        state = Default;
+        updateUI();
+    }
 }

@@ -108,7 +108,7 @@ void TransactionsWindow::updateUI()
 
 void TransactionsWindow::on_buttonLogout_clicked()
 {
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 
 

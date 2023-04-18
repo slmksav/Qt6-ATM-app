@@ -45,8 +45,8 @@ public:
     QString language = "fi";
 
 signals:
-    void sendTimeout();
-    void sendLogout();
+    void sendTimeout(QObject*);
+    void sendLogout(QObject*);
 
 public slots:
     void resetTimer();
