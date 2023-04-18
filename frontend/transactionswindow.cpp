@@ -73,13 +73,13 @@ void TransactionsWindow::updateUI()
         }
         else
         {
-            QString transactionDate = transactionDates.previous();
-            transactionDate.replace("T", " ");
-            transactionDate.replace("Z", "");
-            transactionDate.chop(3); // remove last three zeros
+            QString transactionDateStr = transactionDates.previous();
+            QDateTime transactionDate = QDateTime::fromString(transactionDateStr, Qt::ISODate);
+            transactionDate = transactionDate.toLocalTime().addSecs(3 * 3600);
+            QString transactionDateFmt = transactionDate.toString("yyyy-MM-dd hh:mm:ss").replace("T", " ").replace("Z", "");
 
             qDebug() << Q_FUNC_INFO << "Index inside of list, outputting transaction[" << i + listIndex;
-            transactionLabels[i]->setText(transactionDate +
+            transactionLabels[i]->setText(transactionDateFmt +
                     ": " + QString::number(-1 * transactionAmounts.previous(), 'f', 2));
         }
     }
