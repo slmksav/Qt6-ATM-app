@@ -38,6 +38,7 @@ private slots:
     void getCardIDFromDb();
     void getCardInfoFromDb();
     void setLanguage();
+    void emptyLineEdit();
 private:
     Ui::DLLPinCode *ui;
     QString InsertingPin;

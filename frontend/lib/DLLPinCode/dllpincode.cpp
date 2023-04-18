@@ -5,9 +5,10 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
     QDialog(parent),
     ui(new Ui::DLLPinCode)
 {
-    ui->setupUi(this);
-    languageGlobal = language;
-    setLanguage();
+     ui->setupUi(this);
+     languageGlobal = language;
+     setLanguage();
+     emptyLineEdit();
      ui->labelInterrupt->setVisible(false);
      ui->labelFreezed1->setVisible(false);
      ui->labelFreezed2->setVisible(false);
@@ -122,14 +123,14 @@ void DLLPinCode::getCardInfoFromDb()
                     QJsonDocument document = QJsonDocument::fromJson(response);
                     QJsonObject object = document.object();
                     // Check if the response contains the cardhexcode key
-                    cardhexcodeSQL = object.value("cardhexcode").toString();
-                    SQLPin = object.value("fourdigitpin").toString();
+       //            cardhexcodeSQL = object.value("cardhexcode").toString();
+        //           SQLPin = object.value("fourdigitpin").toString();
                     wrongAttempts = object.value("wrongAttempts").toInt();
                     ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
                     qDebug() << "wrongAttemptsMäärä" << wrongAttempts;
-                    ui->labeljee->setText(cardhexcodeSQL);
-                    ui->cardhexcodeLabel->setText(cardHexCode);
-                    ui->labelpin->setText(SQLPin);
+//                    ui->labeljee->setText(cardhexcodeSQL);
+//                    ui->cardhexcodeLabel->setText(cardHexCode);
+//                    ui->labelpin->setText(SQLPin);
                     if(wrongAttempts <= 0)
                     {
                         accountFreezed();
@@ -222,9 +223,9 @@ void DLLPinCode::enterClickHandler()
     ui->buttonEnter->setFlat(true);
     ui->buttonEnter->setDisabled(true);
 
-    while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
-        QCoreApplication::processEvents();
-    }
+  // while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
+   //     QCoreApplication::processEvents();
+    //}
 
     CheckPin = ui->lineEdit->text();
     qDebug() << "Pin joka on syötetty:" << CheckPin;
@@ -316,6 +317,7 @@ void DLLPinCode::numberClickHandler()
         InsertingPin += clickedValue;
         ui->lineEdit->setText(InsertingPin);
         CheckPin = clickedValue;
+        emptyLineEdit();
 }
 
 
@@ -325,6 +327,7 @@ void DLLPinCode::clearClickHandler()
       ui->lineEdit->clear();
       timer->stop();
       timer->start(30000);
+      emptyLineEdit();
 }
 
 void DLLPinCode::stopClickHandler()
@@ -398,5 +401,19 @@ void DLLPinCode::english()
       ui->labelFreezed2->setText("Please contact our customer service number +358 10 1234567");
       ui->labelInterrupt->setText("Login aborted");
       ui->label_3->setText("and press ENTER");
+}
+
+void DLLPinCode::emptyLineEdit()
+{
+          if (ui->lineEdit->text().isEmpty())
+          {
+              ui->buttonEnter->setFlat(true);
+              ui->buttonEnter->setDisabled(true);
+          }
+          else
+          {
+              ui->buttonEnter->setFlat(false);
+              ui->buttonEnter->setDisabled(false);
+          }
 }
 

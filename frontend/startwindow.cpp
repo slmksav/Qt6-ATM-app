@@ -342,8 +342,8 @@ void StartWindow::updateUI()
     case Default:
         if(language == "fi")
         {
-            ui->labelInfo->setText("Lue kortti aloittaksesi");
-            ui->labelInfo2->setText("Lue kortti aloittaksesi");
+            ui->labelInfo->setText("Lue kortti aloittaaksesi");
+            ui->labelInfo2->setText("Lue kortti aloittaaksesi");
             ui->labelPhoneInfo->setText("Palvelunumero (ark. 8-17)");
         }
         if(language == "en")
