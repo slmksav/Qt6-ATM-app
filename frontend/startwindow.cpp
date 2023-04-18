@@ -443,7 +443,7 @@ void StartWindow::expireTimedStates()
     if(countSeconds >= 10)
     {
         qDebug() << Q_FUNC_INFO << "expiring timed states";
-        //countSeconds = 0;
+        countSeconds = 0;
         state = Default;
         updateUI();
     }
