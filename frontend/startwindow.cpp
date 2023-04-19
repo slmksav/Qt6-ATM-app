@@ -3,7 +3,6 @@
 #include "ui_startwindow.h"
 #include <QDebug>
 #include <QGraphicsBlurEffect>
-
 StartWindow::StartWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::StartWindow)
@@ -28,22 +27,45 @@ StartWindow::StartWindow(QWidget *parent) :
             this, SLOT(openDLLPinCode(QString)));
 
     //test button signal to skip pin window altogether
-    connect(this, SIGNAL(testOhitaPINSignal(int, QString)),
-            this, SLOT(startSession(int, QString)));
-
+    connect(this, SIGNAL(testOhitaPINSignal(int,QString)),
+            this, SLOT(startSession(int,QString)));
 
     QTimer *timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &StartWindow::updateTime);
+    connect(timer, &QTimer::timeout, this, &StartWindow::updateTime); //connect to clock
+    connect(timer, SIGNAL(timeout()),
+            this, SLOT(expireTimedStates())); //connect to states
     timer->start(1000);
 
     QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
     blurEffect->setBlurRadius(4);
     ui->labelInfo->setGraphicsEffect(blurEffect);
+
+    sound();
 }
 
 StartWindow::~StartWindow()
 {
     delete ui;
+}
+
+void StartWindow::sound()
+{
+          player = new QMediaPlayer;
+          audioOutput = new QAudioOutput;
+          player->setAudioOutput(audioOutput);
+
+          QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardFI.mp3";
+          qDebug() << "Sound file path:" << soundFilePath;
+
+          if (QFile::exists(soundFilePath)) {
+              player->setSource(QUrl::fromLocalFile(soundFilePath));
+              audioOutput->setVolume(0.5);  // set volume to 50%
+              player->play();
+          } else {
+              qDebug() << "Sound file does not exist!";
+          }
+          audioOutput->setVolume(1);
+          player->play();
 }
 
 void StartWindow::languageButtonClicked(int buttonID)
@@ -57,9 +79,15 @@ void StartWindow::languageButtonClicked(int buttonID)
     updateUI();
 }
 
-void StartWindow::logout()
+void StartWindow::logout(QObject* initiator)
 {
-    qDebug() << Q_FUNC_INFO << "Logout initiated by" << QObject::sender();
+    qDebug() << Q_FUNC_INFO << "Logout initiated by" << initiator;
+    qDebug() << Q_FUNC_INFO << "QObject::sender()" << QObject::sender();
+    if(initiator == session)
+    {
+        qDebug() << Q_FUNC_INFO << "Session probably sent out a timeout signal";
+        state = Timeout;
+    }
 
     //delete windows before SessionData, because their destructors
     //make calls to SessionData's timeout() function, for example
@@ -77,24 +105,23 @@ void StartWindow::logout()
         delete session;
         session = nullptr;
     }
+
+    if(state != Error && state != Timeout)
+        state = Logout;
+
+    updateUI();
 }
-
-//this might be redundant
-void StartWindow::printReceipt(bool print)
-{
-    //store transaction
-
-    if(print)
-    {
-       //print transaction to a logfile or something else
-    }
-
-    logout();
-}
-
 
 void StartWindow::openDLLPinCode(QString hexaCode)
 {
+    if(state != Default)
+    {
+        qDebug() << Q_FUNC_INFO << "invalid state for card reading";
+        return;
+    }
+
+    state = Running;
+
     qDebug() << Q_FUNC_INFO << "Got hexa from DLLSerialPort in StartWindow:" << hexaCode;
     pDLLPinCode = new DLLPinCode(this, hexaCode, language);
 
@@ -108,16 +135,18 @@ void StartWindow::openDLLPinCode(QString hexaCode)
 void StartWindow::startSession(int returnedCardID, QString token)
 {
     //returned invalid cardID
-    if(returnedCardID == 0)
+    if(returnedCardID <= 0)
     {
         qDebug() << Q_FUNC_INFO << "DLLPinCode returned" << returnedCardID <<
             "| startSession aborted...";
+        state = Default;
+        updateUI();
+
         return;
     }
 
     //put token to DLLRestApi
     pDLLRestApi->token = token;
-
     //update state and ui
     state = Waiting;
     updateUI();
@@ -128,18 +157,11 @@ void StartWindow::startSession(int returnedCardID, QString token)
     session->stopTimer(); //stop until all data has been fetched from db
     session->language = language;
     session->cardID = returnedCardID;
-    connect(session, SIGNAL(sendTimeout()),
-            this, SLOT(logout()));
+    connect(session, SIGNAL(sendTimeout(QObject*)),
+            this, SLOT(logout(QObject*)));
 
-    if(returnedCardID == -333) //test case
-    {
-        session->accountID = -333;
-    }
-    else
-    {
-        //this is unique in that it stays the same even when changing accounts
-        session->accountID = pDLLRestApi->getAccountId(session->cardID);
-    }
+    //this is unique in that it stays the same even when changing accounts
+    session->accountID = pDLLRestApi->getAccountId(session->cardID);
 
     //call DLLRestApi to get rest of the data
     fetchDataWithDLL(session->accountID);
@@ -149,7 +171,7 @@ void StartWindow::startSession(int returnedCardID, QString token)
     {
         state = Error;
         updateUI();
-        logout();
+        logout(this);
         return;
     }
 
@@ -169,99 +191,48 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
 
     session->accountID = returnedAccountID;
 
-    if(returnedAccountID == -333) //test button pressed, initiate test data
+    //DLLRestApi functions should fetch stuff from database here
+    session->customerID = pDLLRestApi->getCustomerId(session->accountID);
+    session->accountType = pDLLRestApi->getAccountType(session->accountID);
+    session->customerName = pDLLRestApi->getCustomerName(session->customerID);
+
+    //avoid making unnecessary calls to server
+    if(session->accountType == "debit" || session->accountType == "dual")
     {
-        session->customerID = -333;
-        session->accountType = "dual";
-        session->customerName = "Markus Korhonen";
-
-        session->accountBalance = 255.64;
-        session->accountCredit = 500.00;
-
-        session->additionalAccountNames = {"Martti Ahtisaari - debit",
-                                           "Pekka Mahtisaari - dual",
-                                           "Pertti Vahtisaari - credit",
-                                           "Jorma Sahtisaari - debit",
-                                           "Makkis Pekkis - dual",
-                                           "Putte Possu - debit",
-                                           "Poika Veli - credit"};
-
-        session->additionalAccountIDs = {3,6,13,102,103,-222,345};
-
-        session->transactionIDs = {1,2,3,4,
-                                   5,6,7,8};
-        session->transactionDates = {"01.02.2012", "05.12.2013", "01.12.2014", "06.11.2015",
-                                     "01.12.2016", "05.10.2018", "01.02.2019", "05.12.2021"};
-        session->transactionAmounts = {200.25, 55.00, 60, 20,
-                                       20000.1, 60, 100.0, 100.00};
+        session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
     }
-    else if(returnedAccountID == -222) //other test case
+    if(session->accountType == "credit" || session->accountType == "dual")
     {
-        session->customerID = -222;
-        session->accountType = "debit";
-        session->customerName = "Putte Possu";
-
-        session->accountBalance = 155.62;
-        session->accountCredit = 50000.00;
-
-        session->additionalAccountNames = {"Martti Ahtisaari - debit",
-                                           "Pekka Mahtisaari - dual",
-                                           "Pertti Vahtisaari - credit"};
-
-        session->additionalAccountIDs = {3,6,13};
-
-        session->transactionIDs = {1,2,3,4,
-                                   5,6,7,8};
-        session->transactionDates = {"01.02.2015", "05.12.2016", "01.12.2017", "06.11.2018",
-                                     "01.12.2019", "05.10.2020", "01.02.2021", "05.12.2022"};
-        session->transactionAmounts = {100.25, 155.00, 160, 120,
-                                       20000.11, 560, 1000.0, 200.00};
+        session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
+        session->accountCreditMax = pDLLRestApi->getCreditMax(session->accountID);
     }
-    else
-    {
-        //DLLRestApi functions should fetch stuff from database here
-        session->customerID = pDLLRestApi->getCustomerId(session->accountID);
-        session->accountType = pDLLRestApi->getAccountType(session->accountID);
-        session->customerName = pDLLRestApi->getCustomerName(session->customerID);
 
-        //avoid making unnecessary calls to server
-        if(session->accountType == "debit" || session->accountType == "dual")
-        {
-            session->accountBalance = pDLLRestApi->getAccountBalance(session->accountID);
-        }
-        if(session->accountType == "credit" || session->accountType == "dual")
-        {
-            session->accountCredit = pDLLRestApi->getAccountCredit(session->accountID);
-            session->accountCreditMax = pDLLRestApi->getCreditMax(session->accountID);
-        }
+    //additional accounts
+    session->additionalAccountIDs.clear();
+    session->additionalAccountIDs.append(
+        pDLLRestApi->getAdditionalAccountIDs(session->cardID));
+    qDebug() << Q_FUNC_INFO << "Retrieved ID list size:" << session->additionalAccountIDs.count();
 
-        //additional accounts
-        session->additionalAccountIDs.clear();
-        session->additionalAccountIDs.append(
-                    pDLLRestApi->getAdditionalAccountIDs(session->cardID));
-        qDebug() << Q_FUNC_INFO << "Retrieved ID list size:" << session->additionalAccountIDs.count();
+    session->additionalAccountNames.clear();
+    session->additionalAccountNames.append(
+        pDLLRestApi->getAdditionalAccountNames(session->cardID));
+    qDebug() << Q_FUNC_INFO << "Retrieved names list size:" << session->additionalAccountNames.count();
 
-        session->additionalAccountNames.clear();
-        session->additionalAccountNames.append(
-                    pDLLRestApi->getAdditionalAccountNames(session->cardID));
-        qDebug() << Q_FUNC_INFO << "Retrieved names list size:" << session->additionalAccountNames.count();
+    //transactions
+    session->transactionIDs.clear();
+    session->transactionIDs.append(
+        pDLLRestApi->getTransactionIDs(session->accountID));
+    qDebug() << Q_FUNC_INFO << "Retrieved transacID list size:" << session->transactionIDs.count();
 
-        //transactions
-        session->transactionIDs.clear();
-        session->transactionIDs.append(
-                    pDLLRestApi->getTransactionIDs(session->accountID));
-        qDebug() << Q_FUNC_INFO << "Retrieved transacID list size:" << session->transactionIDs.count();
+    session->transactionDates.clear();
+    session->transactionDates.append(
+        pDLLRestApi->getTransactionDates(session->accountID));
+    qDebug() << Q_FUNC_INFO << "Retrieved transac dates list size:" << session->transactionDates.count();
 
-        session->transactionDates.clear();
-        session->transactionDates.append(
-                    pDLLRestApi->getTransactionDates(session->accountID));
-        qDebug() << Q_FUNC_INFO << "Retrieved transac dates list size:" << session->transactionDates.count();
-
-        session->transactionAmounts.clear();
-        session->transactionAmounts.append(
-                    pDLLRestApi->getTransactionAmounts(session->accountID));
-        qDebug() << Q_FUNC_INFO << "Retrieved transac amounts list size:" << session->transactionAmounts.count();
-    }
+    session->transactionAmounts.clear();
+    session->transactionAmounts.append(
+        pDLLRestApi->getTransactionAmounts(session->accountID));
+    qDebug() << Q_FUNC_INFO << "Retrieved transac amounts list size:" << session->transactionAmounts.count();
 
     //put accountType to withdrawMode automatically if card isn't "dual"
     if(session->accountType != "dual")
@@ -298,7 +269,7 @@ void StartWindow::swapToAccount(int accountID)
     {
         state = Error;
         updateUI();
-        logout();
+        logout(this);
         return;
     }
 
@@ -311,15 +282,15 @@ void StartWindow::openOptionsWindow()
     //create and show OptionsWindow
     optionsWindow = new OptionsWindow(this, session);
 
-    connect(session, SIGNAL(sendLogout()),
-            this, SLOT(logout()));
+    connect(session, SIGNAL(sendLogout(QObject*)),
+            this, SLOT(logout(QObject*)));
     connect(optionsWindow, SIGNAL(changeToAccount(int)),
             this, SLOT(swapToAccount(int)));
 
     optionsWindow->show();
 
     //update state and ui
-    state = Default;
+    state = Running;
     updateUI();
 }
 
@@ -330,12 +301,13 @@ void StartWindow::updateUI()
         delete pSpinner;
         pSpinner = nullptr;  
     }
+
     switch (state) {
     case Default:
         if(language == "fi")
         {
-            ui->labelInfo->setText("Lue kortti aloittaksesi");
-            ui->labelInfo2->setText("Lue kortti aloittaksesi");
+            ui->labelInfo->setText("Lue kortti aloittaaksesi");
+            ui->labelInfo2->setText("Lue kortti aloittaaksesi");
             ui->labelPhoneInfo->setText("Palvelunumero (ark. 8-17)");
         }
         if(language == "en")
@@ -360,6 +332,10 @@ void StartWindow::updateUI()
             ui->labelInfo->setText("Wait a Moment");
             ui->labelInfo2->setText("Wait a Moment");
         }
+        break;
+
+    case Running:
+
         break;
 
     case Timeout:
@@ -450,4 +426,25 @@ void StartWindow::updateTime()
 
     // Update the QLabel with the time
     ui->labelTime->setText(currentTime.toString("hh:mm:ss"));
+}
+
+void StartWindow::expireTimedStates()
+{
+    //not a timed state
+    if(state == Default || state == Waiting || state == Running)
+    {
+        return;
+    }
+
+    //count to n seconds and then set state to Default
+    static int countSeconds;
+    countSeconds++;
+
+    if(countSeconds >= 10)
+    {
+        qDebug() << Q_FUNC_INFO << "expiring timed states";
+        countSeconds = 0;
+        state = Default;
+        updateUI();
+    }
 }

@@ -4,6 +4,8 @@
 #include "sessiondata.h"
 
 #include <QDialog>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class ReceiptWindow;
@@ -28,12 +30,18 @@ private slots:
 
     void on_buttonNo_clicked();
 
+    void sound();
+
+
 private:
     Ui::ReceiptWindow *ui;
 
     SessionData * session;
 
     QString generateLog(QString name);
+
+    QMediaPlayer *player;
+    QAudioOutput *audioOutput;
 };
 
 #endif // RECEIPTWINDOW_H

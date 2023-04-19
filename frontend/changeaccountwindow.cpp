@@ -155,6 +155,6 @@ void ChangeAccountWindow::on_buttonNext_clicked()
 
 void ChangeAccountWindow::on_buttonLogout_clicked()
 {
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 

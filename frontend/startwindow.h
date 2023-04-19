@@ -10,6 +10,8 @@
 #include "spinner.h"
 
 #include <QMainWindow>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class StartWindow;
@@ -29,9 +31,8 @@ signals:
 
 private slots:
     void languageButtonClicked(int);
-
-    void logout();
-    void printReceipt(bool); //this might be redundant
+    void sound();
+    void logout(QObject*);
 
     void openDLLPinCode(QString);
 
@@ -43,6 +44,7 @@ private slots:
     void on_buttonOhitaPIN_clicked(); //this shall be removed on release
 
     void updateTime();
+    void expireTimedStates();
 
 private:
     Ui::StartWindow *ui;
@@ -59,10 +61,13 @@ private:
     //QString state = "default";
     QString language = "fi";
     QTimer *timer;
+    QMediaPlayer *player;
+    QAudioOutput *audioOutput;
 
     enum State {
         Default,
         Waiting,
+        Running,
         Timeout,
         Error,
         Logout

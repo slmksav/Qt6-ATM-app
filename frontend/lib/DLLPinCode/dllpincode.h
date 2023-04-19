@@ -8,6 +8,8 @@
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QDebug>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 namespace Ui {
 class DLLPinCode;
@@ -21,9 +23,8 @@ public:
     explicit DLLPinCode(QWidget *parent = nullptr, QString cardHexCodeReceived = "", QString language = "fi");
     ~DLLPinCode();
     static QString getBaseUrl();
-    QString cardhexcodeSQL;
     QString cardHexCode;
-     bool postLogin(QString hex, QString pin);
+    bool postLogin(QString hex, QString pin);
 signals:
     void LoginSuccess(int, QString);
 private slots:
@@ -36,20 +37,21 @@ private slots:
     void getCardIDFromDb();
     void getCardInfoFromDb();
     void setLanguage();
+    void emptyLineEdit();
 private:
     Ui::DLLPinCode *ui;
     QString InsertingPin;
     QString CheckPin;
-    QString SQLPin;
     QTimer *timer;
+    QMediaPlayer *player;
+    QAudioOutput *audioOutput;
     QString token;
     QString cardID;
     QString languageGlobal;
     int wrongAttempts;
     void finnish();
     void english();
-
-
+    void sound();
 };
 
 #endif // DLLPINCODE_H

@@ -127,7 +127,7 @@ void BalanceWindow::updateUI()
 
 void BalanceWindow::on_buttonLogout_clicked()
 {
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 
 

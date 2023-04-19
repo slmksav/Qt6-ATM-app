@@ -127,5 +127,5 @@ bool SessionData::checkDataValidity()
 void SessionData::handleTimeout()
 {
     qDebug() << Q_FUNC_INFO << "Inactivity timer ran out";
-    emit sendTimeout();
+    emit sendTimeout(this);
 }

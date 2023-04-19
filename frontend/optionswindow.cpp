@@ -59,7 +59,7 @@ void OptionsWindow::updateUI()
 
 void OptionsWindow::on_buttonLogout_clicked()
 {
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 
 void OptionsWindow::on_buttonWithdraw_clicked()

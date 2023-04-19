@@ -20,6 +20,9 @@ ReceiptWindow::ReceiptWindow(QWidget *parent, SessionData *session) :
         QString log = generateLog(session->originalCustomerName);
         session->restApi->postEmail(session->accountID, log);
     }
+
+
+    sound();
 }
 
 ReceiptWindow::~ReceiptWindow()
@@ -54,13 +57,33 @@ void ReceiptWindow::on_buttonYes_clicked()
     QString log = generateLog(session->originalCustomerName);
     session->restApi->postEmail(session->originalAccountID, log);
 
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 
 
 void ReceiptWindow::on_buttonNo_clicked()
 {
-    emit session->sendLogout();
+    emit session->sendLogout(this);
+}
+
+void ReceiptWindow::sound()
+{
+    player = new QMediaPlayer;
+    audioOutput = new QAudioOutput;
+    player->setAudioOutput(audioOutput);
+
+    QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/receiptFI.mp3";
+    qDebug() << "Sound file path:" << soundFilePath;
+
+    if (QFile::exists(soundFilePath)) {
+        player->setSource(QUrl::fromLocalFile(soundFilePath));
+        audioOutput->setVolume(0.5);  // set volume to 50%
+        player->play();
+    } else {
+        qDebug() << "Sound file does not exist!";
+    }
+    audioOutput->setVolume(1);
+    player->play();
 }
 
 QString ReceiptWindow::generateLog(QString name)

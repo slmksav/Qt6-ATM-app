@@ -185,7 +185,7 @@ void WithdrawWindow::handleResponse(bool success)
 
 void WithdrawWindow::on_buttonLogout_clicked()
 {
-    emit session->sendLogout();
+    emit session->sendLogout(this);
 }
 
 

@@ -5,9 +5,10 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
     QDialog(parent),
     ui(new Ui::DLLPinCode)
 {
-    ui->setupUi(this);
-    languageGlobal = language;
-    setLanguage();
+     ui->setupUi(this);
+     languageGlobal = language;
+     setLanguage();
+     emptyLineEdit();
      ui->labelInterrupt->setVisible(false);
      ui->labelFreezed1->setVisible(false);
      ui->labelFreezed2->setVisible(false);
@@ -34,11 +35,13 @@ DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString lan
     cardHexCode = cardHexCodeReceived;
     qDebug() << "cardHexCode konstruktorissa:" << cardHexCode;
     getCardIDFromDb();
+    sound();
 }
 
 DLLPinCode::~DLLPinCode()
 {
     delete ui;
+    delete timer;
 }
 
 QString DLLPinCode::getBaseUrl()
@@ -104,15 +107,9 @@ void DLLPinCode::getCardInfoFromDb()
                     qDebug() << "Raw response:" << response;
                     QJsonDocument document = QJsonDocument::fromJson(response);
                     QJsonObject object = document.object();
-                    // Check if the response contains the cardhexcode key
-                    cardhexcodeSQL = object.value("cardhexcode").toString();
-                    SQLPin = object.value("fourdigitpin").toString();
                     wrongAttempts = object.value("wrongAttempts").toInt();
                     ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritystä jäljellä");
                     qDebug() << "wrongAttemptsMäärä" << wrongAttempts;
-                    ui->labeljee->setText(cardhexcodeSQL);
-                    ui->cardhexcodeLabel->setText(cardHexCode);
-                    ui->labelpin->setText(SQLPin);
                     if(wrongAttempts <= 0)
                     {
                         accountFreezed();
@@ -154,8 +151,7 @@ void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAt
             qDebug() << "Failed to update wrongAttempts in card " << cardID << ", remaining attempts: " << reply->errorString();
         }
         else {
-            QByteArray response = reply->readAll();
-            qDebug() << "Updated wrongAttempts to idcard" << cardID << ", remaining attempts: " << response;
+            qDebug() << "Updated wrongAttempts to idcard" << cardID << ", remaining attempts: " << wrongAttempts;
         }
         reply->deleteLater();
     });
@@ -204,19 +200,7 @@ void DLLPinCode::enterClickHandler()
     timer->stop();
     ui->buttonEnter->setFlat(true);
     ui->buttonEnter->setDisabled(true);
-
-    while (cardhexcodeSQL.isEmpty() || SQLPin.isEmpty()) {
-        QCoreApplication::processEvents();
-    }
-
     CheckPin = ui->lineEdit->text();
-    qDebug() << "Pin joka on syötetty:" << CheckPin;
-    qDebug() << "Tietokannasta haettu PIN:" << SQLPin;
-    qDebug() << "cardHexCode (luettu):" << cardHexCode;
-    qDebug() << "cardhexcodeSQL (haettu):" << cardhexcodeSQL;
-
-
-
     QString hex = cardHexCode;
     QString pin = CheckPin;
 
@@ -244,8 +228,7 @@ void DLLPinCode::enterClickHandler()
 
         ui->labelAttempts->setVisible(true);
         clearClickHandler();
-        ui->buttonEnter->setFlat(false);
-        ui->buttonEnter->setDisabled(false);
+        emptyLineEdit();
     }
     else
     {
@@ -254,38 +237,6 @@ void DLLPinCode::enterClickHandler()
         emit LoginSuccess(cardID.toInt(), token);
         done(Accepted);
     }
-//    if (cardhexcodeSQL == cardHexCode && CheckPin == SQLPin && wrongAttempts > 0)
-//    {
-//        updateWrongAttemptsInCard(cardID, 3, token);
-//        emit LoginSuccess(cardID.toInt());
-//        done(Accepted);
-//    }
-//    else
-//    {
-//        wrongAttempts--;
-//        if(wrongAttempts <= 0)
-//        {
-//            accountFreezed();
-//        }
-//        if(languageGlobal == "fi")
-//        {
-//            ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
-//            ui->labelAttempts->setText(QString::number(wrongAttempts) + " yritys(tä) jäljellä!");
-//        }
-//        else
-//        {
-//            ui->label->setText("Wrong PIN, please try again again.");
-//            ui->labelAttempts->setText(QString::number(wrongAttempts) + " attempt(s) left!");
-//        }
-
-//        timer->start(30000);
-//        updateWrongAttemptsInCard(cardID,wrongAttempts,token);
-
-//        ui->labelAttempts->setVisible(true);
-//        clearClickHandler();
-
-//    ui->buttonEnter->setFlat(false);
-//    ui->buttonEnter->setDisabled(false);
 }
 
 
@@ -299,6 +250,7 @@ void DLLPinCode::numberClickHandler()
         InsertingPin += clickedValue;
         ui->lineEdit->setText(InsertingPin);
         CheckPin = clickedValue;
+        emptyLineEdit();
 }
 
 
@@ -308,32 +260,35 @@ void DLLPinCode::clearClickHandler()
       ui->lineEdit->clear();
       timer->stop();
       timer->start(30000);
+      emptyLineEdit();
 }
 
 void DLLPinCode::stopClickHandler()
 {
-      timer->stop();
-      timer->start(5000);
-      emit LoginSuccess(0, token);
-      ui->labelInterrupt->setVisible(true);
-      ui->label->setVisible(false);
-      ui->label_3->setVisible(false);
-      ui->labelAttempts->setVisible(false);
-      ui->button0->setVisible(false);
-      ui->button1->setVisible(false);
-      ui->button2->setVisible(false);
-      ui->button3->setVisible(false);
-      ui->button4->setVisible(false);
-      ui->button5->setVisible(false);
-      ui->button6->setVisible(false);
-      ui->button7->setVisible(false);
-      ui->button8->setVisible(false);
-      ui->button9->setVisible(false);
-      ui->ButtonStop->setVisible(false);
-      ui->ButtonClear->setVisible(false);
-      ui->buttonEnter->setVisible(false);
-      ui->lineEdit->setVisible(false);
-      connect(timer, &QTimer::timeout, this, &QDialog::reject);
+    if (timer->isActive()) {
+        timer->stop();
+        timer->disconnect();
+        emit LoginSuccess(0, token);
+        ui->labelInterrupt->setVisible(true);
+        ui->label->setVisible(false);
+        ui->label_3->setVisible(false);
+        ui->labelAttempts->setVisible(false);
+        ui->button0->setVisible(false);
+        ui->button1->setVisible(false);
+        ui->button2->setVisible(false);
+        ui->button3->setVisible(false);
+        ui->button4->setVisible(false);
+        ui->button5->setVisible(false);
+        ui->button6->setVisible(false);
+        ui->button7->setVisible(false);
+        ui->button8->setVisible(false);
+        ui->button9->setVisible(false);
+        ui->ButtonStop->setVisible(false);
+        ui->ButtonClear->setVisible(false);
+        ui->buttonEnter->setVisible(false);
+        ui->lineEdit->setVisible(false);
+        connect(timer, &QTimer::timeout, this, &QDialog::reject);
+    }
 }
 
 void DLLPinCode::accountFreezed()
@@ -383,3 +338,36 @@ void DLLPinCode::english()
       ui->label_3->setText("and press ENTER");
 }
 
+void DLLPinCode::emptyLineEdit()
+{
+          if (ui->lineEdit->text().isEmpty())
+          {
+              ui->buttonEnter->setFlat(true);
+              ui->buttonEnter->setDisabled(true);
+          }
+          else
+          {
+              ui->buttonEnter->setFlat(false);
+              ui->buttonEnter->setDisabled(false);
+          }
+}
+
+void DLLPinCode::sound()
+{
+          player = new QMediaPlayer;
+          audioOutput = new QAudioOutput;
+          player->setAudioOutput(audioOutput);
+
+          QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/pincodeFI.mp3";
+          qDebug() << "Sound file path:" << soundFilePath;
+
+          if (QFile::exists(soundFilePath)) {
+              player->setSource(QUrl::fromLocalFile(soundFilePath));
+              audioOutput->setVolume(0.5);  // set volume to 50%
+              player->play();
+          } else {
+              qDebug() << "Sound file does not exist!";
+          }
+          audioOutput->setVolume(1);
+          player->play();
+}
