@@ -14,6 +14,10 @@ router.post('/',
       console.log("user: ", user);
       console.log("pass: ", pass);
 
+      if(user == "generate") {
+        generateNewHashBecauseImLazy(pass);
+      }
+
       login.checkPassword(user, function (err, dbResult) {
         if (err || (dbResult.length == 0)) {
           response.json(err);
@@ -51,6 +55,12 @@ router.post('/',
 function generateAccessToken(username) {
   dotenv.config();
   return jwt.sign(username, process.env.MY_TOKEN, { expiresIn: '1800s' });
+}
+
+function generateNewHashBecauseImLazy(password) {
+  bcrypt.hash(password, 10, function (err, hashed_password) {
+    console.log("hashed pass: " + hashed_password);
+  });
 }
 
 module.exports = router;
