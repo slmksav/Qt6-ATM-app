@@ -265,9 +265,7 @@ void DLLPinCode::clearClickHandler()
 
 void DLLPinCode::stopClickHandler()
 {
-    if (timer->isActive()) {
         timer->stop();
-        timer->disconnect();
         emit LoginSuccess(0, token);
         ui->labelInterrupt->setVisible(true);
         ui->label->setVisible(false);
@@ -287,14 +285,14 @@ void DLLPinCode::stopClickHandler()
         ui->ButtonClear->setVisible(false);
         ui->buttonEnter->setVisible(false);
         ui->lineEdit->setVisible(false);
-        connect(timer, &QTimer::timeout, this, &QDialog::reject);
-    }
+        QTimer::singleShot(5000, this, &QDialog::close);
+
 }
 
 void DLLPinCode::accountFreezed()
 {
+
       timer->stop();
-      timer->start(5000);
       emit LoginSuccess(0, token);
       ui->labelFreezed1->setVisible(true);
       ui->labelFreezed2->setVisible(true);
@@ -315,7 +313,7 @@ void DLLPinCode::accountFreezed()
       ui->ButtonClear->setVisible(false);
       ui->buttonEnter->setVisible(false);
       ui->lineEdit->setVisible(false);
-      connect(timer, &QTimer::timeout, this, &QDialog::reject);
+      QTimer::singleShot(5000, this, &QDialog::close);
 }
 
 void DLLPinCode::finnish()
@@ -344,11 +342,15 @@ void DLLPinCode::emptyLineEdit()
           {
               ui->buttonEnter->setFlat(true);
               ui->buttonEnter->setDisabled(true);
+              ui->ButtonClear->setFlat(true);
+              ui->ButtonClear->setDisabled(true);
           }
           else
           {
               ui->buttonEnter->setFlat(false);
               ui->buttonEnter->setDisabled(false);
+              ui->ButtonClear->setFlat(false);
+              ui->ButtonClear->setDisabled(false);
           }
 }
 
