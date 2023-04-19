@@ -285,7 +285,7 @@ void DLLPinCode::stopClickHandler()
         ui->ButtonClear->setVisible(false);
         ui->buttonEnter->setVisible(false);
         ui->lineEdit->setVisible(false);
-        QTimer::singleShot(5000, this, &QDialog::close);
+        QTimer::singleShot(5000, this, &QDialog::reject);
 
 }
 
@@ -313,7 +313,7 @@ void DLLPinCode::accountFreezed()
       ui->ButtonClear->setVisible(false);
       ui->buttonEnter->setVisible(false);
       ui->lineEdit->setVisible(false);
-      QTimer::singleShot(5000, this, &QDialog::close);
+      QTimer::singleShot(5000, this, &QDialog::reject);
 }
 
 void DLLPinCode::finnish()

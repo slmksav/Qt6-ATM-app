@@ -6,7 +6,7 @@ Spinner::Spinner(QWidget *parent) :
     ui(new Ui::Spinner)
 {
     ui->setupUi(this);
-    QWidget::showFullScreen();
+    QWidget::show();
 
     QMovie* pMovie = new QMovie(":/exeimgs/gifigifigifigifi.gif");
     ui->label->setMovie(pMovie);
