@@ -5,6 +5,17 @@ const login = require('../models/login_model');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
+router.get('/:id',
+  function (request, response) {
+    login.getAttempts(request.params.id, function (err, dbResult) {
+      if (err) {
+        response.json(err);
+      } else {
+        response.json(dbResult[0]);
+      }
+    });
+  });
+
 router.post('/',
   function (request, response) {
     if (request.body.username && request.body.password) {

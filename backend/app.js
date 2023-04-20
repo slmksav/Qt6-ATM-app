@@ -32,12 +32,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 //suojaamattomat endpointit
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
-app.use('/card', cardRouter); //move this back under auth when pincode issues resolved
-app.use('/hexcode', hexcodeRouter); //move this back under auth when pincode issues resolved
-app.use('/attempts', attemptsRouter)
 
 app.use(authenticateToken);
 //suojatut endpointit
+app.use('/card', cardRouter); //move this back under auth when pincode issues resolved
+app.use('/hexcode', hexcodeRouter); //move this back under auth when pincode issues resolved
 app.use('/customer', customerRouter);
 app.use('/account', accountRouter);
 app.use('/additionals', additionalsRouter);
