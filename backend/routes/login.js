@@ -14,36 +14,69 @@ router.post('/',
       console.log("user: ", user);
       console.log("pass: ", pass);
 
-      if(user == "generate") {
+      if (user == "generate") {
         generateNewHashBecauseImLazy(pass);
       }
 
-      login.checkPassword(user, function (err, dbResult) {
+      login.checkAttempts(user, function (err, dbResult) {
         if (err || (dbResult.length == 0)) {
           response.json(err);
         }
         else {
-          console.log("dbResult: ", dbResult);
-          console.log("dbResult[0].fourdigitpin: ", dbResult[0].fourdigitpin);
-          console.log("pass: ", pass);
-
-          bcrypt.compare(pass, dbResult[0].fourdigitpin, function (err, compareResult) {
-            if(err) {
-              console.log("bcrypt.compare error: " + err);
-              response.send(false);
+          login.checkAttempts(user, function (err, dbResult) {
+            if (err || (dbResult.length == 0)) {
+              response.json(err);
             }
-            else if (compareResult) {
-              console.log("success");
-              const token = generateAccessToken({ username: user });
-              response.send(token);
+            else if (dbResult[0].wrongAttempts <= 0) {
+              response.send("frozen");
             }
             else {
-              console.log("wrong password");
-              response.send(false);
+              login.checkPassword(user, function (err, dbResult) {
+                if (err || (dbResult.length == 0)) {
+                  response.json(err);
+                }
+                else {
+                  console.log("dbResult: ", dbResult);
+                  console.log("dbResult[0].fourdigitpin: ", dbResult[0].fourdigitpin);
+                  console.log("pass: ", pass);
+
+                  bcrypt.compare(pass, dbResult[0].fourdigitpin, function (err, compareResult) {
+                    if (err) {
+                      console.log("bcrypt.compare error: " + err);
+                      response.send(false);
+                    }
+                    else if (compareResult) {
+                      console.log("success");
+                      const token = generateAccessToken({ username: user });
+                      login.resetAttempts(user, function (err, dbResult) {
+                        if (err || (dbResult.length == 0)) {
+                          response.json(err);
+                        }
+                        else {
+                        response.send(token);
+                        }
+                      });
+                    }
+                    else {
+                      console.log("wrong password");
+                      login.decreaseAttempts(user, function (err, dbResult) {
+                        if (err || (dbResult.length == 0)) {
+                          response.json(err);
+                        }
+                        else {
+                        response.send(false);
+                        }
+                      });
+
+                    }
+                  });
+                }
+              });
             }
           });
         }
       });
+
     }
     else {
       console.log("username or password missing");
