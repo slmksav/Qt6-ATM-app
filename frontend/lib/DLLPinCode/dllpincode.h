@@ -28,14 +28,14 @@ public:
 signals:
     void LoginSuccess(int, QString);
 private slots:
-    void updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token);
+//    void updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token);
     void numberClickHandler();
     void enterClickHandler();
     void clearClickHandler();
     void stopClickHandler();
     void accountFreezed();
     void getCardIDFromDb();
-    void getCardInfoFromDb();
+  void getWrongAttempts();
     void setLanguage();
     void emptyLineEdit();
 private:

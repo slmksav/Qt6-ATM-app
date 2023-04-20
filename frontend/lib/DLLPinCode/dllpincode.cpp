@@ -52,7 +52,7 @@ QString DLLPinCode::getBaseUrl()
 //tämä funktio hakee cardHexCoden perusteella cardID:n eli rivin primary keyn
 void DLLPinCode::getCardIDFromDb()
 {
-    QString site_url = DLLPinCode::getBaseUrl() + "/hexcode/hex/" + cardHexCode;
+    QString site_url = getBaseUrl() + "/hexcode/hex/" + cardHexCode;
     QNetworkRequest request((site_url));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
@@ -79,14 +79,14 @@ void DLLPinCode::getCardIDFromDb()
                         qDebug() << "idcard found: " << cardID;
                     }
                 }
-                getCardInfoFromDb();
+                getWrongAttempts();
                 reply->deleteLater();
             });
     manager->get(request);
 }
 
 //tämä funktio hakee haetun cardID:n perusteella relevantit tiedot
-void DLLPinCode::getCardInfoFromDb()
+void DLLPinCode::getWrongAttempts()
 {
     QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
     QNetworkRequest request((site_url));
@@ -132,31 +132,31 @@ void DLLPinCode::setLanguage()
     }
 }
 
-void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token)
-{
-    qDebug() << "Updating wrongAttempts in card " << cardID << " to " << newWrongAttempts;
-    QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
-    QNetworkRequest request((site_url));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
-    request.setRawHeader("Authorization", authHeader);
-    QJsonObject requestBody;
-    requestBody.insert("wrongAttempts", newWrongAttempts);
-    QJsonDocument requestBodyDoc(requestBody);
-    QByteArray requestBodyData = requestBodyDoc.toJson();
-    QNetworkAccessManager *manager = new QNetworkAccessManager();
+//void DLLPinCode::updateWrongAttemptsInCard(const QString& cardID, int newWrongAttempts, const QString& token)
+//{
+//    qDebug() << "Updating wrongAttempts in card " << cardID << " to " << newWrongAttempts;
+//    QString site_url = DLLPinCode::getBaseUrl() + "/card/" + cardID;
+//    QNetworkRequest request((site_url));
+//    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+//    QByteArray authHeader = QString("Bearer %1").arg(token).toLatin1();
+//    request.setRawHeader("Authorization", authHeader);
+//    QJsonObject requestBody;
+//    requestBody.insert("wrongAttempts", newWrongAttempts);
+//    QJsonDocument requestBodyDoc(requestBody);
+//    QByteArray requestBodyData = requestBodyDoc.toJson();
+//    QNetworkAccessManager *manager = new QNetworkAccessManager();
 
-    connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply *reply) {
-        if (reply->error()) {
-            qDebug() << "Failed to update wrongAttempts in card " << cardID << ", remaining attempts: " << reply->errorString();
-        }
-        else {
-            qDebug() << "Updated wrongAttempts to idcard" << cardID << ", remaining attempts: " << wrongAttempts;
-        }
-        reply->deleteLater();
-    });
-    manager->put(request, requestBodyData);
-}
+//    connect(manager, &QNetworkAccessManager::finished, [=](QNetworkReply *reply) {
+//        if (reply->error()) {
+//            qDebug() << "Failed to update wrongAttempts in card " << cardID << ", remaining attempts: " << reply->errorString();
+//        }
+//        else {
+//            qDebug() << "Updated wrongAttempts to idcard" << cardID << ", remaining attempts: " << wrongAttempts;
+//        }
+//        reply->deleteLater();
+//    });
+//    manager->put(request, requestBodyData);
+//}
 
 bool DLLPinCode::postLogin(QString hex, QString pin)
 {
@@ -184,6 +184,12 @@ bool DLLPinCode::postLogin(QString hex, QString pin)
 
         token = QString(responseData);
 
+        if(token == "frozen")
+        {
+            accountFreezed();
+            return false;
+        }
+
         if(token == "false")
             return false;
 
@@ -196,7 +202,7 @@ bool DLLPinCode::postLogin(QString hex, QString pin)
 }
 
 void DLLPinCode::enterClickHandler()
-{ 
+{
     timer->stop();
     ui->buttonEnter->setFlat(true);
     ui->buttonEnter->setDisabled(true);
@@ -208,10 +214,10 @@ void DLLPinCode::enterClickHandler()
     {
         qDebug() << Q_FUNC_INFO << "wrong login info";
         wrongAttempts--;
-        if(wrongAttempts <= 0)
-        {
-            accountFreezed();
-        }
+//      if(wrongAttempts <= 0)
+//        {
+//            accountFreezed();
+//        }
         if(languageGlobal == "fi")
         {
             ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
@@ -224,7 +230,7 @@ void DLLPinCode::enterClickHandler()
         }
 
         timer->start(30000);
-        updateWrongAttemptsInCard(cardID,wrongAttempts,token);
+//        updateWrongAttemptsInCard(cardID,wrongAttempts,token);
 
         ui->labelAttempts->setVisible(true);
         clearClickHandler();
@@ -233,7 +239,12 @@ void DLLPinCode::enterClickHandler()
     else
     {
         qDebug() << Q_FUNC_INFO << "correct login info";
-        updateWrongAttemptsInCard(cardID, 3, token);
+//        updateWrongAttemptsInCard(cardID, 3, token);
+        getCardIDFromDb();
+        while(cardID.isEmpty())
+        {
+            QApplication::processEvents();
+        }
         emit LoginSuccess(cardID.toInt(), token);
         done(Accepted);
     }
