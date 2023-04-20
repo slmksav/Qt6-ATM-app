@@ -22,54 +22,47 @@ router.post('/',
         if (err || (dbResult.length == 0)) {
           response.json(err);
         }
+        else if (dbResult[0].wrongAttempts <= 0) {
+          response.send("frozen");
+        }
         else {
-          login.checkAttempts(user, function (err, dbResult) {
+          login.checkPassword(user, function (err, dbResult) {
             if (err || (dbResult.length == 0)) {
               response.json(err);
             }
-            else if (dbResult[0].wrongAttempts <= 0) {
-              response.send("frozen");
-            }
             else {
-              login.checkPassword(user, function (err, dbResult) {
-                if (err || (dbResult.length == 0)) {
-                  response.json(err);
-                }
-                else {
-                  console.log("dbResult: ", dbResult);
-                  console.log("dbResult[0].fourdigitpin: ", dbResult[0].fourdigitpin);
-                  console.log("pass: ", pass);
+              console.log("dbResult: ", dbResult);
+              console.log("dbResult[0].fourdigitpin: ", dbResult[0].fourdigitpin);
+              console.log("pass: ", pass);
 
-                  bcrypt.compare(pass, dbResult[0].fourdigitpin, function (err, compareResult) {
-                    if (err) {
-                      console.log("bcrypt.compare error: " + err);
-                      response.send(false);
-                    }
-                    else if (compareResult) {
-                      console.log("success");
-                      const token = generateAccessToken({ username: user });
-                      login.resetAttempts(user, function (err, dbResult) {
-                        if (err || (dbResult.length == 0)) {
-                          response.json(err);
-                        }
-                        else {
-                        response.send(token);
-                        }
-                      });
+              bcrypt.compare(pass, dbResult[0].fourdigitpin, function (err, compareResult) {
+                if (err) {
+                  console.log("bcrypt.compare error: " + err);
+                  response.send(false);
+                }
+                else if (compareResult) {
+                  console.log("success");
+                  const token = generateAccessToken({ username: user });
+                  login.resetAttempts(user, function (err, dbResult) {
+                    if (err || (dbResult.length == 0)) {
+                      response.json(err);
                     }
                     else {
-                      console.log("wrong password");
-                      login.decreaseAttempts(user, function (err, dbResult) {
-                        if (err || (dbResult.length == 0)) {
-                          response.json(err);
-                        }
-                        else {
-                        response.send(false);
-                        }
-                      });
-
+                      response.send(token);
                     }
                   });
+                }
+                else {
+                  console.log("wrong password");
+                  login.decreaseAttempts(user, function (err, dbResult) {
+                    if (err || (dbResult.length == 0)) {
+                      response.json(err);
+                    }
+                    else {
+                      response.send(false);
+                    }
+                  });
+
                 }
               });
             }
