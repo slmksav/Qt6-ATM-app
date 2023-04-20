@@ -111,7 +111,7 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Int,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -143,7 +143,7 @@ Q_CONSTINIT const QMetaObject DLLPinCode::staticMetaObject = { {
         // method 'accountFreezed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'getCardIDFromDb'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'getWrongAttempts'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'setLanguage'
@@ -166,7 +166,8 @@ void DLLPinCode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->clearClickHandler(); break;
         case 4: _t->stopClickHandler(); break;
         case 5: _t->accountFreezed(); break;
-        case 6: _t->getCardIDFromDb(); break;
+        case 6: { int _r = _t->getCardIDFromDb();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 7: _t->getWrongAttempts(); break;
         case 8: _t->setLanguage(); break;
         case 9: _t->emptyLineEdit(); break;

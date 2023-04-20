@@ -34,7 +34,7 @@ private slots:
     void clearClickHandler();
     void stopClickHandler();
     void accountFreezed();
-    void getCardIDFromDb();
+    int getCardIDFromDb();
   void getWrongAttempts();
     void setLanguage();
     void emptyLineEdit();
