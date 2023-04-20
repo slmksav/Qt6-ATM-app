@@ -24,7 +24,10 @@ router.post('/',
         }
         else {
           login.checkAttempts(user, function (err, dbResult) {
-            if (dbResult[0].wrongAttempts <= 0) {
+            if (err || (dbResult.length == 0)) {
+              response.json(err);
+            }
+            else if (dbResult[0].wrongAttempts <= 0) {
               response.send("frozen");
             }
             else {
@@ -45,15 +48,24 @@ router.post('/',
                     else if (compareResult) {
                       console.log("success");
                       const token = generateAccessToken({ username: user });
-                      response.send(token);
                       login.resetAttempts(user, function (err, dbResult) {
+                        if (err || (dbResult.length == 0)) {
+                          response.json(err);
+                        }
+                        else {
                         response.send(token);
+                        }
                       });
                     }
                     else {
                       console.log("wrong password");
                       login.decreaseAttempts(user, function (err, dbResult) {
+                        if (err || (dbResult.length == 0)) {
+                          response.json(err);
+                        }
+                        else {
                         response.send(false);
+                        }
                       });
 
                     }
