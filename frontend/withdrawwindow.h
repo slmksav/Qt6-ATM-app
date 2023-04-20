@@ -34,6 +34,12 @@ private slots:
 
     void on_buttonReturn_clicked();
 
+    void on_buttonIncrement_clicked();
+
+    void on_buttonDecrement_clicked();
+
+    void on_buttonCustomWithdraw_clicked();
+
 private:
     Ui::WithdrawWindow *ui;
 
@@ -42,6 +48,8 @@ private:
     ReceiptWindow * receiptWindow;
 
     bool invalidAttempt = false;
+
+    int customWithdrawAmount = 40;
 };
 
 #endif // WITHDRAWWINDOW_H
