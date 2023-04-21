@@ -9,7 +9,7 @@ namespace Ui {
 class ModeSelectWindow;
 }
 
-class ModeSelectWindow : public QDialog
+class ModeSelectWindow : public QWidget
 {
     Q_OBJECT
 

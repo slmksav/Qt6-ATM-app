@@ -1,7 +1,7 @@
 #ifndef DLLPINCODE_H
 #define DLLPINCODE_H
 
-#include <QDialog>
+#include <QWidget>
 #include "DLLPinCode_global.h"
 #include <QTimer>
 #include <QtNetwork>
@@ -15,7 +15,7 @@ namespace Ui {
 class DLLPinCode;
 }
 
-class DLLPINCODE_EXPORT DLLPinCode : public QDialog
+class DLLPINCODE_EXPORT DLLPinCode : public QWidget
 {
     Q_OBJECT
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>Spinner</class>
- <widget class="QDialog" name="Spinner">
+ <widget class="QWidget" name="Spinner">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,9 +19,6 @@
     background-repeat: no-repeat;
     background-position: center;
 }</string>
-  </property>
-  <property name="modal">
-   <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">

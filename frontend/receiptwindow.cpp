@@ -2,7 +2,7 @@
 #include "ui_receiptwindow.h"
 
 ReceiptWindow::ReceiptWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::ReceiptWindow)
 {
     ui->setupUi(this);

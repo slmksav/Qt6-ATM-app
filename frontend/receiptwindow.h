@@ -11,7 +11,7 @@ namespace Ui {
 class ReceiptWindow;
 }
 
-class ReceiptWindow : public QDialog
+class ReceiptWindow : public QWidget
 {
     Q_OBJECT
 

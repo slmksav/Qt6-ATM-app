@@ -2,7 +2,7 @@
 #include "ui_balancewindow.h"
 
 BalanceWindow::BalanceWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::BalanceWindow)
 {
     ui->setupUi(this);
@@ -133,6 +133,6 @@ void BalanceWindow::on_buttonLogout_clicked()
 
 void BalanceWindow::on_buttonReturn_clicked()
 {
-    done(Accepted);
+    delete this;
 }
 

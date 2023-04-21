@@ -4,7 +4,7 @@
 #include <QDebug>
 
 WithdrawWindow::WithdrawWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::WithdrawWindow)
 {
     ui->setupUi(this);
@@ -185,7 +185,7 @@ void WithdrawWindow::handleResponse(bool success)
     }
 
     receiptWindow = new ReceiptWindow(this, session);
-    receiptWindow->open();
+    receiptWindow->show();
 }
 
 
@@ -197,7 +197,7 @@ void WithdrawWindow::on_buttonLogout_clicked()
 
 void WithdrawWindow::on_buttonReturn_clicked()
 {
-    done(Accepted);
+    delete this;
 }
 
 

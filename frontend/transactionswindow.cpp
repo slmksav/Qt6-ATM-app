@@ -2,7 +2,7 @@
 #include "ui_transactionswindow.h"
 
 TransactionsWindow::TransactionsWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::TransactionsWindow)
 {
     ui->setupUi(this);
@@ -114,7 +114,7 @@ void TransactionsWindow::on_buttonLogout_clicked()
 
 void TransactionsWindow::on_buttonReturn_clicked()
 {
-    done(Accepted);
+    delete this;
 }
 
 

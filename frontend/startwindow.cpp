@@ -330,7 +330,8 @@ void StartWindow::updateUI()
 
     case Waiting:
 
-        pSpinner = new Spinner;
+        pSpinner = new Spinner(this);
+        pSpinner->show();
 
         if(language == "fi")
         {

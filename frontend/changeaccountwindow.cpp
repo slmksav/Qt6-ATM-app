@@ -3,7 +3,7 @@
 #include <QDebug>
 
 ChangeAccountWindow::ChangeAccountWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::ChangeAccountWindow)
 {
     ui->setupUi(this);
@@ -130,7 +130,7 @@ void ChangeAccountWindow::accountButtonClicked(QAbstractButton * button)
     }
     else
     {
-        done(Rejected);
+        delete this;
     }
 }
 

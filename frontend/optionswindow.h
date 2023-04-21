@@ -7,13 +7,13 @@
 #include "sessiondata.h"
 #include "transactionswindow.h"
 #include "withdrawwindow.h"
-#include <QDialog>
+#include <QWidget>
 
 namespace Ui {
 class OptionsWindow;
 }
 
-class OptionsWindow : public QDialog
+class OptionsWindow : public QWidget
 {
     Q_OBJECT
 

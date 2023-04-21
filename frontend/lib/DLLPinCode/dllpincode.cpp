@@ -2,7 +2,7 @@
 #include "ui_dllpincode.h"
 
 DLLPinCode::DLLPinCode(QWidget *parent, QString cardHexCodeReceived, QString language) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::DLLPinCode)
 {
      ui->setupUi(this);
@@ -240,7 +240,7 @@ void DLLPinCode::enterClickHandler()
             QApplication::processEvents();
         }
         emit LoginSuccess(cardID.toInt(), token);
-        done(Accepted);
+        delete this;
     }
 }
 
@@ -290,7 +290,7 @@ void DLLPinCode::stopClickHandler()
         ui->ButtonClear->setVisible(false);
         ui->buttonEnter->setVisible(false);
         ui->lineEdit->setVisible(false);
-        QTimer::singleShot(5000, this, &QDialog::reject);
+        QTimer::singleShot(5000, this, &QWidget::close);
 
 }
 
@@ -318,7 +318,7 @@ void DLLPinCode::accountFreezed()
       ui->ButtonClear->setVisible(false);
       ui->buttonEnter->setVisible(false);
       ui->lineEdit->setVisible(false);
-      QTimer::singleShot(5000, this, &QDialog::reject);
+      QTimer::singleShot(5000, this, &QWidget::close);
 }
 
 void DLLPinCode::finnish()

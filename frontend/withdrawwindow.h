@@ -10,7 +10,7 @@ namespace Ui {
 class WithdrawWindow;
 }
 
-class WithdrawWindow : public QDialog
+class WithdrawWindow : public QWidget
 {
     Q_OBJECT
 

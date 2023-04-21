@@ -9,7 +9,7 @@ namespace Ui {
 class TransactionsWindow;
 }
 
-class TransactionsWindow : public QDialog
+class TransactionsWindow : public QWidget
 {
     Q_OBJECT
 
