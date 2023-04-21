@@ -1,4 +1,3 @@
-#include "mainwindow.h"
 #include "startwindow.h"
 #include <QApplication>
 #include <QSerialPortInfo>
@@ -13,7 +12,6 @@ int main(int argc, char *argv[])
     //testw.show();
     StartWindow w;
     w.show();
-
 
     return a.exec();
 }
