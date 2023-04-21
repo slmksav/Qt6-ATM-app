@@ -1,8 +1,11 @@
 
 # group_18_O
 Sauli Savinainen
+
 Mika Korkiakoski
+
 Miika Tiihonen
+
 Samuli Pylkkönen
 # UI-suunnitelma sovellukselle
 
