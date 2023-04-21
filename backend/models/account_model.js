@@ -20,13 +20,13 @@ const account = {
   update: function(id, amount, type, callback) {
     console.log("account update function");
     if(type == 'debit') {
-      return db.query('update account set debitSaldo = debitSaldo - ? where idaccount=?',
-      [amount, id],
+      return db.query('update account set debitSaldo = debitSaldo - ? where idaccount=? and debitSaldo >= ?',
+      [amount, id, amount],
       callback
     );
     } else if(type == 'credit') { 
-      return db.query('update account set creditSaldo = creditSaldo + ? where idaccount=?',
-      [amount, id],
+      return db.query('update account set creditSaldo = creditSaldo + ? where idaccount=? and creditMax - creditSaldo >= ?;',
+      [amount, id, amount],
       callback
     );
     }
