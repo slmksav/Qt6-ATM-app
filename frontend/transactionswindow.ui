@@ -209,12 +209,12 @@ background-color: rgb(217, 243, 46);</string>
    </property>
   </widget>
   <zorder>widget</zorder>
-  <zorder>buttonLogout</zorder>
-  <zorder>buttonReturn</zorder>
-  <zorder>buttonPrevious</zorder>
-  <zorder>buttonNext</zorder>
   <zorder>layoutWrapper</zorder>
   <zorder>labelInfo</zorder>
+  <zorder>buttonReturn</zorder>
+  <zorder>buttonLogout</zorder>
+  <zorder>buttonPrevious</zorder>
+  <zorder>buttonNext</zorder>
  </widget>
  <resources/>
  <connections/>
