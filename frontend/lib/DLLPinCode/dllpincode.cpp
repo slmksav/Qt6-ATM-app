@@ -208,10 +208,10 @@ void DLLPinCode::enterClickHandler()
         qDebug() << Q_FUNC_INFO << "wrong login info";
 
         wrongAttempts--;
-//      if(wrongAttempts <= 0)
-//        {
-//            accountFreezed();
-//        }
+      if(wrongAttempts <= 0)
+        {
+            accountFreezed();
+        }
         if(languageGlobal == "fi")
         {
             ui->label->setText("Väärin, syötä tunnusluku uudestaan.");
