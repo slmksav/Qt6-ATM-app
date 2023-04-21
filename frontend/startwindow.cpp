@@ -53,8 +53,17 @@ void StartWindow::sound()
           player = new QMediaPlayer;
           audioOutput = new QAudioOutput;
           player->setAudioOutput(audioOutput);
+          QString soundFilePath;
 
-          QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardFI.mp3";
+          if(language == "fi")
+          {
+             soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardFI.mp3";
+          }
+          if(language == "en")
+          {
+             soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardEN.mp3";
+          }
+
           qDebug() << "Sound file path:" << soundFilePath;
 
           if (QFile::exists(soundFilePath)) {
@@ -77,6 +86,7 @@ void StartWindow::languageButtonClicked(int buttonID)
 
     language = buttonValue;
     updateUI();
+    sound();
 }
 
 void StartWindow::logout(QObject* initiator)

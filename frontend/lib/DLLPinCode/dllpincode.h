@@ -51,6 +51,7 @@ private:
     int wrongAttempts;
     void finnish();
     void english();
+    QString soundFilePath;
     void sound();
 };
 

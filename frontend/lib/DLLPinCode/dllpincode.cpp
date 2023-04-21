@@ -323,6 +323,7 @@ void DLLPinCode::accountFreezed()
 
 void DLLPinCode::finnish()
 {
+      soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/pincodeFI.mp3";
       ui->label->setText("Näppäile PIN-koodi");
       ui->labelAttempts->setText(" yritys(tä) jäljellä");
       ui->labelFreezed1->setText("Tili jäädytetty liian monen yrityksen takia.");
@@ -333,6 +334,7 @@ void DLLPinCode::finnish()
 
 void DLLPinCode::english()
 {
+      soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/pincodeEN.mp3";
       ui->label->setText("Enter 4-digit PIN code");
       ui->labelAttempts->setText(" attempt(s) left");
       ui->labelFreezed1->setText("Account frozen due to excessive amount of attempts.");
@@ -364,8 +366,7 @@ void DLLPinCode::sound()
           player = new QMediaPlayer;
           audioOutput = new QAudioOutput;
           player->setAudioOutput(audioOutput);
-
-          QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/pincodeFI.mp3";
+           //muutin soundpathin luokkamuuttujaksi erillisten finnish() ja english() funktioiden vuoksi
           qDebug() << "Sound file path:" << soundFilePath;
 
           if (QFile::exists(soundFilePath)) {
