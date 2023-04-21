@@ -223,8 +223,8 @@ background-color: rgb(217, 243, 46);</string>
   <widget class="QLabel" name="labelWithdrawWarning">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>90</y>
+     <x>200</x>
+     <y>100</y>
      <width>391</width>
      <height>20</height>
     </rect>
@@ -271,7 +271,7 @@ background-color: rgb(217, 243, 46);</string>
     <rect>
      <x>550</x>
      <y>410</y>
-     <width>171</width>
+     <width>191</width>
      <height>61</height>
     </rect>
    </property>
@@ -337,8 +337,8 @@ background-color: rgb(217, 243, 46);</string>
    </property>
    <property name="font">
     <font>
-     <family>Verdana Pro Black</family>
-     <pointsize>10</pointsize>
+     <family>Verdana Pro</family>
+     <pointsize>14</pointsize>
      <italic>true</italic>
     </font>
    </property>
@@ -352,7 +352,7 @@ background-color: rgb(217, 243, 46);</string>
   <widget class="QLabel" name="labelWithCustomWithdrawInfo">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>128</x>
      <y>380</y>
      <width>471</width>
      <height>31</height>

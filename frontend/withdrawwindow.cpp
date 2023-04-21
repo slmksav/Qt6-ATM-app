@@ -65,7 +65,7 @@ void WithdrawWindow::updateUI()
     //other ui elements
     if(session->language == "fi")
     {
-        ui->buttonCustomWithdraw->setText("Nosta summa");
+        ui->buttonCustomWithdraw->setText("Nosta muu summa");
         ui->labelWithCustomWithdrawInfo->setText("Pienin sallittu oma summa: 40");
         ui->buttonLogout->setText("Kirjaudu Ulos");
         ui->buttonReturn->setText("Palaa");
@@ -73,7 +73,7 @@ void WithdrawWindow::updateUI()
     }
     if(session->language == "en")
     {
-        ui->buttonCustomWithdraw->setText("Withdraw amount");
+        ui->buttonCustomWithdraw->setText("Withdraw custom");
         ui->labelWithCustomWithdrawInfo->setText("Min. amount for custom withdraw: 40");
         ui->buttonLogout->setText("Log out");
         ui->buttonReturn->setText("Return");
