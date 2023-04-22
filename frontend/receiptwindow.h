@@ -22,9 +22,6 @@ public:
 public slots:
     void updateUI();
 
-signals:
-    void clickReceipt(bool);
-
 private slots:
     void on_buttonYes_clicked();
 

@@ -18,9 +18,6 @@ public:
     explicit WithdrawWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~WithdrawWindow();
 
-signals:
-    void clickAmount(int);
-
 public slots:
     void updateUI();
     void freezeUI(bool);

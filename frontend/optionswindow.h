@@ -22,13 +22,6 @@ public:
     ~OptionsWindow();
 
 signals:
-    void clickLogout();
-
-    void clickWithdraw();
-    void clickBalance();
-    void clickTransactions();
-    void clickChangeAccount();
-
     void changeToAccount(int);
 
 public slots:
