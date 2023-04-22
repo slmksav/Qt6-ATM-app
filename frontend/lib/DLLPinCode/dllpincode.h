@@ -4,7 +4,6 @@
 #include <QWidget>
 #include "DLLPinCode_global.h"
 #include <QTimer>
-#include <QtNetwork>
 #include <QNetworkAccessManager>
 #include <QJsonDocument>
 #include <QDebug>

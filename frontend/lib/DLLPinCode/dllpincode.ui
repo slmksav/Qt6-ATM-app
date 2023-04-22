@@ -400,7 +400,6 @@ background-color: rgb(254, 195, 50);</string>
     background-image: url(:/exeimgs/button130x50.jpg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100% 100%;
 }</string>
    </property>
    <property name="text">

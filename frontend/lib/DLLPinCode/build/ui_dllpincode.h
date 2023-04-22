@@ -204,7 +204,6 @@ public:
 "    background-image: url(:/exeimgs/button130x50.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         button3 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button3);
