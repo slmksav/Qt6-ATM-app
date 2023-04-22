@@ -5,10 +5,14 @@
 #include "DLLPinCode_global.h"
 #include <QTimer>
 #include <QNetworkAccessManager>
+#include <QUrl>
+#include <QUrlQuery>
 #include <QJsonDocument>
 #include <QDebug>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QNetworkReply>
+#include <QJsonObject>
 
 namespace Ui {
 class DLLPinCode;
