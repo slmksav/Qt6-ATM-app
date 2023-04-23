@@ -16,57 +16,19 @@ QString DLLRestApi::getBaseUrl()
     //return "http://localhost:3000";
 }
 
-bool DLLRestApi::postLogin(QString hex, QString pin)
+bool DLLRestApi::sendRequest(const QJsonObject& jsonObj, const QString& endpoint)
 {
-    QJsonObject jsonObj;
-    jsonObj.insert("username", hex);
-    jsonObj.insert("password", pin);
-
-    QString site_url = getBaseUrl() + "/login";
+    QString site_url = getBaseUrl() + endpoint;
     QNetworkRequest request(site_url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
-
-    QNetworkReply* networkReply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
-
-    QEventLoop loop;
-    QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
-    loop.exec();
-
-    QByteArray responseData;
-
-    if(networkReply->error() == QNetworkReply::NoError) {
-        responseData = networkReply->readAll();
-        qDebug() << Q_FUNC_INFO << "Raw response:" << responseData;
-
-        token = QString(responseData);
-
-        if(token == "false")
-            return false;
-
-        return true;
+    if (!token.isEmpty()) {
+        request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
     }
-    else {
-        qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
-        return false;
-    }
-}
 
-bool DLLRestApi::postEmail(int accountID, QString log)
-{
-    QJsonObject jsonObj;
-    jsonObj.insert("idaccount", accountID);
-    jsonObj.insert("log", log);
+    QNetworkAccessManager * manager = new QNetworkAccessManager(this);
 
-    QString site_url = getBaseUrl() + "/email";
-    QNetworkRequest request(site_url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader(QByteArray("Authorization"), QByteArray(token.toUtf8()));
-
-    QNetworkAccessManager * loginManager = new QNetworkAccessManager(this);
-
-    QNetworkReply* networkReply = loginManager->post(request, QJsonDocument(jsonObj).toJson());
+    QNetworkReply* networkReply = manager->post(request, QJsonDocument(jsonObj).toJson());
 
     QEventLoop loop;
     QObject::connect(networkReply, SIGNAL(finished()), &loop, SLOT(quit()));
@@ -87,6 +49,32 @@ bool DLLRestApi::postEmail(int accountID, QString log)
         qDebug() << Q_FUNC_INFO<< "Network error: " << networkReply->errorString();
         return false;
     }
+}
+
+
+bool DLLRestApi::postLogin(QString hex, QString pin)
+{
+    QJsonObject jsonObj;
+    jsonObj.insert("username", hex);
+    jsonObj.insert("password", pin);
+
+    bool success = sendRequest(jsonObj, "/login");
+
+    if (success) {
+        token = QString(response_data);
+        qDebug() << token;
+    }
+
+    return success;
+}
+
+bool DLLRestApi::postEmail(int accountID, QString log)
+{
+    QJsonObject jsonObj;
+    jsonObj.insert("idaccount", accountID);
+    jsonObj.insert("log", log);
+
+    return sendRequest(jsonObj, "/email");
 }
 
 int DLLRestApi::getAccountId(int cardID)
