@@ -185,6 +185,9 @@ void StartWindow::startSession(int returnedCardID, QString token)
         return;
     }
 
+    //debug print all session data
+    session->debugPrintData();
+
     //put info of person who logged in to memory
     session->originalAccountID = session->accountID;
     session->originalCustomerName = session->customerName;
@@ -251,9 +254,6 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
     }
 
     session->resetTimer();
-
-    //debug print all session data
-    session->debugPrintData();
 }
 
 void StartWindow::swapToAccount(int accountID)
@@ -282,6 +282,9 @@ void StartWindow::swapToAccount(int accountID)
         logout(this);
         return;
     }
+
+    //debug print all session data
+    session->debugPrintData();
 
     //create and show OptionsWindow
     openOptionsWindow();
