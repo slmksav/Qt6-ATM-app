@@ -24,7 +24,7 @@ const card = {
       if (error) throw error;
       // lähettää viestin RabbitMQ:n jonoon kun kortin väärät yritykset päivitetään
       const channel = await connectToRabbitMQ();
-      const queueName = 'card_wrongAttempts_queue';
+      const queueName = 'card_wrongAttempts_queue_2';
       await channel.assertQueue(queueName, { durable: false });
       const message = `Card ${id} was updated`;
       channel.sendToQueue(queueName, Buffer.from(message));
