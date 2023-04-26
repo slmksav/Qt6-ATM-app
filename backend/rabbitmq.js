@@ -1,6 +1,6 @@
 const amqplib = require('amqplib');
 
-(async function connectToRabbitMQ() {
+async function connectToRabbitMQ() {
   if (!process.env.RABBITMQ_HOST) {
   }
 
@@ -35,12 +35,6 @@ const amqplib = require('amqplib');
   const message = 'jos Renderissä näkyy tämä viesti niin message broker on yhdistettynä';
   console.log(`📮  lähetetään viestiä "${message}" jonolle "${queue}"`);
   await channel.sendToQueue(queue, Buffer.from(message));
-
-})().catch(error => {
-  console.error('');
-  console.error('🐞 virhe, ei voitu muodostaa yhteyttä!');
-  console.error(error);
-  process.exit(1);
-});
+}
 
 module.exports = connectToRabbitMQ;
