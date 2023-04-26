@@ -9,7 +9,7 @@ namespace Ui {
 class BalanceWindow;
 }
 
-class BalanceWindow : public QDialog
+class BalanceWindow : public QWidget
 {
     Q_OBJECT
 

@@ -4,28 +4,14 @@
 
 DLLSerialPort::DLLSerialPort(QObject *parent) : QObject(parent)
 {
-    m_serialPort.setPortName("COM3");
-    if(!m_serialPort.setBaudRate(QSerialPort::Baud9600))
-        qDebug() << m_serialPort.errorString();
-    if(!m_serialPort.setDataBits(QSerialPort::Data7))
-        qDebug() << m_serialPort.errorString();
-    if(!m_serialPort.setParity(QSerialPort::EvenParity))
-        qDebug() << m_serialPort.errorString();
-    if(!m_serialPort.setFlowControl(QSerialPort::HardwareControl))
-        qDebug() << m_serialPort.errorString();
-    if(!m_serialPort.setStopBits(QSerialPort::OneStop))
-        qDebug() << m_serialPort.errorString();
-    if(!m_serialPort.open(QIODevice::ReadOnly))
-        qDebug() << m_serialPort.errorString();
-    qDebug() << m_serialPort.bytesAvailable();
-
-    connect(&m_serialPort, &QSerialPort::readyRead, this, &DLLSerialPort::handleReadyRead);
-
-    // Get list of available serial ports
     const auto serialPortInfos = QSerialPortInfo::availablePorts();
 
-    // Loop over ports and print information
+    // etsii portin joka on käytössä. todellisuudessa ei kovin hyvä ratkaisu koska voi olla monta sarjaporttia käyttävää laitetta kiinni
+
+    QString serialPortName;
     for (const QSerialPortInfo &portInfo : serialPortInfos) {
+        QSerialPort serialPort;
+        serialPort.setPort(portInfo);
         qDebug() << "\n"
                  << "Port:" << portInfo.portName() << "\n"
                  << "Location:" << portInfo.systemLocation() << "\n"
@@ -40,8 +26,41 @@ DLLSerialPort::DLLSerialPort(QObject *parent) : QObject(parent)
                  << (portInfo.hasProductIdentifier()
                      ? QByteArray::number(portInfo.productIdentifier(), 16)
                      : QByteArray());
+
+        if (serialPort.open(QIODevice::ReadOnly)) {
+            if (serialPort.baudRate() == QSerialPort::Baud9600) {
+                serialPortName = portInfo.portName();
+                serialPort.close();
+                break;
+            } else {
+                serialPort.close();
+            }
+        } else {
+            qDebug() << "failed to open port" << portInfo.portName() << ": " << serialPort.errorString();
+        }
+    }
+    if (serialPortName.isEmpty()) {
+        qDebug() << "No serial port found";
+    } else {
+        qDebug() << "Using serial port:" << serialPortName;
+        m_serialPort.setPortName(serialPortName);
+        if(!m_serialPort.setBaudRate(QSerialPort::Baud9600))
+            qDebug() << m_serialPort.errorString();
+        if(!m_serialPort.setDataBits(QSerialPort::Data7))
+            qDebug() << m_serialPort.errorString();
+        if(!m_serialPort.setParity(QSerialPort::EvenParity))
+            qDebug() << m_serialPort.errorString();
+        if(!m_serialPort.setFlowControl(QSerialPort::HardwareControl))
+            qDebug() << m_serialPort.errorString();
+        if(!m_serialPort.setStopBits(QSerialPort::OneStop))
+            qDebug() << m_serialPort.errorString();
+        if(!m_serialPort.open(QIODevice::ReadOnly))
+            qDebug() << m_serialPort.errorString();
+        qDebug() << m_serialPort.bytesAvailable();
+        connect(&m_serialPort, &QSerialPort::readyRead, this, &DLLSerialPort::handleReadyRead);
     }
 }
+
 
 void DLLSerialPort::sendData(const QString& dataToSend)
 {

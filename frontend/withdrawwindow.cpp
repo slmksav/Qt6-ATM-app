@@ -4,7 +4,7 @@
 #include <QDebug>
 
 WithdrawWindow::WithdrawWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::WithdrawWindow)
 {
     ui->setupUi(this);
@@ -29,6 +29,8 @@ WithdrawWindow::~WithdrawWindow()
 void WithdrawWindow::updateUI()
 {
     ui->labelWithdrawInfo->setText(session->customerName + " - " + session->withdrawMode);
+
+    ui->labelCustomSum->setText(QString::number(customWithdrawAmount));
 
     if(invalidAttempt == true)
     {
@@ -63,12 +65,16 @@ void WithdrawWindow::updateUI()
     //other ui elements
     if(session->language == "fi")
     {
+        ui->buttonCustomWithdraw->setText("Nosta muu summa");
+        ui->labelWithCustomWithdrawInfo->setText("Pienin sallittu oma summa: 40");
         ui->buttonLogout->setText("Kirjaudu Ulos");
         ui->buttonReturn->setText("Palaa");
         ui->labelWithMoreInfo->setText("Valitse summa:");
     }
     if(session->language == "en")
     {
+        ui->buttonCustomWithdraw->setText("Withdraw custom");
+        ui->labelWithCustomWithdrawInfo->setText("Min. amount for custom withdraw: 40");
         ui->buttonLogout->setText("Log out");
         ui->buttonReturn->setText("Return");
         ui->labelWithMoreInfo->setText("Select the amount:");
@@ -179,7 +185,7 @@ void WithdrawWindow::handleResponse(bool success)
     }
 
     receiptWindow = new ReceiptWindow(this, session);
-    receiptWindow->open();
+    receiptWindow->show();
 }
 
 
@@ -191,6 +197,37 @@ void WithdrawWindow::on_buttonLogout_clicked()
 
 void WithdrawWindow::on_buttonReturn_clicked()
 {
-    done(Accepted);
+    delete this;
+}
+
+
+void WithdrawWindow::on_buttonIncrement_clicked()
+{
+    if (customWithdrawAmount + 10 <= 1000) { //cäpätty tuhanteen nostoraja yhdellä kerralla
+        customWithdrawAmount += 10;
+        ui->labelCustomSum->setText(QString::number(customWithdrawAmount));
+    } else {
+        customWithdrawAmount = 1000;
+    }
+}
+
+
+void WithdrawWindow::on_buttonDecrement_clicked()
+{
+    if (customWithdrawAmount <= 40) { //minimisumma minkä voi nostaa on 40 (2x 20 euron seteliä)
+        customWithdrawAmount += 10;
+    } else {
+        customWithdrawAmount -= 10;
+        ui->labelCustomSum->setText(QString::number(customWithdrawAmount));
+    }
+}
+
+
+void WithdrawWindow::on_buttonCustomWithdraw_clicked()
+{
+    //get button value (text of the button)
+    int buttonValue = ui->labelCustomSum->text().toInt();
+    qDebug() << Q_FUNC_INFO << "Custom withdrawal amount selected: " << buttonValue;
+    withdrawMoney(buttonValue);
 }
 

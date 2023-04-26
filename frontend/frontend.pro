@@ -17,7 +17,6 @@ SOURCES += \
     balancewindow.cpp \
     changeaccountwindow.cpp \
     main.cpp \
-    mainwindow.cpp \
     modeselectwindow.cpp \
     optionswindow.cpp \
     receiptwindow.cpp \
@@ -30,7 +29,6 @@ SOURCES += \
 HEADERS += \
     balancewindow.h \
     changeaccountwindow.h \
-    mainwindow.h \
     modeselectwindow.h \
     optionswindow.h \
     receiptwindow.h \
@@ -43,7 +41,6 @@ HEADERS += \
 FORMS += \
     balancewindow.ui \
     changeaccountwindow.ui \
-    mainwindow.ui \
     modeselectwindow.ui \
     optionswindow.ui \
     receiptwindow.ui \

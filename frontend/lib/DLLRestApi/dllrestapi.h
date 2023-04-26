@@ -30,6 +30,8 @@ public:
     bool postLogin(QString hex, QString pin);
     bool postEmail(int accountID, QString log);
 
+    bool sendRequest(const QJsonObject& jsonObj, const QString& endpoint);
+
     int getCardId(QString hexa);
     int getAccountId(int cardID);
     int getCustomerId(int accountID);

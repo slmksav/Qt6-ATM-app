@@ -10,16 +10,13 @@ namespace Ui {
 class WithdrawWindow;
 }
 
-class WithdrawWindow : public QDialog
+class WithdrawWindow : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit WithdrawWindow(QWidget *parent = nullptr, SessionData *session = nullptr);
     ~WithdrawWindow();
-
-signals:
-    void clickAmount(int);
 
 public slots:
     void updateUI();
@@ -34,6 +31,12 @@ private slots:
 
     void on_buttonReturn_clicked();
 
+    void on_buttonIncrement_clicked();
+
+    void on_buttonDecrement_clicked();
+
+    void on_buttonCustomWithdraw_clicked();
+
 private:
     Ui::WithdrawWindow *ui;
 
@@ -42,6 +45,8 @@ private:
     ReceiptWindow * receiptWindow;
 
     bool invalidAttempt = false;
+
+    int customWithdrawAmount = 40;
 };
 
 #endif // WITHDRAWWINDOW_H

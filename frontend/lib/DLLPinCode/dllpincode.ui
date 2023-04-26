@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>DLLPinCode</class>
- <widget class="QDialog" name="DLLPinCode">
+ <widget class="QWidget" name="DLLPinCode">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -400,7 +400,6 @@ background-color: rgb(254, 195, 50);</string>
     background-image: url(:/exeimgs/button130x50.jpg);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100% 100%;
 }</string>
    </property>
    <property name="text">

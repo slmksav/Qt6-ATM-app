@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -48,7 +47,7 @@ public:
     QLabel *labelLangInfo_4;
     QButtonGroup *buttonGroup;
 
-    void setupUi(QDialog *DLLPinCode)
+    void setupUi(QWidget *DLLPinCode)
     {
         if (DLLPinCode->objectName().isEmpty())
             DLLPinCode->setObjectName("DLLPinCode");
@@ -205,7 +204,6 @@ public:
 "    background-image: url(:/exeimgs/button130x50.jpg);\n"
 "    background-repeat: no-repeat;\n"
 "    background-position: center;\n"
-"    background-size: 100% 100%;\n"
 "}"));
         button3 = new QPushButton(DLLPinCode);
         buttonGroup->addButton(button3);
@@ -306,7 +304,7 @@ public:
         QMetaObject::connectSlotsByName(DLLPinCode);
     } // setupUi
 
-    void retranslateUi(QDialog *DLLPinCode)
+    void retranslateUi(QWidget *DLLPinCode)
     {
         DLLPinCode->setWindowTitle(QCoreApplication::translate("DLLPinCode", "Dialog", nullptr));
         button4->setText(QCoreApplication::translate("DLLPinCode", "4", nullptr));

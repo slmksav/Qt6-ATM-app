@@ -2,11 +2,10 @@
 #include "ui_spinner.h"
 
 Spinner::Spinner(QWidget *parent) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::Spinner)
 {
     ui->setupUi(this);
-    QWidget::show();
 
     QMovie* pMovie = new QMovie(":/exeimgs/gifigifigifigifi.gif");
     ui->label->setMovie(pMovie);

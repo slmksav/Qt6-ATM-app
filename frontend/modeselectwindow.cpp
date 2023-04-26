@@ -4,7 +4,7 @@
 #include <QDebug>
 
 ModeSelectWindow::ModeSelectWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::ModeSelectWindow)
 {
     ui->setupUi(this);

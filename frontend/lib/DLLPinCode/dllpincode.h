@@ -1,21 +1,24 @@
 #ifndef DLLPINCODE_H
 #define DLLPINCODE_H
 
-#include <QDialog>
+#include <QWidget>
 #include "DLLPinCode_global.h"
 #include <QTimer>
-#include <QtNetwork>
 #include <QNetworkAccessManager>
+#include <QUrl>
+#include <QUrlQuery>
 #include <QJsonDocument>
 #include <QDebug>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QNetworkReply>
+#include <QJsonObject>
 
 namespace Ui {
 class DLLPinCode;
 }
 
-class DLLPINCODE_EXPORT DLLPinCode : public QDialog
+class DLLPINCODE_EXPORT DLLPinCode : public QWidget
 {
     Q_OBJECT
 
@@ -34,7 +37,7 @@ private slots:
     void clearClickHandler();
     void stopClickHandler();
     void accountFreezed();
-    void getCardIDFromDb();
+    int getCardIDFromDb();
   void getWrongAttempts();
     void setLanguage();
     void emptyLineEdit();
@@ -51,6 +54,7 @@ private:
     int wrongAttempts;
     void finnish();
     void english();
+    QString soundFilePath;
     void sound();
 };
 

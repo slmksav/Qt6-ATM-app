@@ -11,7 +11,7 @@ namespace Ui {
 class ReceiptWindow;
 }
 
-class ReceiptWindow : public QDialog
+class ReceiptWindow : public QWidget
 {
     Q_OBJECT
 
@@ -21,9 +21,6 @@ public:
 
 public slots:
     void updateUI();
-
-signals:
-    void clickReceipt(bool);
 
 private slots:
     void on_buttonYes_clicked();

@@ -53,8 +53,17 @@ void StartWindow::sound()
           player = new QMediaPlayer;
           audioOutput = new QAudioOutput;
           player->setAudioOutput(audioOutput);
+          QString soundFilePath;
 
-          QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardFI.mp3";
+          if(language == "fi")
+          {
+             soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardFI.mp3";
+          }
+          if(language == "en")
+          {
+             soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/readcardEN.mp3";
+          }
+
           qDebug() << "Sound file path:" << soundFilePath;
 
           if (QFile::exists(soundFilePath)) {
@@ -77,6 +86,7 @@ void StartWindow::languageButtonClicked(int buttonID)
 
     language = buttonValue;
     updateUI();
+    sound();
 }
 
 void StartWindow::logout(QObject* initiator)
@@ -175,6 +185,9 @@ void StartWindow::startSession(int returnedCardID, QString token)
         return;
     }
 
+    //debug print all session data
+    session->debugPrintData();
+
     //put info of person who logged in to memory
     session->originalAccountID = session->accountID;
     session->originalCustomerName = session->customerName;
@@ -241,9 +254,6 @@ void StartWindow::fetchDataWithDLL(int returnedAccountID)
     }
 
     session->resetTimer();
-
-    //debug print all session data
-    session->debugPrintData();
 }
 
 void StartWindow::swapToAccount(int accountID)
@@ -272,6 +282,9 @@ void StartWindow::swapToAccount(int accountID)
         logout(this);
         return;
     }
+
+    //debug print all session data
+    session->debugPrintData();
 
     //create and show OptionsWindow
     openOptionsWindow();
@@ -320,7 +333,8 @@ void StartWindow::updateUI()
 
     case Waiting:
 
-        pSpinner = new Spinner;
+        pSpinner = new Spinner(this);
+        pSpinner->show();
 
         if(language == "fi")
         {

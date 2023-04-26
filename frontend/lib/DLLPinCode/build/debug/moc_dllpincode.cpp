@@ -111,7 +111,7 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Int,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -120,7 +120,7 @@ Q_CONSTINIT static const uint qt_meta_data_DLLPinCode[] = {
 };
 
 Q_CONSTINIT const QMetaObject DLLPinCode::staticMetaObject = { {
-    QMetaObject::SuperData::link<QDialog::staticMetaObject>(),
+    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
     qt_meta_stringdata_DLLPinCode.offsetsAndSizes,
     qt_meta_data_DLLPinCode,
     qt_static_metacall,
@@ -143,7 +143,7 @@ Q_CONSTINIT const QMetaObject DLLPinCode::staticMetaObject = { {
         // method 'accountFreezed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'getCardIDFromDb'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'getWrongAttempts'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'setLanguage'
@@ -166,7 +166,8 @@ void DLLPinCode::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 3: _t->clearClickHandler(); break;
         case 4: _t->stopClickHandler(); break;
         case 5: _t->accountFreezed(); break;
-        case 6: _t->getCardIDFromDb(); break;
+        case 6: { int _r = _t->getCardIDFromDb();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         case 7: _t->getWrongAttempts(); break;
         case 8: _t->setLanguage(); break;
         case 9: _t->emptyLineEdit(); break;
@@ -194,12 +195,12 @@ void *DLLPinCode::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_DLLPinCode.stringdata0))
         return static_cast<void*>(this);
-    return QDialog::qt_metacast(_clname);
+    return QWidget::qt_metacast(_clname);
 }
 
 int DLLPinCode::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QDialog::qt_metacall(_c, _id, _a);
+    _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

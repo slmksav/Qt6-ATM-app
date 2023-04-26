@@ -1,4 +1,4 @@
-QT       += core gui sql
+QT       += core gui
 QT       += network
 QT       += multimedia
 
@@ -7,7 +7,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = lib
 DEFINES += DLLPINCODE_LIBRARY
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

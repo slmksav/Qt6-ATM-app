@@ -10,7 +10,7 @@ namespace Ui {
 class ChangeAccountWindow;
 }
 
-class ChangeAccountWindow : public QDialog
+class ChangeAccountWindow : public QWidget
 {
     Q_OBJECT
 

@@ -2,7 +2,7 @@
 #include "ui_receiptwindow.h"
 
 ReceiptWindow::ReceiptWindow(QWidget *parent, SessionData *session) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::ReceiptWindow)
 {
     ui->setupUi(this);
@@ -71,8 +71,16 @@ void ReceiptWindow::sound()
     player = new QMediaPlayer;
     audioOutput = new QAudioOutput;
     player->setAudioOutput(audioOutput);
+    QString soundFilePath;
 
-    QString soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/receiptFI.mp3";
+    if(session->language == "fi")
+    {
+       soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/receiptFI.mp3";
+    }
+    if(session->language == "en")
+    {
+       soundFilePath = QCoreApplication::applicationDirPath() + "/../../sounds/receiptEN.mp3";
+    }
     qDebug() << "Sound file path:" << soundFilePath;
 
     if (QFile::exists(soundFilePath)) {

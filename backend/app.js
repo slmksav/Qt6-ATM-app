@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 
+const amqp = require('amqplib');
+
 var indexRouter = require('./routes/index');
 var customerRouter = require('./routes/customer');
 var accountRouter = require('./routes/account');
@@ -17,8 +19,7 @@ var hexcodeRouter = require('./routes/hexcode');
 var getAccountIDRouter = require('./routes/getAccountID');
 var transactionHistoryRouter = require('./routes/transactionHistory');
 var email = require('./routes/email');
-
-
+  
 var app = express();
 dotenv.config();
 app.use(cors());
