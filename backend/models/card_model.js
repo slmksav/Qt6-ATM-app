@@ -1,5 +1,5 @@
 const db = require('../database');
-const connectToRabbitMQ = require('./rabbitmq');
+const connectToRabbitMQ = require('../rabbitmq');
 
 const card = {
   getAll: function(callback) {

@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 
-const amqp = require('amqplib');
 
 var indexRouter = require('./routes/index');
 var customerRouter = require('./routes/customer');
