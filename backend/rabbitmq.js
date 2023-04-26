@@ -1,12 +1,11 @@
 const amqplib = require('amqplib');
 
-(async () => {
+(async function connectToRabbitMQ() {
   if (!process.env.RABBITMQ_HOST) {
-    throw Error('You should first fill the .env-example file and rename it to .env');
   }
 
   // Connect to RabbitMQ server
-  console.log('🔌  Connecting to RabbitMQ...');
+  console.log('🔌  Yhdistetään RabbitMQ palvelimeen...');
   const connection = await amqplib.connect(
     {
       protocol: 'amqps',
@@ -18,29 +17,30 @@ const amqplib = require('amqplib');
   process.once('SIGTERM', () => connection.close());
 
   const channel = await connection.createChannel();
-  const queue = 'hello';
+  const queue = 'card_wrongAttempts_queue';
   await channel.assertQueue(queue, { durable: false });
 
-  // Consume the queue and display content
-  console.log(`📭  Consumming queue ${queue}...`);
+  console.log(`📭 lokitetaan jonoa ${queue}...`);
   channel.consume(
     queue,
     message => {
-      console.log(`📬  Received message on queue "${queue}": "` + message.content.toString() + '"');
-      console.log('✅  All done, your RabbitMQ works great!');
+      console.log(`📬  viesti lisätty jonoon: "${queue}": "` + message.content.toString() + '"');
+      console.log('✅  RabbitMQ yhdistetty REST API:in');
       process.exit(0);
     },
     { noAck: true }
   );
 
   // Sending message to queue
-  const message = 'Hello world!';
-  console.log(`📮  Sending message "${message}" to queue "${queue}"`);
+  const message = 'jos Renderissä näkyy tämä viesti niin message broker on yhdistettynä';
+  console.log(`📮  lähetetään viestiä "${message}" jonolle "${queue}"`);
   await channel.sendToQueue(queue, Buffer.from(message));
 
 })().catch(error => {
   console.error('');
-  console.error('🐞 An error occurred!');
+  console.error('🐞 virhe, ei voitu muodostaa yhteyttä!');
   console.error(error);
   process.exit(1);
 });
+
+module.exports = connectToRabbitMQ;
