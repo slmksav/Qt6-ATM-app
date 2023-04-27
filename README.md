@@ -1,16 +1,15 @@
+# Group 18
 
-# group_18_O
-Sauli Savinainen
+Sauli Savinainen - Serial port component development, Qt-development to all components (custom sum withdrawal, POST API functions...), Raspberry Pi cross-compilation, CRUD-table development, REST API deployment to web service and MySQL database hosting & administration, RabbitMQ integration, graphics and sound features
 
-Mika Korkiakoski
+Mika Korkiakoski - Card-handling (PIN-code and related data) component development on Qt, backend development for related API functions, graphics and interface development
 
-Miika Tiihonen
+Miika Tiihonen - GUI and main executable structural/functional design and implementation in Qt (excluding PIN-code(dll), styles, sounds, visual clock, and custom sum withdrawal). Necessary functionality to our Qt dll handling http requests and backend/REST API to facilitate account swapping, transaction creation on withdrawal, email sending, and login. Table updates and troubleshooting in MySQL database.
 
-Samuli Pylkkönen
-# UI-suunnitelma sovellukselle
+Samuli Pylkkönen - API functions component development on Qt, data formatting
 
-# ER-kaavio tietokannalle
+# ER-diagram of the ATM database
 ![image](https://user-images.githubusercontent.com/87731856/232758358-d00e9a1e-7811-4578-a3de-22a5dc6705fa.png)
 
-# Esittelyä kun repo forkataan jokaisen omaan githubiin
+# Showcase
 ![image](https://user-images.githubusercontent.com/87731856/233630613-7da6348a-46cf-4542-b7de-87d91f3a82c0.png)
