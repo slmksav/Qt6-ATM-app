@@ -4,7 +4,7 @@ Sauli Savinainen - Serial port component development, Qt-development to all comp
 
 Mika Korkiakoski - Card-handling (PIN-code and related data) component development on Qt, backend development for related API functions, graphics and interface development
 
-Miika Tiihonen - GUI and main executable structural/functional design and implementation in Qt (excluding PIN-code, styles, sounds, visual clock, and custom sum withdrawal). Necessary functionality to our Qt dll handling http requests and backend/REST API to facilitate account swapping, transaction creation on withdrawal, email sending, and login. Table updates and troubleshooting in MySQL database.
+Miika Tiihonen - GUI and main executable structural/functional design and implementation in Qt (excluding PIN-code(dll), styles, sounds, visual clock, and custom sum withdrawal). Necessary functionality to our Qt dll handling http requests and backend/REST API to facilitate account swapping, transaction creation on withdrawal, email sending, and login. Table updates and troubleshooting in MySQL database.
 
 Samuli Pylkkönen - API functions component development on Qt, data formatting
 
