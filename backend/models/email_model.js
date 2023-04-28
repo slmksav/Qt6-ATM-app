@@ -2,19 +2,21 @@ const db = require('../database');
 const amqplib = require('amqplib');
 
 const email = {
-    getEmail: function (idaccount, callback) {
-      return db.query('select email from customer where idcustomer in (select id_customers from account where idaccount=?)', idaccount, (err, results) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          // Publish a message to a RabbitMQ queue with the email details
-          publishToQueue(results[0].email, callback);
-        }
-      });
+  getEmail: async function (idaccount, callback) {
+    try {
+      const results = await db.query('select email from customer where idcustomer in (select id_customers from account where idaccount=?)', idaccount);
+
+      // Publish a message to a RabbitMQ queue with the email details
+      const email = results[0].email;
+      const publishedEmail = await publishToQueue(email);
+      callback(null, results);
+    } catch (error) {
+      callback(error, null);
     }
   }
+};
   
-  async function publishToQueue(email, callback) {
+  async function publishToQueue(email) {
     try {
       const connection = await amqplib.connect({
         protocol: 'amqps',
@@ -33,11 +35,12 @@ const email = {
       await connection.close();
   
       console.log(`Email "${email}" sent to RabbitMQ queue "${queue}"!`);
-      callback(null, email);
+      return email;
     } catch (error) {
       console.error('Error sending email to RabbitMQ queue:', error);
-      callback(error, null);
+      throw error;
     }
   }
+  
 
 module.exports=email;
